@@ -1,0 +1,44 @@
+crontab
+
+服务器端设置定时脚本方式，以及定时规则的时间方式
+
+1、安装配置 crontab 
+
+	yum install vixie-cron
+	yum install crontabs
+
+	注：vixie-cron软件包是cron的主程序；
+		crontabs软件包是用来安装、卸装、或列举用来驱动 cron 守护进程的表格的程序。
+
+2、开启 crontab 服务
+	
+	service crond status // 查看 crontab 服务状态 
+	service crond start // 启动 
+	service crond stop // 关闭 
+	service crond restart // 重启 
+	service crond reload // 重新载入配置 
+
+	chkconfig crond on // 设置开机自动启动crond服务
+	chkconfig crond off // 取消开机自动启动crond服务
+
+3、设置需要执行的脚本
+	
+	以编辑文件的方式添加修改相应的任务
+	vim /etc/crontab
+
+	添加任务如: */1 * * * * root home/test/hello.sh >> home/test/sh.txt 
+	注：1、每1分钟执行一次 / 2、以root权限 / 3、shell 脚本 home/test/hello.sh / 4、将执行结果写入 home/test/sh.txt 文件内
+
+	定时访问远程：*/30 * * * * root /usr/bin/curl http://www.xxxx.com/test_action
+	注：1、每30分钟执行一次 / 2、以root权限 / 3、使用curl工具访问地址（本地不记录执行结果）
+
+
+注：
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
