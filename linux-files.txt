@@ -1,0 +1,28 @@
+linux 文件的操作 
+
+该笔记操作不涉及复杂的操作过程
+仅以此作为实际开发的参考操作
+
+1、创建 
+	@1、mkdir dirname 		// 创建 dirname 文件夹
+	@2、mkdir -p a/b/c  	// 创建嵌套的目录
+	@3、touch filename  	// 创建 filename 文件
+	@4、vi/vim filename  	// 创建并编辑 filename 文件
+
+
+2、删除
+	@1、rm -rf filename/dirname 	// 强制删除该文件/文件夹
+
+
+3、名称重命名、移动、复制
+	@1、mv oldFile/oldPath newFile/newPath 	// 文件名重命名、移动
+	@2、cp file dir 						// 复制 file 文件到 dir 内
+	@3、cp dir01/* dir02 					// 复制 dir01 下的所有文件 到 dir02 ，同名文件需要确认
+
+
+4、查找/查看
+	@1、find path -name filename 	// 在 path 路径中查找 filename 文件
+	@2、find path -size +30k/-40k  	// 在 path 路径中查找文件大小 大于30k或者小于40k 的文件
+	@3、...| grep name  			// 查询结果中匹配含有 name 的记录
+	@4、stat filename				// 查看文件的详情信息 ( 文件大小,创建时间,行数 )
+	@5、tree 						// 树 的形式列出当前文件目录结构 
