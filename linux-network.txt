@@ -1,1 +1,61 @@
 linux 网络,性能,系统查看
+
+1、查看网络信息
+	ifconfig 
+		eth0 inet addr:192.168.147.130  返回结果中 该地址就是外网可访问的IP
+
+
+2、添加默认网关 
+	route add default gw 192.168.1.1
+
+
+3、 配置DNS
+	vi /etc/resolv.conf
+	nameserver 202.96.134.133
+
+
+4、查看DNS
+	less /etc/resolv.conf 
+
+
+5、重启网络服务
+	service network restart 
+
+
+6、防火墙，端口 
+	@1、service iptables status 	// 查看防火墙端口信息 
+	@2、打开 90 端口操作 
+		vi /etc/sysconfig/iptables 
+		将 
+			-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT #（允许80端口）
+		添加到22端口配置的下面 
+		service iptables restart // 重启防火墙 
+
+
+7、查看系统性能（cpu，进程数，能耗，内存使用情况等信息）
+	@1、top // 查看性能操作
+
+	@2、查看所有运行中的进程
+		ps aux | less
+
+	@3、查看与 nginx 相关的进程
+		ps aux | grep nginx
+
+	@4、查看非root运行的进程
+		ps aux | grep username
+
+	@5、以树状显示正在运行的进程
+		pstree
+
+
+8、service、systemctl 使用方式
+
+
+
+
+
+
+
+
+
+
