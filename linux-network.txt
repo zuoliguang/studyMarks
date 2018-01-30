@@ -47,8 +47,15 @@ linux 网络,性能,系统查看
 	@5、以树状显示正在运行的进程
 		pstree
 
+8、查看端口占用情况
+	1、查看某个端口的占用情况
+		netstat  -anp  |grep   端口号
+	2、查看所有端口使用情况
+		netstat  -nultp
+	3、查看82端口的使用情况
+		netstat  -anp  |grep  82
 
-8、systemctl 使用方式
+注：systemctl 使用方式
 	systemctl命令是系统服务管理器指令，它实际上将 service 和 chkconfig 这两个命令组合到一起。
 	( 该功能比较新的版本会使用到，暂不考虑 )
 
