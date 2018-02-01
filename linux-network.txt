@@ -27,9 +27,14 @@ linux 网络,性能,进程,系统查看
 	@2、打开 90 端口操作 
 		vi /etc/sysconfig/iptables 
 		将 
-			-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT #（允许80端口）
+			-A INPUT -m state --state NEW -m tcp -p tcp --dport 90 -j ACCEPT #（允许90端口）
 		添加到22端口配置的下面 
-		service iptables restart // 重启防火墙 
+		/etc/init.d/iptables save //保存修改
+		@@1、/etc/sysconfig/iptables restart // 重启防火墙
+		@@2、service iptables restart // 重启防火墙 
+	@3、
+	@4、也可以使用 “ps aux | grep 端口” 的方式查找
+	@5、netstat -ntlp 查看
 
 
 7、查看系统性能（cpu，进程数，能耗，内存使用情况等信息）
