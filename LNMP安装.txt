@@ -1,69 +1,82 @@
 LNMP安装
 
 1.安装nginx
+    yum install yum-priorities -y 
+    wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm 
+    rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm 
+    yum install nginx
 
-yum install yum-priorities -y 
-wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm 
-rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm 
-yum install nginx
 2.启动nginx
+    systemctl start nginx.service #启动nginx 
+    systemctl stop nginx.service #停止 
+    systemctl restart nginx.service #重启 
+    systemctl enable nginx.service #设置开机启动
 
-systemctl start nginx.service #启动nginx 
-systemctl stop nginx.service #停止 
-systemctl restart nginx.service #重启 
-systemctl enable nginx.service #设置开机启动
 3.更改nginx端口号（根据自己需求）
-
-cd /etc/nginx/conf.d/ 
-vim default.conf 
-把listen 80改成listen 81 
-然后重启nginx 
-systemctl restart nginx.service #重启nginx
+    cd /etc/nginx/conf.d/ 
+    vim default.conf 
+    把listen 80改成listen 81 
+    然后重启nginx 
+    systemctl restart nginx.service #重启nginx
+    
 4.访问http://ip:81即可看到nginx首页
 
 5.下一步安装PHP-fpm
+    yum install php-fpm 
+    安装完毕后
+    systemctl start php-fpm.service #启动php-fpm 
+    systemctl enable php-fpm.service #设置开机启动
+    
+6.安装mariadb（MySQL）
+    yum install mariadb mariadb-server #询问是否要安装，输入Y即可自动安装,直到安装完成 
+    systemctl start mariadb.service #启动MariaDB 
+    systemctl stop mariadb.service #停止MariaDB 
+    systemctl restart mariadb.service #重启MariaDB 
+    systemctl enable mariadb.service #设置开机启动
+    
+7.修改mysql密码，安装后默认为空
+    修改mysql密码：set password for 'root'@'localhost'=password 'root';
+    mysql授权远程连接（navicat等）： grant all on *.* to root identified by 'root'; 
 
-yum install php-fpm 
-安装完毕后
-systemctl start php-fpm.service #启动php-fpm 
-systemctl enable php-fpm.service #设置开机启动
-6.更改nginx配置文件识别php  vi /etc/nginx/conf.d/default.conf，把之前的#给去掉就可以了，顺手改一下fastcgi_param
+8.安装PHP以及组件，使PHP支持 MariaDB
+    yum install php php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-bcmath php-mhash 
+    #这里选择以上安装包进行安装，根据提示输入Y回车 
+    systemctl restart mariadb.service #重启MariaDB 
+    systemctl restart httpd.service #重启apache
+    
+9.更改nginx配置文件识别php  vi /etc/nginx/conf.d/default.conf，把之前的#给去掉就可以了，顺手改一下fastcgi_param
+    location ~ \.php$ { 
+        root      html; 
+        fastcgi_pass  127.0.0.1:9000; 
+        fastcgi_index index.php; 
+        fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html/$fastcgi_script_name; 
+        include    fastcgi_params; 
+      }
+      
+10.访问test.php
+    在 /usr/share/nginx/html中新建一个test.php <?php echo 123;?>
+    访问http://ip:81/test.php即可看到nginx中的php页面
+    
+11.负载配置
+    进入 vi /etc/nginx/conf.d/default.conf
+    upstream site{ 
+          server 172.16.170.138; 
+          server 172.16.170.139; 
+      } 
+      server { 
+        listen    80; 
+        server_name ieccohomo.com; 
 
-location ~ \.php$ { 
-    root      html; 
-    fastcgi_pass  127.0.0.1:9000; 
-    fastcgi_index index.php; 
-    fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html/$fastcgi_script_name; 
-    include    fastcgi_params; 
-  }
-7.访问test.php
+        #charset koi8-r; 
+        #access_log /var/log/nginx/log/host.access.log main; 
 
-在 /usr/share/nginx/html中新建一个test.php <?php echo 123;?>
-
-访问http://ip:81/test.php即可看到nginx中的php页面
-8.负载配置
-
-进入 vi /etc/nginx/conf.d/default.conf
-
-upstream site{ 
-      server 172.16.170.138; 
-      server 172.16.170.139; 
-  } 
-  server { 
-    listen    80; 
-    server_name ieccohomo.com; 
-
-    #charset koi8-r; 
-    #access_log /var/log/nginx/log/host.access.log main; 
-
-    location / { 
-      root  /usr/share/nginx/html; 
-      index index.html index.htm; 
-      proxy_pass http://ieccohomo.com; 
-    }
-9.域名修改  把上面(ieccohomo.com)site,localhost改为www.a.com
-
-
+        location / { 
+          root  /usr/share/nginx/html; 
+          index index.html index.htm; 
+          proxy_pass http://ieccohomo.com; 
+        }
+        
+12.域名修改  把上面(ieccohomo.com)site,localhost改为www.a.com
 
 
 
