@@ -1,7 +1,37 @@
 CentOS 7 操作指南
 
-CentOS 7 启动默认是用的doc 命令行
+1、CentOS 7 启动默认是用的doc 命令行
+      安装选择软件的过程中 可选择GUI桌管理组件
 
-安装选择软件的过程中 可选择GUI桌管理组件
+2、centos7下yum换阿里云源
+      @1、备份旧的配置文件
+            cd /etc/yum.repos.d
+            mv CentOS-Base.repo CentOS-Base.repo.bak
+            wget -O CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
       
-      
+      @2、更新yum重建缓存
+            yum clean all 
+            yum makecache 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
