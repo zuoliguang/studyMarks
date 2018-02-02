@@ -35,8 +35,14 @@ LNMP安装
     systemctl enable mariadb.service #设置开机启动
     
 7.修改mysql密码，安装后默认为空
-    修改mysql密码：set password for 'root'@'localhost'=password 'root';
-    mysql授权远程连接（navicat等）： grant all on *.* to root identified by 'root'; 
+    接下来进行MariaDB的相关简单配置
+    mysql_secure_installation
+    修改密码一：
+        mysqladmin  -uroot -p  password '1q2w3e'
+        初始root密码为空，设置root密码为1q2w3e。然后就可以本地mysql -uroot -p1q2w3e登录了
+    若不成功：密码为空
+        修改mysql密码：set password for 'root'@'localhost'=password 'root';
+        mysql授权远程连接（navicat等）： grant all on *.* to root identified by 'root'; 
 
 8.安装PHP以及组件，使PHP支持 MariaDB
     yum install php php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-bcmath php-mhash 
