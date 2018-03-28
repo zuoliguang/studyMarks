@@ -1,16 +1,40 @@
 #### 该笔记记录本地 4台 虚拟机 CentOS 6.5 LNMP 环境下配置
 
+注意：在实际开发中 当应用程序存放在多台服务器上使用时 需要使用一台服务器负责负载均衡的角色；
+      配置信息，使得客户端访问导向 附在后面的多台服务中的一台服务器；
+效果：缓解一台服务器相应能力不足及高并发的问题；
 
 1、环境开始之前准备四台虚拟机 使用的同样的环境 CentOS 6.5 ，PHP 5.6
   外网的访问IP分别为：
-  负载均衡服务器 ：192.168.147.135
-  服务器1 ：192.168.147.132
-  服务器2 ：192.168.147.133
-  服务器3 ：192.168.147.134
-  
-2、
-  
+  负载均衡服务器-主 ：192.168.147.135 
+  服务器-1 ：192.168.147.132
+  服务器-2 ：192.168.147.133
+  服务器-3 ：192.168.147.134
+  网站应用程序已经部署三台服务器，并在首页面标记不同的信息。
+  
+2、修改添加 nginx.conf 配置 信息 /usr/local/nginx/conf/nginx.conf
 
+  # 添加的 upstream 配置信息
+  upstream test.nginx.com {
+          server 192.168.147.132 weight=2; # weight表示负载分配的权重
+          server 192.168.147.133 weight=2;
+          server 192.168.147.134 weight=2;
+  }  
+
+  server{  
+          listen 80;  
+          server_name test.nginx.com;  
+          # 添加配置项
+          location / {  
+                  proxy_pass         http://test.nginx.com;  
+                  proxy_set_header   Host             $host;  
+                  proxy_set_header   X-Real-IP        $remote_addr;  
+                  proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;  
+          }  
+  }
+  
+3、将上面保存后 重启 nginx 服务；
+  重启成功之后访问 test.nginx.com ，刷新几次便可以看到不同的首页信息变化，说明负载均衡配置成功。
 
 
 
