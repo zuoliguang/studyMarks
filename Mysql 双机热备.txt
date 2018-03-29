@@ -8,10 +8,117 @@
 
   服务器-1 ：192.168.147.132 # 主
   服务器-2 ：192.168.147.133 # 从
-  服务器-3 ：192.168.147.134 # 从
 
-具体操作：
-1、
+MySQL主从同步的步骤
+一、准备操作
+ 1、主从数据库版本一致，建议版本5.5以上,本地测试使用的 mysql 5.6 
+ 2、主从数据库数据一致
+二、具体操作
+ 1、（主服务器操作）设置主服务器上的mysql配置信息 
+    位置 /etc/my.cnf
+    # set slave
+    log-bin=mysql-bin
+    binlog_format=mixed
+    server-id       = 1
+    expire_logs_days = 10
+    # 添加项
+    binlog-ignore-db=information_schema # 忽略更新
+    binlog-ignore-db=mysql # 忽略更新
+    binlog-do-db=test # 要同步的库名
+
+ 2、（主服务器操作）登录主服务器mysql
+    mysql > mysql -u root -p 
+    mysql > ******(密码)
+    
+3、（主服务器操作）设置从服务器可用来登录的账号（slave_account）密码（123456）；
+   mysql > grant replication slave on *.* to 'slave_account'@'192.168.147.132' identified by '123456';
+   并更新数据库的权限
+   mysql > flush privileges;
+   查看 Master 主库的热备状态
+   mysql> show master status;
+   +------------------+----------+--------------+--------------------------+
+   | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB         |
+   +------------------+----------+--------------+--------------------------+
+   | mysql-bin.000011 |      107 | test         | information_schema,mysql |
+   +------------------+----------+--------------+--------------------------+
+   1 row in set (0.00 sec)
+
+   注：1、执行完这个步骤后不要再操作主数据库了，防止主数据库状态值变化；
+      2、主服务器要关闭防火墙，否则后面会造成后面从库 Slave_IO_Running: Connecting 同步失败的问题；
+
+4、（从服务器操作）设置从服务器上的mysql配置信息 
+   位置 /etc/my.cnf
+   # set slave
+   log-bin=mysql-bin
+   binlog_format=mixed
+   server-id       = 2 #该值要和主库设置区分开来
+   expire_logs_days = 10
+   # 下面为添加项
+   binlog-ignore-db=information_schema # 忽略更新
+   binlog-ignore-db=mysql # 忽略更新
+   replicate-do-db=test # 执行更新的库名（从库）
+   replicate-ignore-db=mysql 
+   log-slave-updates # 日志更新
+   slave-skip-errors=all # 错误跳过
+   slave-net-timeout=60 # 每次更新超时设置
+
+5、（从服务器操作）执行同步命令，设置主数据库ip，同步帐号密码，同步位置
+  mysql > change master to master_host='192.168.147.132', master_user='slave_account', master_password='123456', master_log_file='mysql-bin.000011', master_log_pos=107;
+
+6、（从服务器操作）开启同步功能
+  mysql > start slave;
+  拓展：中间调试可用 stop slave (停止); reset slave (恢复默认); 
+
+7、（从服务器操作）查看从库同步状态
+
+  mysql> show slave status\G;
+  *************************** 1. row ***************************
+                 Slave_IO_State: Waiting for master to send event
+                    Master_Host: 192.168.147.132
+                    Master_User: slave_account
+                    Master_Port: 3306
+                  Connect_Retry: 60
+                Master_Log_File: mysql-bin.000011
+            Read_Master_Log_Pos: 107
+                 Relay_Log_File: bogon-relay-bin.000002
+                  Relay_Log_Pos: 253
+          Relay_Master_Log_File: mysql-bin.000011
+               Slave_IO_Running: Yes
+              Slave_SQL_Running: Yes
+                Replicate_Do_DB: test
+            Replicate_Ignore_DB: mysql
+             Replicate_Do_Table: 
+         Replicate_Ignore_Table: 
+        Replicate_Wild_Do_Table: 
+    Replicate_Wild_Ignore_Table: 
+                     Last_Errno: 0
+                     Last_Error: 
+                   Skip_Counter: 0
+            Exec_Master_Log_Pos: 107
+                Relay_Log_Space: 409
+                Until_Condition: None
+                 Until_Log_File: 
+                  Until_Log_Pos: 0
+             Master_SSL_Allowed: No
+             Master_SSL_CA_File: 
+             Master_SSL_CA_Path: 
+                Master_SSL_Cert: 
+              Master_SSL_Cipher: 
+                 Master_SSL_Key: 
+          Seconds_Behind_Master: 0
+  Master_SSL_Verify_Server_Cert: No
+                  Last_IO_Errno: 0
+                  Last_IO_Error: 
+                 Last_SQL_Errno: 0
+                 Last_SQL_Error: 
+    Replicate_Ignore_Server_Ids: 
+               Master_Server_Id: 1
+  1 row in set (0.00 sec)
+
+  注：1、Slave_IO_Running及Slave_SQL_Running进程必须正常运行，即YES状态，否则说明同步失败；
+  2、主从数据库配置 max_allowed_packet = 16M ，否则会造成后期同步失败；
+
+  到这里，主从数据库设置工作已经完成，自己可以新建数据库和表，插入和修改数据，测试一下是否成功
 
 
 
