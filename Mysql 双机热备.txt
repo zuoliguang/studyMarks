@@ -63,7 +63,8 @@ MySQL主从同步的步骤
    slave-net-timeout=60 # 每次更新超时设置
 
 5、（从服务器操作）执行同步命令，设置主数据库ip，同步帐号密码，同步位置
-  mysql > change master to master_host='192.168.147.132', master_user='slave_account', master_password='123456', master_log_file='mysql-bin.000011', master_log_pos=107;
+  mysql > change master to master_host='192.168.147.132', master_user='slave_account', master_password='123456', 
+          master_log_file='mysql-bin.000011', master_log_pos=107;
 
 6、（从服务器操作）开启同步功能
   mysql > start slave;
