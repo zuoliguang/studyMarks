@@ -1,0 +1,109 @@
+
+一、首先查看MySQL服务器状态信息，包括当前MySQL启动后的运行时间，当前MySQL的客户端会话连接数，当前MySQL服务器执行的慢查询数，
+    当前MySQL执行了多少SELECT语句、执行了多少UPDATE/DELETE/INSERT语句等统计信息，便于我们根据当前MySQL服务器的运行状态进行对应的调整或优化工作。
+    1、SHOW STATUS 指令语句来查看MySQL服务器的状态信息
+    2、查看单个信息语法 
+        SHOW [统计范围] STATUS [LIKE '状态项名称']
+            --统计范围关键字分为GLOBAL和SESSION(或LOCAL)两种。
+        例如：
+            --查看MySQL本次启动后的运行时间(单位：秒)
+            show status like 'uptime';
+            
+            --查看select语句的执行数
+            show [global] status like 'com_select';
+            
+            --查看insert语句的执行数
+            show [global] status like 'com_insert';
+            
+            --查看update语句的执行数
+            show [global] status like 'com_update';
+            
+            --查看delete语句的执行数
+            show [global] status like 'com_delete';
+            
+            --查看试图连接到MySQL(不管是否连接成功)的连接数
+            show status like 'connections';
+            
+            --查看线程缓存内的线程的数量。
+            show status like 'threads_cached';
+            
+            --查看当前打开的连接的数量。
+            show status like 'threads_connected';
+            
+            --查看当前打开的连接的数量。
+            show status like 'threads_connected';
+            
+            --查看创建用来处理连接的线程数。如果Threads_created较大，你可能要增加thread_cache_size值。
+            show status like 'threads_created';
+            
+            --查看激活的(非睡眠状态)线程数。
+            show status like 'threads_running';
+            
+            --查看立即获得的表的锁的次数。
+            show status like 'table_locks_immediate';
+            
+            --查看不能立即获得的表的锁的次数。如果该值较高，并且有性能问题，你应首先优化查询，然后拆分表或使用复制。
+            show status like 'table_locks_waited';
+            
+            --查看创建时间超过slow_launch_time秒的线程数。
+            show status like 'slow_launch_threads';
+            
+            --查看查询时间超过long_query_time秒的查询的个数。
+            show status like 'slow_queries';
+            
+            修改 MySQL> set [字段] = 值;
+
+二、查看MySQL执行的历史记录及执行时间，分析出最烂SQL方便优化。
+    1、在my.cnf中的[mysqld](其他地方可能无效)下插入log=/etc/tmp/mysql.log(日志的地址可以自己定义,不过不要在home里面,否则可能显示不出来,
+        主要要有写的权限).然后要重启数据库,用service mysqld restart命令就可以了.这个log会将所有的执行语句记录下来,所以在数据库很忙的时候,
+        这个日志可能变得很大,不宜查看.
+        用tail -f /etc/tmp/mysql.log 命令可以持续观察执行语句,也可以将该文件下载下来慢慢看.
+    
+    2、另外还有一个慢查询历史记录,也在my.cnf文件里,配置语句为
+    
+        log-slow-queries=/var/lib/mysql/slowquery.log 
+        long_query_time=5 
+        log-queries-not-using-indexes=1
+        
+        注: log-slow-queries 是慢查询历史记录的地址,
+            long_query_time 限定超过X秒才能加入到历史记录里面,
+            log-queries-not-using-indexes 限定没有使用索引的查询语句.
+        这个日志由于记录语句不多,所以可以长期开启.
+    
+    3、操作
+        （1） 查看慢SQL日志是否启用
+            mysql> show variables like 'log_slow_queries'; 
+            +------------------+-------+
+            | Variable_name    | Value |
+            +------------------+-------+
+            | log_slow_queries | ON    |
+            +------------------+-------+
+            1 row in set (0.00 sec)
+
+        （2） 查看执行慢于多少秒的SQL会记录到日志文件中
+            mysql> show variables like 'long_query_time';
+            +-----------------+-------+
+            | Variable_name   | Value |
+            +-----------------+-------+
+            | long_query_time | 1     |   
+            +-----------------+-------+
+            1 row in set (0.00 sec)
+            这里value=1， 表示1秒
+        
+        （3）配置my.ini文件（inux下文件名为my.cnf）， 查找到[mysqld]区段，增加日志的配置，如下示例：
+            [mysqld]
+            log="C:/temp/mysql.log"
+            log_slow_queries="C:/temp/mysql_slow.log"
+            long_query_time=1
+
+            log指示日志文件存放目录；
+            log_slow_queries指示记录执行时间长的sql日志目录；
+            long_query_time指示多长时间算是执行时间长，单位s。
+
+            Linux下这些配置项应该已经存在，只是被注释掉了，可以去掉注释。但直接添加配置项也OK
+    
+    
+
+
+
+
