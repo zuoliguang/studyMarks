@@ -1,0 +1,89 @@
+
+配置前准备
+
+MySQL > 6.*版本
+
+一、准备数据表
+    mysql 复制表结构及信息到另一张表的sql
+    1、复制表结构及数据到新表
+        CREATE TABLE 新表 SELECT * FROM 旧表；
+        
+    2、只复制表结构到新表
+        CREATE TABLE 新表 SELECT * FROM 旧表 WHERE 1=2；（即:让WHERE条件不成立.）
+        CREATE TABLE 新表 LIKE 旧表 ；（mysql4.0.25 不支持，mysql5已经支持了）
+        
+    3、复制旧表的数据到新表(假设两个表结构一样)
+        INSERT INTO 新表 SELECT * FROM 旧表 ；
+        
+    4、复制旧表的数据到新表(假设两个表结构不一样)
+        INSERT INTO 新表(字段1,字段2,…….) SELECT 字段1,字段2,…… FROM 旧表；
+
+    5、复制旧表附加条件的信息
+        INSERT INTO 目标表 (字段1, 字段2, ...) 
+        SELECT 字段1, 字段2, ...  FROM 来源表  
+            WHERE not exists (select * from 目标表  
+            where 目标表.比较字段 = 来源表.比较字段);
+
+二、全文检索
+    1、MySQL全文检索是利用查询关键字和查询列内容之间的相关度进行检索，可以利用全文索引来提高匹配的速度。
+    
+    2、配置条件： TABLE 需要是 MyISAM 类型的表；
+        col1、col2 必须是char、varchar或text类型；
+        col1、col2 上分别建立全文索引(FULLTEXT索引)；
+        MySQL 配置my.ini [mysql] 下添加 ft_min_word_len = 1 (默认4，通过 SHOW VARIABLES LIKE 'ft_min_word_len' 可查看)；
+    
+    3、使用语法  
+        SELECT * FROM tab_name WHERE MATCH ('列名1,列名2...列名n') AGAINST('词1 词2 词3 ... 词m');
+        即：MATCH 相当于要匹配的列，而 AGAINST 就是要找的内容。
+        
+    4、检索方式
+        a、自然语言检索： IN NATURAL LANGUAGE MODE
+        b、布尔检索： IN BOOLEAN MODE （常用）
+            特色： 
+              ·不剔除50%以上符合的row。 
+              ·不自动以相关性反向排序。 
+              ·可以对没有FULLTEXT index的字段进行搜寻，但会非常慢。 
+              ·限制最长与最短的字符串。 
+              ·套用Stopwords。
+            语法规则：
+                 +   一定要有(不含有该关键词的数据条均被忽略)。 
+                 -   不可以有(排除指定关键词，含有该关键词的均被忽略)。 
+                 >   提高该条匹配数据的权重值。 
+                 <   降低该条匹配数据的权重值。
+                 ~   将其相关性由正转负，表示拥有该字会降低相关性(但不像 - 将之排除)，只是排在较后面权重值降低。 
+                 *   万用字，不像其他语法放在前面，这个要接在字符串后面。 
+                 " " 用双引号将一段句子包起来表示要完全相符，不可拆字。
+            例如：
+                @ SELECT * FROM articles WHERE MATCH (title,content) AGAINST ('+apple -banana' IN BOOLEAN MODE);
+                注：+ 表示AND，即必须包含。- 表示NOT，即必须不包含。即：返回记录必需包含 apple，且不能包含 banner。
+                
+                @ SELECT * FROM articles WHERE MATCH (title,content) AGAINST ('apple banana' IN BOOLEAN MODE);
+                注：apple和banana之间是空格，空格表示OR。即：返回记录至少包含apple、banana中的一个。
+                
+                @ SELECT * FROM articles WHERE MATCH (title,content) AGAINST ('+apple banana' IN BOOLEAN MODE);
+                注：返回记录必须包含apple，同时banana可包含也可不包含，若包含的话会获得更高的权重
+                
+                @ SELECT * FROM articles WHERE MATCH (title,content) AGAINST ('+apple ~banana' IN BOOLEAN MODE);
+                 注：~ 是我们熟悉的异或运算符。返回记录必须包含apple，若也包含了banana会降低权重。但是它没有 +apple -banana 严格，
+                    因为后者如果包含banana压根就不返回。
+                    
+                @ SELECT * FROM articles WHERE MATCH (title,content) AGAINST ('+apple +(>banana <orange)' IN BOOLEAN MODE);
+                 注：返回必须同时包含“apple banana”或者必须同时包含“apple orange”的记录。
+                    若同时包含“apple banana”和“apple orange”的记录，则“apple banana”的权重高于“apple orange”的权重。
+                    
+        c、查询扩展检索： WITH QUERY EXPANSION
+        
+三、注意事项：
+    1、预设搜寻是不分大小写，若要分大小写，columne 的 character set要从utf8改成utf8_bin。
+    2、预设 MATCH...AGAINST 是以相关性排序，由高到低。
+    3、MATCH(title, content)里的字段必须和FULLTEXT(title, content)里的字段一模一样。
+        如果只要单查title或content一个字段，那得另外再建一个 FULLTEXT(title) 或 FULLTEXT(content)，也因为如此，MATCH()的字段不能跨table。
+    4、MySQL不支持中文全文索引，原因很简单：与英文不同，中文的文字是连着一起写的，中间没有MySQL能找到分词的地方；
+        如果你的MySQL是安装在Windows平台上的，可以不用转码直接存储中文就可以使用全文索引。
+        但是如果你的MySQL是安装在Linux上的则需要进行转编码(urlencode / base64_encode / json_encode / 区位 / 拼音)等进行编码使之以“字母+数字”
+        的方式存储于数据库中。
+    5、InnoDB 在 MySQL5.6 之后新引入了引擎对FULLTEXT索引的支持，之前只有MyISAM引擎支持FULLTEXT索引。
+        ***** 也就是MySQL5.6之后的版本对数据表的类型不做要求了，都可以使用。
+
+文章参考：http://www.cnblogs.com/martinzhang/p/3220345.html
+
