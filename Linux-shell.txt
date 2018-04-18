@@ -1,0 +1,232 @@
+1、变量
+    str="string"
+    echo $str
+    echo ${str}
+    str=123
+    echo $str
+    注意点：变量等号两边不能有空格出现
+
+2、变量使用
+    str2=$str
+    echo $str2;
+    str3=${str}
+    echo ${str3}
+    curDir=$(pwd)
+    echo "curDir = ${curDir}"
+    curDirCon=`ls`
+    echo "curDirCon = ${curDirCon}"
+    
+    # 输出：
+    =======变量=======
+    string
+    string
+    123
+    123
+    123
+    curDir = /Users/aron/git-repo/ShellLearning/helloshell
+    curDirCon = data
+    syntax.sh
+
+3、打印
+    str4="string4"
+    echo $str4
+    echo "str4=$str4"
+    echo "str4=${str4}str3=${str3}"
+
+    # 输出：
+    =======打印=======
+    string4
+    str4=string4
+    str4=string4str3=123
+
+4、运算
+    （1）echo "=======expr运算======="
+    result=$(expr 5 + 5)
+    echo ${result}
+    result=$(expr 16 - 5)
+    echo ${result}
+    result=$(expr 5 \* 5)
+    echo ${result}
+    result=$(expr 28 / 5)
+    echo ${result}
+
+    # 输出：
+    =======expr运算=======
+    10
+    11
+    25
+    5
+    注意点：*乘法运算符号需要转义
+
+    （2）echo "=======[]运算======="
+    result=$[5 + 5]
+    echo ${result}
+    result=$[16 - 5]
+    echo ${result}
+    result=$[5 * 5]
+    echo ${result}
+    result=$[28 / 5]
+    echo ${result}
+
+    # 输出：
+    =======[]运算=======
+    10
+    11
+    25
+    5
+
+5、控制
+    （1）数值比较
+        if [[ 3 > 7 ]]; then
+            echo "hehe"
+        else
+            echo "yes"
+        fi
+
+        # 输出：
+        yes
+        注意：比较符 还可以使用下面的比较符号
+        比较符	      描述  
+        n1 -eq n2	检查n1是否与n2相等
+        n1 -ge n2	检查n1是否大于或等于n2
+        n1 -gt n2	检查n1是否大于n2
+        n1 -le n2	检查n1是否小于或等于n2
+        n1 -lt n2	检查n1是否小于n2
+        n1 -ne n2	检查n1是否不等于n2
+
+    （2）字符串比较
+        比较符	          描述
+        str1 = str2	    检查str1是否和str2相同
+        str1 != str2	检查str1是否和str2不同
+        str1 < str2	    检查str1是否比str2小
+        str1 > str2	    检查str1是否比str2大
+        -n str1	        检查str1的长度是否非0
+        -z str1	        检查str1的长度是否为0
+        
+        echo "=======控制字符串比较======="
+        str1="abc"
+        str2="abd"
+        if [[ $str1 > $str2 ]]; then
+            echo "$str1 大于 $str2"
+        else
+            echo "$str1 小于等于 $str2"
+        fi
+
+        if [[ -z $str1 ]]; then
+            echo "str1 为空"
+        else
+            echo "str1 不为空"
+        fi
+
+        str1=""
+        if [[ -z $str1 ]]; then
+            echo "str1 为空"
+        else
+            echo "str1 不为空"
+        fi
+
+        # 输出：
+        =======控制字符串比较=======
+        abc 小于等于 abd
+        str1 不为空
+        str1 为空
+
+    （3）文件比较
+        比较符	              描述
+        -d file	            检查file是否存在并是一个目录
+        -e file	            检查file是否存在
+        -f file	            检查file是否存在并是一个文件
+        -r file	            检查file是否存在并可读
+        -s file	            检查file是否存在并非空
+        -w file	            检查file是否存在并可写
+        -x file	            检查file是否存在并可执行
+        -O file	            检查file是否存在并属当前用户所有
+        -G file	            检查file是否存在并且默认组与当前用户相同
+        file1 -nt file2	    检查file1是否比file2新
+        file1 -ot file2	    检查file1是否比file2旧
+        
+        echo "=======控制文件比较======="
+        file="syntax.sh"
+        if [[ -e $file ]]; then
+            echo "${file} 文件存在"
+        else
+            echo "${file} 文件不存在"
+        fi
+
+        if [[ -f $file ]]; then
+            echo "${file} 是一个文件"
+        else
+            echo "${file} 不是一个文件"
+        fi
+
+        if [[ -d $file ]]; then
+            echo "${file} 是一个文件夹"
+        else
+            echo "${file} 不是一个文件夹"
+        fi
+
+        # 输出：
+        =======控制文件比较=======
+        syntax.sh 文件存在
+        syntax.sh 是一个文件
+        syntax.sh 不是一个文件夹
+
+    （4）循环
+        # for循环
+        echo "=======循环for======="
+        num=0
+        for (( i = 0; i < 10; i++ )); do
+            num=$[$num + $i]
+        done
+        echo "result = ${num}"
+
+        # 输出：
+        =======循环for=======
+        result = 45
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
