@@ -1,3 +1,4 @@
+
 1、变量
     str="string"
     echo $str
