@@ -202,7 +202,8 @@
         done
         IFS=${IFS_OLD}
 
-        # 输出：
+        # 注意：$IFS是文件循环处理的分隔符，按按行处理数据需要把该值设置为$'\n'，处理完成之后恢复旧值
+        # 输出：
         =======循环for in=======
         The quick brown fox jumps over the lazy dog.
         The quick brown fox jumps over the lazy dog.
@@ -263,7 +264,108 @@
         * 参数的传递添加在方法之后，多个使用空格分割
         * 参数的获取使用$1,$2以此类推，特别地$0表示文件名、$#表示参数的个数
         
+        function test1 {
+            return 200;
+        }
+        test2() {
+            echo "test2 invoked"
+        }
+        echo `test1` # 执行 test1 函数
+        echo `test2` # 执行 test2 函数
         
+        # 接收参数
+        test1
+        retval=$? # 将 return 的数据接收
+        echo "test1 retval=$retval"
+
+        ret=`test2` # 将 echo 的数据接收
+        echo "test2 retval=$ret"
+        
+        # 带参数的函数
+        checkDir() {
+            path=$1
+            msg=$2
+            if [[ -d $path ]]; then
+                echo "目录存在 ${path}"
+                checkDirRes=$path
+                return 1
+            else
+                echo "${msg} ${path}"
+            fi
+        }
+        
+        # 调用时 第一个参数：$(pwd)；第二个参数："目录不存在"；
+        checkDir $(pwd) "目录不存在"
+        echo "checkDirRes = ${checkDirRes} "
+        # ==========输出============
+        目录存在 /home/www
+        checkDirRes = /home/www
+    
+    （8）目录的读取
+        echo "=======文件目录======="
+        function read_implement_file_recursively {
+            if [[ -d $1 ]]; then
+                for item in $(ls $1); do
+                    itemPath="$1/${item}"
+                    if [[ -d $itemPath ]]; then
+                        # 目录
+                        echo "处理目录 ${itemPath}"
+                        read_implement_file_recursively $itemPath
+                    else 
+                        # 文件
+                        echo "处理文件 ${itemPath}"
+                    fi
+                done
+            else
+                echo "err:不是一个目录"
+            fi
+        }
+        read_implement_file_recursively $(pwd)
+        
+        输出：
+        =======文件目录=======
+        处理文件 /Users/aron/git-repo/ShellLearning/helloshell/data
+        处理目录 /Users/aron/git-repo/ShellLearning/helloshell/subfolder
+        处理文件 /Users/aron/git-repo/ShellLearning/helloshell/subfolder/data2
+        处理文件 /Users/aron/git-repo/ShellLearning/helloshell/syntax.sh
+
+    （9）文件写入
+        使用输出重定向把内容输出到文件
+        >   输出重定向符号先清空文件然后把内容写入到文件中
+        >>  输出重定向符号把内容追加写入到文件中
+        
+        此外可以结合其他命令实现排序、去重功能
+        sort 命令对文件内容以行作为单位排序
+        uniq 命令对文件内容进行去重，以行为单位，一般需要结合sort命令使用
+
+        sort ${file} | uniq > ${destfile}
+        # 将 file 文件 以行为单位排序 排重 写入被清空过的 destfile
+
+6、模块
+    Math.sh保存了一些数学计算函数
+    #!/bin/bash
+    power(){
+        base=$1
+        exp=$2
+        result=1
+        for (( i = 0; i < $exp; i++ )); do
+            result=$[ $result * $base ];
+        done
+        echo $result
+    }
+    
+    其他模块使用. ./Math.sh包含这个模块，可以调用其中定义的power方法
+    注意：. ./Math.sh中 【. 是 source 的简写】，这里也可以写成source ./Math.sh
+    同路径下 调用
+    
+    echo "=======模块======="
+    . ./Math.sh
+    result=$(power 3 5)
+    echo "3^5 = ${result}"
+
+    输出：
+    =======模块=======
+    3^5 = 243
 
 
 
