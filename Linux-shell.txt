@@ -355,7 +355,7 @@
     }
     
     其他模块使用. ./Math.sh包含这个模块，可以调用其中定义的power方法
-    注意：. ./Math.sh中 【. 是 source 的简写】，这里也可以写成source ./Math.sh
+    注意：. ./Math.sh中 【. 是 source 的简写】，这里也可以写成【source ./Math.sh】
     同路径下 调用
     
     echo "=======模块======="
@@ -367,12 +367,34 @@
     =======模块=======
     3^5 = 243
 
+7、流程模块
+    流程模块是包含了一些列操作的模块，可以向该模块传递参数，也可以有返回值。
+    但是实际应用中我们用来处理 文件操作 及 远程操作，比如 项目一键自动部署等等。
+    
+    # test.sh
+    echo "参数>>${@}"                             # 获取所有参数项
+    while getopts :a:b:c: opt                    # 指定可添加的参数项
+    do
+        case "$opt" in
+            a) Aval=$OPTARG                      # $OPTARG 接收到的值 并赋值给 Aval
+                    echo "参数 $opt = ${Aval}";;
+            b) Bval=$OPTARG                      # $OPTARG 接收到的值 并赋值给 Bval
+                    echo "参数 $opt = ${Bval}";;
+            c) Cval=$OPTARG                      # $OPTARG 接收到的值 并赋值给 Cval
+                    echo "参数 $opt = ${Cval}";;
+            *) echo "未知参数 $opt";;             # 当接到其他未指定项 （除 -a -b -c 之外的值）返回为值参数
+        esac
+    done
 
+    执行 ： sh test.sh -a hahaha
+    输出 ：
+        参数>>-a hahaha
+        参数 a = hahaha
 
-
-
-
-
+    看到这里恭喜！可以简单的写一个shell功能工具了。
+    
+8、获取输入
+    
 
 
 
