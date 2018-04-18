@@ -184,16 +184,86 @@
         =======循环for=======
         result = 45
 
+    (5) for in 循环处理文件
+        data 文件路径 /home/www/data
+        内容 ：
+        The quick brown fox jumps over the lazy dog.
+        The quick brown fox jumps over the lazy dog.
+        The quick brown fox jumps over the lazy dog.
+        The quick brown fox jumps over the lazy dog.
+        
+        echo "=======循环for in======="
+        file="data"
+        IFS_OLD=$IFS
+        IFS=$'\n'
+        for line in $(cat $file)
+        do
+            echo "${line}"
+        done
+        IFS=${IFS_OLD}
 
+        # 输出：
+        =======循环for in=======
+        The quick brown fox jumps over the lazy dog.
+        The quick brown fox jumps over the lazy dog.
+        The quick brown fox jumps over the lazy dog.
+        The quick brown fox jumps over the lazy dog.
 
+    （6）while 循环
+        while表示条件满足执行循环
+        i=1
+        while [[ i -lt 10 ]]; do
+            i=$[$i + 1]
+            echo "${i}"
+        done
+        
+        # 9*9乘法口诀表
+        echo "-----------9*9乘法口诀表--------------------"
+        i=1
+        while [[ i -lt 10 ]]; do
+            j=1
+            line=""
+            while [[ j -le 10 ]]; do
+                if [[ j -le i ]]; then
+                    res=$[$i * $j]
+                    resStr="$j x $i = $res"
+                    line=${line}${resStr}"\t"
+                fi
+                j=$[$j + 1]
+            done
+            echo -e ${line}
+            i=$[$i + 1]
+        done
+        
+        输出：
+        -----------9*9乘法口诀表--------------------
+        1 x 1 = 1	
+        1 x 2 = 2	2 x 2 = 4	
+        1 x 3 = 3	2 x 3 = 6	3 x 3 = 9	
+        1 x 4 = 4	2 x 4 = 8	3 x 4 = 12	4 x 4 = 16	
+        1 x 5 = 5	2 x 5 = 10	3 x 5 = 15	4 x 5 = 20	5 x 5 = 25	
+        1 x 6 = 6	2 x 6 = 12	3 x 6 = 18	4 x 6 = 24	5 x 6 = 30	6 x 6 = 36	
+        1 x 7 = 7	2 x 7 = 14	3 x 7 = 21	4 x 7 = 28	5 x 7 = 35	6 x 7 = 42	7 x 7 = 49	
+        1 x 8 = 8	2 x 8 = 16	3 x 8 = 24	4 x 8 = 32	5 x 8 = 40	6 x 8 = 48	7 x 8 = 56	8 x 8 = 64	
+        1 x 9 = 9	2 x 9 = 18	3 x 9 = 27	4 x 9 = 36	5 x 9 = 45	6 x 9 = 54	7 x 9 = 63	8 x 9 = 72	9 x 9 = 81
 
+    （7）容器 和 方法
+        * array[$line_count]=$line  把内容保存到数组
+        * ${#array[@]}              获取数组的元素个数
+        * content=${array[i]};      读取数组第i个元素
 
-
-
-
-
-
-
+        @ 方法的定义有两种方式
+        * function func1 { #这里定义方法体 }
+        * func2() { #这里定义方法体 }
+        @ 方法返回值的处理有三种方式
+        * return 最大返回256，表示结果码，有特殊含义，并且只能返回数值
+        * echo 返回
+        * 保存在全局变量中
+        @ 方法的参数
+        * 参数的传递添加在方法之后，多个使用空格分割
+        * 参数的获取使用$1,$2以此类推，特别地$0表示文件名、$#表示参数的个数
+        
+        
 
 
 
