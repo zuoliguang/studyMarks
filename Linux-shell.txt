@@ -394,33 +394,91 @@
     看到这里恭喜！可以简单的写一个shell功能工具了。
     
 8、获取输入
+    checkInputDestDirRecursive() {
+            echo -n "请输入目录: "
+            read path
+            if [[ -d $path ]]; then
+                    inputPath=$path
+            else
+                    echo -n "输入的目录无效，"
+                    checkInputDestDirRecursive
+            fi
+    }
+    checkInputDestDirRecursive # 调用该函数
+    echo ${inputPath}
+
+    * echo -n "请输入目录: " 是输入的提示，-n表示不换行，用户的输入跟随在提示后面
+    * read path 把用户的输入内容保存在变量path中
+
+9、菜单
+    使用上面学到的东西 我们可以做一个简单的操作
     
+    # test.sh
+    # 输出菜单
+    function getMunu {
+        clear
+        echo ""
+        echo -e "\t\t\t选项菜单\n"
+        echo -e "\t1. 删除注入内容"
+        echo -e "\t2. 添加注入内容"
+        echo -e "\t0. Exit menu\n\n"
+        echo -en "\t\tEnter option: "
+        read -n 1 option
+    }
+    # remove 操作
+    function remove {
+        echo "do something to removeInjectedContent"
+    }
+    # add 操作
+    function add {
+        echo "do something addInjectedContent"
+    }
+    # 循环操作指导执行了退出的操作 
+    while [[ 1 ]]; do
+        getMunu
+        case $option in
+        0 )
+                echo ""
+                echo "Bye"
+                exit 0
+        ;;
+        1 )
+                # 删除配置文件中注入的内容
+                remove
+        ;;
+        2 )
+                # 添加配置文件中注入的内容
+                add
+        ;;
+        h )
+                getMunu
+        ;;
+        * )
+                echo "Wrong!!"
+        ;;
+        esac
+
+        echo ""
+        echo -en "\n\n\tHit any key to continue"
+        read -n 1 line
+    done
+
+    
+    输出：
+    ======================================================
+
+			选项菜单
+
+	1. 删除注入内容
+	2. 添加注入内容
+	0. Exit menu
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		Enter option:
+ # 当输入1 触发 remove
+ # 当输入2 触发 add
+ # 当输入h 重新操作加载菜单
+ # 当输入0 退出操作
+ # 输入其他提示 "Wrong!!"
 
 
