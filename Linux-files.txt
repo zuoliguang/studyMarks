@@ -43,8 +43,11 @@ linux 文件的操作
 	@6、将要查看的内容输出到 /home/test 文件中
 		# head -n 10 /etc/profile >> /home/test
 		# tail  -n 5 /etc/profile >> /home/test
-	Note: >> 追加内容
-		  >  覆盖内容
+	@7、匹配、排序及显示指定内容的命令：grep、sort、uniq
+		# cat filename | grep string # 查找包含 "string" 的所有行
+		# cat filename | grep string | sort # 按字典顺序排序
+		# cat filename | uniq # 去除重复行
+	Note: >> 追加内容; >  覆盖内容;
 
 
 
