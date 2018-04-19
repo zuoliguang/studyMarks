@@ -29,4 +29,26 @@ linux 文件的操作
 	@5、tree 						// 树 的形式列出当前文件目录结构 
 
 
+5、查看文件内容
+	@1、 查看前几行 
+		# head -n 10 filename # 前10行内容
+	@2、查看末尾几行
+		# tail -n 5 filename # 末尾5行内容
+	@3、从第 number 行开始，显示1000行
+		# cat filename | tail -n +number | head -n 1000
+	@4、显示1000行到3000行
+		# cat filename| head -n 3000 | tail -n +1000 
+	@5、用sed命令  只查看文件的第5行到第10行
+		# sed -n '5,10p' filename
+	@6、将要查看的内容输出到 /home/test 文件中
+		# head -n 10 /etc/profile >> /home/test
+		# tail  -n 5 /etc/profile >> /home/test
+	Note: >> 追加内容
+		  >  覆盖内容
+
+
+
+
+
+
 
