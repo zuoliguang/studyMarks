@@ -1,0 +1,24 @@
+1、密码哈希
+    PHP5.5提供了许多新特性及Api函数，其中之一就是Password Hashing API(创建和校验哈希密码)。
+    比 MD5 更强大
+    @ 加密 string password_hash ( string $password , integer $algo [, array $options ])
+    栗子：
+        $password = '123abc';
+        $passwordHash = password_hash( $password, PASSWORD_DEFAULT, ['cost' => 12] );
+    @ 验证 boolean password_verify ( string $password , string $hash )
+    栗子：
+        $password = 'test';
+        if (password_verify($password, $passwordHash) === false) {
+            exit('密码错误！');
+        }
+2、XSS攻击
+    XSS攻击也是对HTML和JS的一种注入.
+    php 在后台处理的方式有：
+        （1）htmlentities()函数  htmlentities() 函数把字符转换为 HTML 实体。
+3、CSRF攻击
+
+4、SQL注入（ PDO原理）
+
+5、对称加密、非对称加密
+
+6、Hash算法
