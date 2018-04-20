@@ -38,9 +38,70 @@
                 return $data;
             }
 3、CSRF攻击
+    CSRF 攻击的主要目的是让用户在不知情的情况下攻击自己已登录的一个系统账户，类似于钓鱼。
+    其主要利用的是 获取客户端存放的 session 信息，模拟用户登陆第三方网站进而操作信息。
+    @ CSRF漏洞检测：
+       检测CSRF漏洞是一项比较繁琐的工作，最简单的方法就是抓取一个正常请求的数据包，去掉Referer字段后再重新提交，如果该提交还有效，
+       那么基本上可以确定存在CSRF漏洞。
+    @ 防御CSRF攻击：
+    （1）验证 HTTP Referer 字段
+    （2）在请求地址中添加 token 并验证
+    （3）在 HTTP 头中自定义属性并验证
 
 4、SQL注入（ PDO原理）
-
+    （1）使用PDO对象（对于任何数据库驱动都好用）
+        $stmt = $pdo->prepare('SELECT * FROM employees WHERE name = :name');
+        $stmt->execute(array('name' => $name));
+    （2）使用MySqli
+        $stmt = $dbConnection->prepare('SELECT * FROM employees WHERE name = ?');
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+    （3）@ 打开php 的安全模式 防止一些系统级函数的使用
+        php.ini 中 safe_mode = on
+        @ 关闭危险函数
+        disable_functions = system,passthru,exec,shell_exec,popen,phpinfo
+        @ 关闭PHP版本信息在http头中的泄漏
+        expose_php = Off
+        @ 关闭注册全局变量
+        register_globals = Off
+        @ 打开magic_quotes_gpc来防止SQL注入
+        magic_quotes_gpc = On
+        @ 错误信息控制
+        display_errors = Off
+        @ 错误日志 在关闭display_errors后能够把错误信息记录下来，便于查找服务器运行的原因
+        log_errors = On
+        error_log = D:/usr/local/apache2/logs/php_error.log
+        @ PHP 代码中防范
+            * 初始化你的变量，避免用户自己将变量提交创建
+            * sql语句有四大句：select、update、delete、insert，使用正则判断提交内容字符，有则提示操作失败
+            * 使用字符的替换操作将
+                if (!get_magic_quotes_gpc()) // 判断magic_quotes_gpc是否为打开     
+                {     
+                    $post = addslashes($post); // 进行magic_quotes_gpc没有打开的情况对提交数据的过滤     
+                }     
+                $post = str_replace("_", "\_", $post); // 把 '_'过滤掉     
+                $post = str_replace("%", "\%", $post); // 把' % '过滤掉     
+                $post = nl2br($post); // 回车转换     
+                $post= htmlspecialchars($post); // html标记转换
+    
 5、对称加密、非对称加密
-
+    常用的加密分为对称加密和非对称加密，
+    对称加密 就是发送方和接收方都用同一个秘钥进行加密解密，
+    而非对称加密则使用一对公钥和私钥来进行加密， 发送方只需要用接收方的公钥将数据加密即可。
+    可逆的加密 详细查看 Xcrypt.php 文档
+    
 6、Hash算法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
