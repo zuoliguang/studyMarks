@@ -46,7 +46,6 @@
     function binSearch($arr, $target){  
         $height = count($arr)-1;  
         $low = 0;  
-
         while($low <= $height){  
             $mid = floor(($low+$height)/2);//获取中间数
 
@@ -66,10 +65,55 @@
         return "查找失败";  
     }
 
-4、
+4、递归实现二分查找
+    function binaryRecursive($arr,$low,$top,$target){
+        if($low<=$top){
+            $mid = floor(($low+$top)/2);
+            if($arr[$mid]==$target){
+                return $arr[$mid];
+            }elseif($arr[$mid]<$target){
+                return binaryRecursive($arr,$mid+1,$top,$target);
+            }else{
+                return binaryRecursive($arr,$low,$top-1,$target);
+            }
+        }else{
+            return -1;
+        }
+    }
 
+5、遍历一个文件下的所有文件和子文件夹
+    function my_scandir($dir){
+        $files = array();
+        if($handle = opendir($dir)) {
+            while (($file = readdir($handle))!== false) {
+                if($file != '..' && $file != '.') {
+                    if(is_dir($dir."/".$file)){
+                        $files[$file]=my_scandir($dir."/".$file);
+                    }else{
+                        $files[] = $file;
+                    }
+                }
+            }
 
+            closedir($handle);
+            return $files;
+        }
+    }
 
+6、二维数组的排序
+    PHP内置的自定义排序工具
+    $arr = [
+        ['id'=>3, 'name'=>'name3'],
+        ['id'=>5, 'name'=>'name5'],
+        ['id'=>1, 'name'=>'name1'],
+        ['id'=>2, 'name'=>'name2'],
+        ['id'=>9, 'name'=>'name9']
+    ];
+    usort($arr, function($a, $b){
+        return $b['id'] - $a['id'];
+    });
+    echo '<pre>';
+    var_dump($arr);
 
 
 
