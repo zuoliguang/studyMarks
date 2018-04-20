@@ -138,29 +138,75 @@
     
 8. 异构系统通讯中的通讯加密方案参考 http://blog.csdn.net/linvo/article/details/5741942
 
-9. socket连接步骤Socket（套接字）概念套接字（socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作单元。它是网络通信过程中端点的抽象表示，煲含进行网络通信必须的五种信息：连接使用的协议，本地主机的IP地址，本地进程的协议端口，远地主机的IP地址，远地进程的协议端口。Socket连接过程建立Socket连接至少需要一对套接字，其中一个运行于客户端，称为ClientSocket ，另一个运行于服务器端，称为ServerSocket套接字之间的连接过程可以分为三个步骤：服务器监听，客户端请求，连接确认。服务器监听：是服务器端套接字并不定位具体的客户端套接字，而是处于等待连接的状态，实时监控网络状态。客户端请求：是指由客户端的套接字提出连接请求，要连接的目标是服务器端的套接字。为此，客户端的套接字必须首先描述它要连接的服务器的套接字，指出服务器端套接字的地址和端口号，然后就向服务器端套接字提出连接请求。连接确认：是指当服务器端套接字监听到或者说接收到客户端套接字的连接请求，它就响应客户端套接字的请求，建立一个新的线程，把服务器端套接字的描述发给客户端，一旦客户端确认了此描述，连接就建立好了。而服务器端套接字继续处于监听状态，继续接收其他客户端套接字的连接请求。
+9. socket连接步骤Socket（套接字）概念套接字（socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作单元。它是网络通信过程中端点的抽象表示，
+    煲含进行网络通信必须的五种信息：连接使用的协议，本地主机的IP地址，本地进程的协议端口，远地主机的IP地址，远地进程的协议端口。Socket连接过程建立
+    Socket连接至少需要一对套接字，其中一个运行于客户端，称为ClientSocket ，另一个运行于服务器端，称为ServerSocket套接字之间的连接过程可以分为三个
+    步骤：服务器监听，客户端请求，连接确认。服务器监听：是服务器端套接字并不定位具体的客户端套接字，而是处于等待连接的状态，实时监控网络状态。客户端
+    请求：是指由客户端的套接字提出连接请求，要连接的目标是服务器端的套接字。为此，客户端的套接字必须首先描述它要连接的服务器的套接字，指出服务器端套
+    接字的地址和端口号，然后就向服务器端套接字提出连接请求。连接确认：是指当服务器端套接字监听到或者说接收到客户端套接字的连接请求，它就响应客户端套
+    接字的请求，建立一个新的线程，把服务器端套接字的描述发给客户端，一旦客户端确认了此描述，连接就建立好了。而服务器端套接字继续处于监听状态，继续接
+    收其他客户端套接字的连接请求。
 
-10. TCP协议，三次握手、四次挥手TCP协议(Transmission Control Protocol)是主机对主机层的传输控制协议，提供可靠的连接服务，采用三次握手确认建立一个连接，四次挥手断开连接。位码即tcp标志位,有6种标示:SYN(synchronous建立联机) 同步ACK(acknowledgement 确认)PSH(push传送)FIN(finish结束)RST(reset重置)URG(urgent紧急)
+10. TCP协议，三次握手、四次挥手TCP协议(Transmission Control Protocol)是主机对主机层的传输控制协议，提供可靠的连接服务，采用三次握手确认建立一
+    个连接，四次挥手断开连接。位码即tcp标志位,有6种标示:SYN(synchronous建立联机) 同步ACK(acknowledgement 确认)
+    PSH(push传送)FIN(finish结束)RST(reset重置)URG(urgent紧急)
 
 11. php中常用作用相似，性能差异很大的函数区分及举例参考 http://apps.hi.baidu.com/share/detail/43169774
 
-12. posix及perl兼容正则比较，及函数性能分析POSIX正则和 PCRE正则最显著的需要知道的不同点：1. PCRE函数需要模式以分隔符闭合.2. POSIX兼容正则没有修正符。不像POSIX, PCRE扩展没有专门用于大小写不敏感匹配的函数. 取而代之的是, 支持使用/i 模式修饰符完成同样的工作. 其他模式修饰符同样可用于改变匹配策略.3. POSIX函数从最左面开始寻找最长的匹配, 但是PCRE在第一个合法匹配后停止. 如果字符串 不匹配这没有什么区别, 但是如果匹配, 两者在结果和速度上都会有差别. 为了说明这个不同, 考虑下面的例子(来自Jeffrey Friedl的《精通正则表达式》一书). 使用模式 one(self)?(selfsufficient)?在字符串oneselfsufficient 上匹配, PCRE会匹配到oneself, 但是使用POSIX, 结果将是整个字符串 oneselfsufficient. 两个子串都匹配原始字符串, 但是POSIX将 最长的最为结果.PCRE可用的修饰符: (i,s,m)
+12. posix及perl兼容正则比较，及函数性能分析POSIX正则和 PCRE正则最显著的需要知道的不同点：1. PCRE函数需要模式以分隔符闭合.2. POSIX兼容正则没
+    有修正符。不像POSIX, PCRE扩展没有专门用于大小写不敏感匹配的函数. 取而代之的是, 支持使用/i 模式修饰符完成同样的工作. 其他模式修饰符同样可用于
+    改变匹配策略.3. POSIX函数从最左面开始寻找最长的匹配, 但是PCRE在第一个合法匹配后停止. 如果字符串 不匹配这没有什么区别, 但是如果匹配, 两者在结
+    果和速度上都会有差别. 为了说明这个不同, 考虑下面的例子(来自Jeffrey Friedl的《精通正则表达式》一书). 使用模式 one(self)?(selfsufficient)?在
+    字符串oneselfsufficient 上匹配, PCRE会匹配到oneself, 但是使用POSIX, 结果将是整个字符串 oneselfsufficient. 两个子串都匹配原始字符串, 但是
+    POSIX将 最长的最为结果.PCRE可用的修饰符: (i,s,m)
 
-13. 实现PERL正则表达式，抓取html文件a标签的所有href超链接正则：/]/is$html = <<aaas退出百度HTML;$matches = array();preg_match_all ( "/]/is", $html, $matches ); print_r($matches[1]); //输出所有超链接?>
+13. 实现PERL正则表达式，
+    抓取html文件a标签的所有href超链接正则：
+    $is$html = <<aaas退出百度HTML;
+    $matches = array();
+    preg_match_all ( "/]/is", $html, $matches ); 
+    print_r($matches[1]); //输出所有超链接?>
 
-14. 预定义变量、魔术变量、魔术方法比较，及作用举例预定义变量（超级全局变量）$GLOBALS$_SERVER$_GET$_POST$_COOKIE$_SESSION$_REQUEST$_ENV魔术方法http://apps.hi.baidu.com/share/detail/17851228__construct 和__destruct__autoload__get 和__set__isset 和__unset__call 和__callStatic__clone__toString__sleep 和__wakeup__invoke魔术变量http://apps.hi.baidu.com/share/detail/17851228__LINE____FILE____DIR____CLASS____FUNCTION____METHOD____NAMESPACE__
+14. 预定义变量、魔术变量、魔术方法比较，及作用举例
+    预定义变量（超级全局变量）$GLOBALS,$_SERVER,$_GET,$_POST,$_COOKIE,$_SESSION,$_REQUEST,$_ENV
+    魔术方法 __construct 和 __destruct__autoload__get 和 __set__isset 和 __unset__call 
+        和 __callStatic__clone__toString__sleep 和 __wakeup__invoke
+    魔术变量 __LINE__, __FILE__,__DIR__,__CLASS__,__FUNCTION__,__METHOD__,__NAMESPACE__
 
 15. spl常用数据结构类
 
-16. PHP设计模式工厂模式建立一个工厂（一个函数或一个类方法）来制造新的对象工厂模式 是一种类，它具有为您创建对象的某些方法。您可以使用工厂类创建对象，而不直接使用 new。这样，如果您想要更改所创建的对象类型，只需更改该工厂即可。使用该工厂的所有代码会自动更改。单例模式某些应用程序资源是独占的，因为有且只有一个此类型的资源。例如，通过数据库句柄到数据库的连接是独占的。您希望在应用程序中共享数据库句柄，因为在保持连接打开或关闭时，它是一种开销，在获取单个页面的过程中更是如此。单元素模式可以满足此要求。PHP中的单例模式（singleton pattern）：指的是在PHP的应用程序的范围内只对指定的类创建一个实例。在PHP中使用单例模式的类通常拥有一个私有构造函数和一个私有克隆函数，以防 止用户通过创建对象或者克隆对其进行实例化。还有一个静态私有成员变量$instance 与静态方法getInstance。getInstance 负责对其本身实例化，然后将这个对象存储在$instance 静态成员变量中，以确保只有一个实例被创建。观察者模式命令链模式策略模式
+16. PHP设计模式工厂模式建立一个工厂（一个函数或一个类方法）来制造新的对象工厂模式 是一种类，它具有为您创建对象的某些方法。您可以使用工厂类创建对象，
+    而不直接使用 new。这样，如果您想要更改所创建的对象类型，只需更改该工厂即可。使用该工厂的所有代码会自动更改。单例模式某些应用程序资源是独占的，
+    因为有且只有一个此类型的资源。例如，通过数据库句柄到数据库的连接是独占的。您希望在应用程序中共享数据库句柄，因为在保持连接打开或关闭时，它是一
+    种开销，在获取单个页面的过程中更是如此。单元素模式可以满足此要求。PHP中的单例模式（singleton pattern）：指的是在PHP的应用程序的范围内只对指定
+    的类创建一个实例。在PHP中使用单例模式的类通常拥有一个私有构造函数和一个私有克隆函数，以防 止用户通过创建对象或者克隆对其进行实例化。还有一个静
+    态私有成员变量$instance 与静态方法getInstance。getInstance 负责对其本身实例化，然后将这个对象存储在$instance 静态成员变量中，以确保只有一个
+    实例被创建。观察者模式命令链模式策略模式
 
-17. 负载均衡的web应用服务器设计，例如youku用PHP做负载均衡指南思考如何应对以下问题。 参考http://www.examw.com/linux/all/142494/在Apache负载均衡的情况下，做PHP开发如何考虑一下几方面：PHP源文件在服务器、PHP文件上传处理、相关配置文件、Session会话放置、日志放置Apache负载均衡的原则：参考http://s456123123b.blog.163.com/blog/static/5632332220101080474642/轮询均衡策略 （轮询转发请求）按权重分配均衡策略 （按响应数量转发请求）权重请求响应负载均衡策略 （按响应流量转发请求）
+17. 负载均衡的web应用服务器设计，例如youku用PHP做负载均衡指南思考如何应对以下问题。 参考http://www.examw.com/linux/all/142494/在Apache负载均
+    衡的情况下，做PHP开发如何考虑一下几方面：PHP源文件在服务器、PHP文件上传处理、相关配置文件、Session会话放置、日志放置Apache负载均衡的原则:
+    轮询均衡策略 （轮询转发请求）按权重分配均衡策略 （按响应数量转发请求）
+    权重请求响应负载均衡策略 （按响应流量转发请求）
 
-18. 如何优化前端性能1) 页面内容的优化a) 降低请求数合并css、js文件，集成CSS图片b) 减少交互通信量压缩技术：压缩css、js文件，优化图像，减少cookie体积；合理利用缓存：使用外部js/css文件，缓存ajax；减少不必要的通信量：剔除无用脚本和样式、推迟加载内容、使用GET请求c) 合理利用“并行” 尽量避免重定向慎用Iframe 样式表置于顶部 脚本放到样式后面加载d) 节约系统消耗避免CSS表达式、滤镜2) 服务器的优化a) b)c)d)
+18. 如何优化前端性能1) 页面内容的优化a) 降低请求数合并css、js文件，集成CSS图片b) 减少交互通信量压缩技术：压缩css、js文件，优化图像，
+    减少cookie体积；合理利用缓存：使用外部js/css文件，缓存ajax；减少不必要的通信量：剔除无用脚本和样式、推迟加载内容、使用GET请求c) 合理
+    利用“并行” 尽量避免重定向慎用Iframe 样式表置于顶部 脚本放到样式后面加载d) 节约系统消耗避免CSS表达式、滤镜2) 服务器的优化a) b)c)d)
 
-19. yahoo的34条前端优化法则减少HTTP请求、利用CDN技术、 设置头文件过期或者静态缓存、Gzip压缩、把CSS放顶部、 把JS放底部、避免CSS 表达式、将JS和CSS外链、减少DNS查找、减小JS和CSS的体积、 避免重定向、删除重复脚本、 配置ETags、缓存Ajax、尽早的释放缓冲、用GET方式进行AJAX请求、延迟加载组件、 预加载组件、减少DOM元素数量、跨域分离组件、减少iframe数量、不要出现404页面、减小Cookie、 对组件使用无Cookie的域名、减少DOM的访问次数、开发灵活的事件处理句柄、使用< link >而非@import、避免过滤器的使用、优化图片、优化CSS Sprites、 不要在HTML中缩放图片、缩小favicon. ico的大小并缓存它、保证组件在25K以下、将组件打煲进一个多部分的文档中
+19. yahoo的34条前端优化法则减少HTTP请求、利用CDN技术、 设置头文件过期或者静态缓存、Gzip压缩、把CSS放顶部、 把JS放底部、避免CSS 表达
+    式、将JS和CSS外链、减少DNS查找、减小JS和CSS的体积、 避免重定向、删除重复脚本、 配置ETags、缓存Ajax、尽早的释放缓冲、用GET方式进行AJAX
+    请求、延迟加载组件、 预加载组件、减少DOM元素数量、跨域分离组件、减少iframe数量、不要出现404页面、减小Cookie、 对组件使用无Cookie的域名、
+    减少DOM的访问次数、开发灵活的事件处理句柄、使用< link >而非@import、避免过滤器的使用、优化图片、优化CSS Sprites、 不要在HTML中缩放图片、
+    缩小favicon. ico的大小并缓存它、保证组件在25K以下、将组件打煲进一个多部分的文档中
 
-20. 数据库缓存的基本理论，参考memcached什么是Memcached。memcached是高性能的分布式内存缓存服务器。一般的使用目的是，通过缓存数据库查询结果，减少数据库访问次数，以提高动态Web应用的速度、提高可扩展性。虽然memcached 使用了同样的“Key=>Value”方式组织数据，但是它和共享内存、APC等本地缓存有非常大的区别。Memcached是分布式的，也就是说 它不是本地的。它基于网络连接（当然它也可以使用localhost）方式完成服务，本身它是一个独立于应用的程序或守护进程（Daemon方式）PHP与MemcachedMemcached使用libevent库实现网络连接服务，理论上可以处理无限多的连接，但是它和18. 如何优化前端性能1) 页面内容的优化a) 降低请求数合并css、js文件，集成CSS图片b) 减少交互通信量压缩技术：压缩css、js文件，优化图像，减少cookie体积；合理利用缓存：使用外部js/css文件，缓存ajax；减少不必要的通信量：剔除无用脚本和样式、推迟加载内容、使用GET请求c) 合理利用“并行” 尽量避免重定向慎用Iframe 样式表置于顶部 脚本放到样式后面加载d) 节约系统消耗避免CSS表达式、滤镜2) 服务器的优化a) b)c)d)19. yahoo的34条前端优化法则减少HTTP请求、利用CDN技术、 设置头文件过期或者静态缓存、Gzip压缩、把CSS放顶部、 把JS放底部、避免CSS 表达式、将JS和CSS外链、减少DNS查找、减小JS和CSS的体积、 避免重定向、删除重复脚本、 配置ETags、缓存Ajax、尽早的释放缓冲、用GET方式进行AJAX请求、延迟加载组件、 预加载组件、减少DOM元素数量、跨域分离组件、减少iframe数量、不要出现404页面、减小Cookie、 对组件使用无Cookie的域名、减少DOM的访问次数、开发灵活的事件处理句柄、使用< link >而非@import、避免过滤器的使用、优化图片、优化CSS Sprites、 不要在HTML中缩放图片、缩小favicon. ico的大小并缓存它、保证组件在25K以下、将组件打煲进一个多部分的文档中
-
-20. 数据库缓存的基本理论，参考memcached什么是Memcached。memcached是高性能的分布式内存缓存服务器。一般的使用目的是，通过缓存数据库查询结果，减少数据库访问次数，以提高动态Web应用的速度、提高可扩展性。虽然memcached 使用了同样的“Key=>Value”方式组织数据，但是它和共享内存、APC等本地缓存有非常大的区别。Memcached是分布式的，也就是说 它不是本地的。它基于网络连接（当然它也可以使用localhost）方式完成服务，本身它是一个独立于应用的程序或守护进程（Daemon方式）PHP与MemcachedMemcached使用libevent库实现网络连接服务，理论上可以处理无限多的连接，但是它和基于反向代理的Web缓存;基于反向代理的Web缓存23. PHP安全模式php安全模式：safe_mode=on|off启用safe_mode指令将对在共享环境中使用PHP时可能有危险的语言特性有所限制。可以将safe_mode是指为布尔值on来启用，或者设置为off和脚本尝试访问的文件的UID，以此作为限制机制的基础。如果UID相同，则知性脚本；否则，脚本失败。当启用安全模式时，一些限制将生效1、 所有输入输出函数（例如fopen()、file()和require()）的适用会受到限制，只能用于与调用这些函数的脚本有相同拥有者的文件2、 如果试图通过函数popen()、system()或exec()等执行脚本，只有当脚本位于safe_mode_exec_dir配置指令指定的目录才可能3、 3、HTTP验证得到进一步加强，因为验证脚本用于者的UID划入验证领域范围内。此外，当启用安全模式时，不会设置PHP_AUTH。4、 4、如果适用MySQL数据库服务器，链接MySQL服务器所用的用户名必须与调用mysql_connect()的文件拥有者用户名相同。以下是一些和安全模式相关的配置选项safe_mode_gid=on|offsafe_mode_include_dir=stringsafe_mode_env_vars=stringsafe_mode_exec_dir=stringsafe_mode_protected_env_vars=string24. 常见的web攻击方式常见攻击XSS (Cross Site Script) ，跨站脚本攻击。它指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入的恶意html代码会被执行，从而达到恶意用户的特殊 目的。XSS属于被动式的攻击，因为其被动且不好利用，所以许多人常呼略其危害性。但是随着前端技术的不断进步富客户端的应用越来越多，这方面的问题越来 越受关注。举个简单例子 ： 假如你现在是sns站点上一个用户，发布信息的功能存在漏洞可以执行js 你在 此刻输入一个 恶意脚本，那么当前所有看到你新信息的人的浏览器都会执行这个脚本弹出提示框 （很爽吧 弹出广告 ：）），如果你做一些更为激进行为呢 后果难以想象。CSRF(Cross Site Request Forgery)，跨站点伪造请求。顾名思义就是 通过伪造连接请求在用户不知情的情况下，让用户以自己的身份来完成攻击者需要达到的一些目的。csrf 的攻击不同于xss csrf 需要被攻击者的主动行为触发。这样听来似乎是有“被钓鱼”的嫌疑。多窗口浏览器这这方面似乎是有助纣为虐的嫌疑，因为打开的新窗口是具有当前所有 会话的，如果是单浏览器窗口类似ie6 就不会存在这样的问题，因为每个窗口都是一个独立的进程。举个简单例子 ： 你正在玩白社会， 看到有人发了一个连接，你点击过去，然后这个连接里面伪造了一个送礼物的表单，这仅仅是一个简单的例子，问题可见一般。cookie劫持。通过获取页面的权限，在页面中写一个简单的到恶意站点的请 求，并携带用户的cookie 获取cookie后通过cookie 就可以直以被盗用户的身份登录站点。这就是cookie 劫持。举个简单例子： 某人写了一篇很有意思的日志，然后分享给大家，很多人都点击查看并且分享了该日志，一切似乎都很正常，然而写日志的人却另有用心，在日志中偷偷隐藏了一个 对站外的请求,那么所有看过这片日志的人都会在不知情的情况下把自己的cookie 发送给了 某人，那么他可以通过任意一个人的cookie 来登录这个人的账户。SQL注入攻击在 SQL 注入攻击 中，用户通过操纵表单或 GET 查询字符串，将信息添加到数据库查询中。DNS攻击拒绝服务攻击拒绝服务攻击即攻击者想办法让目标机器停止提供服务，是黑客常用的攻击手段之。攻击者进行拒绝服务攻击，实际上让服务器实现两种效果：一是迫使服务器的缓冲区满，不接收新的请求；二是使用IP欺骗，迫使服务器把合法用户的连接复位，影响合法用户的连接25. PHP做好防盗链的基本思想 防盗链什么是盗链。盗链是指服务提供商自己不提供服务的内容，通过技术手段绕过其它有利益的最终用户界面(如广告)，直接在自己的网站上向最终用户提供其它服务提供商的服务内容，骗取最终用户的浏览和点击率。受益者不提供资源或提供很少的资源，而真正的服务提供商却得不到任何的收益。网站盗链会大量消耗被盗链网站的带宽，而真正的点击率也许会很小，严重损害了被盗链网站的利益。 如何做防盗链。不定期更名文件或者目录限制引用页原理是，服务器获取用户提交信息的网站地址，然后和真正的服务端的地址相比较， 如果一致则表明是站内提交，或者为自己信任的站点提交，否则视为盗链。实现时可以使用HTTP_REFERER1 和htaccess 文件(需要启用mod_Rewrite)，结合正则表达式去匹配用户的每一个访问请求。文件伪装文件伪装是目前用得最多的一种反盗链技术，一般会结合服务器端动态脚本 (PHP/JSP/ASP)。实际上用户请求的文件地址，只是一个经过伪装的脚本文件，这个脚本文件会对用户的请求作认证,一般会检查 Session，Cookie 或HTTP_REFERER 作为判断是否为盗链的依据。而真实的文件实际隐藏在用户不能够访问的地方，只有用户通过验证以后才会返回给用户加密认证这种反盗链方式，先从客户端获取用户信息，然后根据这个信息和用户请求的文件名 字一起加密成字符串(Session ID)作为身份验证。只有当认证成功以后，服务端才会把用户需要的文件传送给客户。一般我们会把加密的Session ID 作为URL 参数的一部分传递给服务器，由于这个Session ID 和用户的信息挂钩，所以别人就算是盗取了链接，该Session ID 也无法通过身份认证，从而达到反盗链的目的。这种方式对于分布式盗链非常有效。随机附加码每次,在页面里生成一个附加码,并存在数据库里,和对应的图片相关,访问图片时和此附加码对比,相同则输出图片,否则输出404图片加入水印第14 / 18页26. HTTP请求头信息和响应头信息请求头信息POST /scp1.1.0/prs/new_rnaseqtask/run_go HTTP/1.1Host: 172.30.4.102User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20100101 Firefox/6.0Accept: */*Accept-Language: zh-cn,zh;q=0.5Accept-Encoding: gzip, deflateAccept-Charset: GB2312,utf-8;q=0.7,*;q=0.7Connection: keep-aliveContent-Type: application/x-www-form-urlencoded; charset=UTF-8X-Requested-With: XMLHttpRequestReferer: http://172.30.4.102/scp1.1.0/index.php/prs/new_rnaseqtask/index_continue/13/364 Content-Length: 1819Cookie:ci_session=a%3A4%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%22e31556053ff9407a454f6a1e146d43eb%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A12%3A%22172.16.23.42%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A50%3A%22Mozilla%2F5.0+%28Windows+NT+6.1%3B+rv%3A6.0%29+Gecko%2F2010010%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1314955607%3B%7D664b51a01ef99bac95f3e2206e79cb00;PHPSESSID=v33mlm1437lmop1fquta675vv4;username=linjinming; tk=1314955601855 Pragma: no-cacheCache-Control: no-cache响应头信息HTTP/1.1 200 OKDate: Fri, 02 Sep 2011 09:27:07 GMTServer: Apache/2.2.3 (Red Hat)X-Powered-By: PHP/5.1.6Expires: Thu, 19 Nov 1981 08:52:00 GMTCache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0Pragma: no-cacheVary: Accept-EncodingContent-Encoding: gzipContent-Length: 31Connection: closeContent-Type: text/html; charset=UTF-827. MySQLMySQL数据库性能优化使用mysqlreport；正确使用索引：explain分析查询语句，组合索引，索引副作用（占空间、update）开启慢查询日志、使用慢查询分析工具mysqlsla；索引缓存、索引代价（插入更新索引）；第15 / 18页表锁，行锁，行锁副作用（update多时候变慢），在select和update混合的情况下，行锁巧妙解决了读写互斥的问题；开启使用查询缓存；修改临时表内存空间；开启线程池；MySQL Query语句优化的基本思路和原则1. 优化需要优化的Query；2. 定位优化对象的性能瓶颈；3. 明确优化目标；4. 从Explaing入手；5. 多使用Profile；6. 永远用小结果集推动大的结果集；7. 尽可能在索引中完成排序；8. 只取自己需要的Columns；9. 仅仅使用最有效的过滤条件；10. 尽可能避免复杂的Join和子查询。MySQL 中MyISAM引擎和InnoDB引擎的区别以及它们的性能1：Innodb支持事物，Myisam不支持2：锁定机制不一样，Myisam支持表锁定，而Innodb支持行锁3：Myisam不支持外键，Innodb能支持4：Myisam能在特定环境下支持全文索引，而Innodb不支持5：Myisam支持数据压缩，Innodb不支持6：在数据存储上，Myisam占用的空间少，Innodb相对多些7：Myisam在批量插入和查询方面速度上有优势，而Innodb由于支持行锁，所以在数据修改方面更胜一筹MySQL存储引擎MyISAM：不支持事务、表锁和全文索引, 操作速度快InnoDB：行锁设计、支持外键、支持安全事务HEAP：数据存放在内存中，临时表NDB Cluster：MySQL的簇式数据库引擎CSV: 存储引擎把数据以逗号分隔的格式存储在文本文件中。FEDERATED：存储引擎表并不存放数据，它只是指向一台远程MySQL数据库服务器上的表 Archive: 只支持INSERT和SELECT操作, 压缩后存储, 非常适合存储归档数据Merge：允许将一系列等同的MyISAM表以逻辑方式组合在一起，并作为1个对象引用它们 表类型，区分表类型优化表设计的常用思路第16 / 18页负载均衡的数据库设计数据类型及详细定义，区分28. Apache性能优化，配置，fastCGI等几种工作模式29. Ajax用JS实现Ajax功能 var createXHR = function(){}var addURLParam = function(url, name, value){}var xhr = createXHR();xhr.onreadystatechange = function(){}var url = 'testAjax.php';addURLParam(url, 'name', 'linjm');xhr.open('get',url,true);xhr.send(NULL);if(xhr.readyState == 4){ } if(xhr.status > 200 && xhr.status < 300 || xhr.status == 304){ } alert(xhr.responseText); url += (url.indexOf('?') == -1 ? '?' : '&'); url += encodeURIComponent(name) + '=' + encodeURIComponent(value); return url; if(window.XMLHttpRequest){ } return new XMLHttpRequest(); return new ActiveXObject('Microsoft.XMLHTTP'); throw new Error('No XMLHttpRequest available'); }else{ }else{30. Javascript变量、作用域、作用域链
-
+20. 数据库缓存的基本理论，参考memcached什么是Memcached。memcached是高性能的分布式内存缓存服务器。一般的使用目的是，通过缓存数据库查
+    询结果，减少数据库访问次数，以提高动态Web应用的速度、提高可扩展性。虽然memcached 使用了同样的“Key=>Value”方式组织数据，但是它和共享内存、
+    APC等本地缓存有非常大的区别。Memcached是分布式的，也就是说 它不是本地的。它基于网络连接（当然它也可以使用localhost）方式完成服务，
+    本身它是一个独立于应用的程序或守护进程（Daemon方式）PHP与MemcachedMemcached使用libevent库实现网络连接服务，理论上可以处理无限多的连接，
+    但是它和18. 如何优化前端性能1) 页面内容的优化a) 降低请求数合并css、js文件，集成CSS图片b) 减少交互通信量压缩技术：压缩css、js文件，
+    优化图像，减少cookie体积；合理利用缓存：使用外部js/css文件，缓存ajax；减少不必要的通信量：剔除无用脚本和样式、推迟加载内容、
+    使用GET请求c) 合理利用“并行” 尽量避免重定向慎用Iframe 样式表置于顶部 脚本放到样式后面加载d) 节约系统消耗避免CSS表达式、滤镜2)
+    服务器的优化a) b)c)d)19. yahoo的34条前端优化法则减少HTTP请求、利用CDN技术、 设置头文件过期或者静态缓存、Gzip压缩、把CSS放顶部、
+    把JS放底部、避免CSS 表达式、将JS和CSS外链、减少DNS查找、减小JS和CSS的体积、 避免重定向、删除重复脚本、 配置ETags、缓存Ajax、尽
+    早的释放缓冲、用GET方式进行AJAX请求、延迟加载组件、 预加载组件、减少DOM元素数量、跨域分离组件、减少iframe数量、不要出现404页面、
+    减小Cookie、 对组件使用无Cookie的域名、减少DOM的访问次数、开发灵活的事件处理句柄、使用< link >而非@import、避免过滤器的使用、
+    优化图片、优化CSS Sprites、 不要在HTML中缩放图片、缩小favicon. ico的大小并缓存它、保证组件在25K以下、将组件打煲进一个多部分的文档中
