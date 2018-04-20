@@ -1,0 +1,86 @@
+1、冒泡排序
+    遍历依次对比一次一次将小的值移动到前边.
+    function bubble_sort($arr)  
+    {  
+        $count = count($arr);  
+        if (0 == $count) {
+            return false;  
+        }
+        for($i = 0; $i < $count; $i++){  
+            for($j = 0; $j< $count-1-$i; $j++){
+                if($arr[$j] > $arr[$j+1]){
+                    $temp        = $arr[$j];
+                    $arr[$j]     = $arr[$j+1];
+                    $arr[$j+1]   = $temp;
+               }
+          }
+        }  
+        return $arr;  
+    }
+
+2、快速排序
+    递归；以数组第一个值为依据，每次都将小的值分到左边，大的分到右边，分子化操作完，大小就已经分完排好了；
+    最后 = left + array[0] + right 就是排好的结果了。
+    function quick_sort(array $list) {
+        $len = count($list);
+        if ($len <= 1) {
+            return $list;
+        }
+        $pivotValue = $list[0];
+        $left = array();
+        $right = array();
+        for ($i = 1; $i < $len; $i++) { 
+            if ($list[$i] < $pivotValue) {
+                $left[] = $list[$i];
+            }else{
+                $right[] = $list[$i];
+            }
+        }
+        $left = quick_sort($left);
+        $right = quick_sort($right);
+        return array_merge($left, array($pivotValue), $right);
+    }
+
+3、二分查找（折半查找）
+    适用于有序数组，值可对比操作的数组
+    function binSearch($arr, $target){  
+        $height = count($arr)-1;  
+        $low = 0;  
+
+        while($low <= $height){  
+            $mid = floor(($low+$height)/2);//获取中间数
+
+            //两值相等，返回 
+            if($arr[$mid] == $target){  
+                return $mid; 
+
+            //元素比目标大，查找左部 
+            } elseif ($arr[$mid] < $target){
+                $low = $mid + 1;  
+
+            //元素比目标小，查找右部
+            } elseif ($arr[$mid] > $target){  
+                $height = $mid - 1;  
+            }  
+        }  
+        return "查找失败";  
+    }
+
+4、
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
