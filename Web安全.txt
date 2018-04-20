@@ -93,3 +93,69 @@
     非对称加密 ：则使用一对公钥和私钥来进行加密， 发送方只需要用接收方的公钥将数据加密即可；
     可逆的加密 详细查看 Xcrypt.php 文档
 
+6、附加
+    这里再添加两套简单的加密解密的方案
+    （1）=========================================================
+        * 加密
+        function php_encode($str)  
+        {  
+                if ( $str=='' && strlen( $str)>128) return false;  
+                for( $i=0; $i<strlen ($str); $i++){  
+                         $c = ord($str[$i ]);  
+                        if ($c>31 && $c <107) $c += 20 ;  
+                        if ($c>106 && $c <127) $c -= 75 ;  
+                        $word = chr($c );  
+                        $s .= $word;  
+                }   
+                return $s;   
+        }  
+        * 解密 
+        function php_decode($str)  
+        {  
+                if ( $str=='' && strlen($str )>128) return false;  
+                for( $i=0; $i<strlen ($str); $i++){  
+                        $c  = ord($word);  
+                        if ( $c>106 && $c<127 ) $c = $c-20;  
+                        if ($c>31 && $c< 107) $c = $c+75 ;  
+                        $word = chr( $c);  
+                        $s .= $word ;  
+                }   
+                return $s;   
+        } 
+    
+    （2）=========================================================
+       * 加密
+       function php_encrypt($str)  
+        {  
+                 $encrypt_key = 'abcdefghijklmnopqrstuvwxyz1234567890';  
+                 $decrypt_key = 'ngzqtcobmuhelkpdawxfyivrsj2468021359';  
+                if ( strlen($str) == 0) return  false;  
+                for ($i=0;  $i<strlen($str); $i ++){  
+                        for ($j=0; $j <strlen($encrypt_key); $j ++){  
+                                if ($str[$i] == $encrypt_key [$j]){  
+                                        $enstr .=  $decrypt_key[$j];  
+                                        break;  
+                                }  
+                        }  
+                }  
+                return $enstr;  
+        } 
+       
+       * 解密
+       function php_decrypt($str)  
+        {  
+                 $encrypt_key = 'abcdefghijklmnopqrstuvwxyz1234567890';  
+                 $decrypt_key = 'ngzqtcobmuhelkpdawxfyivrsj2468021359';  
+                if ( strlen($str) == 0) return  false;  
+                for ($i=0;  $i<strlen($str); $i ++){  
+                        for ($j=0; $j <strlen($decrypt_key); $j ++){  
+                                if ($str[$i] == $decrypt_key [$j]){  
+                                        $enstr .=  $encrypt_key[$j];  
+                                        break;  
+                                }  
+                        }  
+                }  
+                return $enstr;  
+        }  
+    
+    
