@@ -116,3 +116,34 @@
     echo '<pre>';
     var_dump($arr);
 
+7、给定一个所有元素为非负的数组，将数组中的所有数字连接起来，求最大的那个数
+    $arr1 = [4, 94, 9, 14, 1];
+
+    function get_max($arr) {
+        usort($arr, function($a, $b){
+            if ($a==$b) {
+                return 0;
+            }
+            return (int) $a.$b < $b.$a;
+        });
+        return implode('', $arr);
+    }
+
+    echo get_max($arr1);
+
+8、
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
