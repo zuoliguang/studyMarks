@@ -131,7 +131,20 @@
 
     echo get_max($arr1);
 
-8、
+8、有面额（1000 元、500 元、100 元、50 元、20 元、10 元、5 元、1 元）的卡，输入金额，返回组成金额的最少卡数
+    $fee = 54;
+
+    function getCards($fee) {
+        $feeArr = [1000, 500, 100, 50, 20, 10, 5, 1]; // 排好顺序 大->小
+        $cards = 0;
+        foreach ($feeArr as $c) {
+            $cards += floor($fee/$c);
+            $fee = $fee%$c;
+        }
+        return $cards;
+    }
+
+    echo getCards($fee);
 
 
 
