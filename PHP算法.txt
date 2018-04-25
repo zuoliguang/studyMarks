@@ -118,7 +118,6 @@
 
 7、给定一个所有元素为非负的数组，将数组中的所有数字连接起来，求最大的那个数
     $arr1 = [4, 94, 9, 14, 1];
-
     function get_max($arr) {
         usort($arr, function($a, $b){
             if ($a==$b) {
@@ -128,12 +127,10 @@
         });
         return implode('', $arr);
     }
-
     echo get_max($arr1);
 
 8、有面额（1000 元、500 元、100 元、50 元、20 元、10 元、5 元、1 元）的卡，输入金额，返回组成金额的最少卡数
     $fee = 54;
-
     function getCards($fee) {
         $feeArr = [1000, 500, 100, 50, 20, 10, 5, 1]; // 排好顺序 大->小
         $cards = 0;
@@ -143,14 +140,64 @@
         }
         return $cards;
     }
-
     echo getCards($fee);
 
+9、‘1 2 3 4 5 6 7 8 9 = 110’
+    为了使等式成立，需要在数字间填入加号或者减号（可以不填，但不能填入其它符号）。
+    之间没有填入符号的数字组合成一个数，例如：12 + 34 + 56 + 7 - 8 + 9 就是一种合格的填法。
 
+    class Rank
+    {
+        public $data = array();
+        public $operate = array('', '-', '+');
+        public $originLen = 0;
+        public $sum = 0;
+        public function __construct(array $data, $sum) {
+            $this->originLen = count($data);
+            $this->sum = $sum;
+            foreach ($data as $k => $value) {
+                $this->data[$k*2] = $value;
+            }
+        }
 
+        public function ternary($number) {
+            $pos = 2 * $this->originLen - 3;
+            do {
+                $mod = $number % 3;
+                $number = (int)($number / 3);
+                $this->data[$pos] = $this->operate[$mod];
+                $pos -= 2;
+            } while($number);
+            //高位补0
+            while ($pos > 0) {
+                $this->data[$pos] = $this->operate[0];
+                $pos -= 2;
+            }
+            ksort($this->data);
+        }
 
+        public function run() {
+            $result = array();
+            $times = pow(3, $this->originLen - 1);
+            for ($i = 0; $i < $times; $i++) {
+                //模拟3进制的运算
+                $this->ternary($i);
+                //决策
+                $str = implode('', $this->data);
+                if (eval("return $str;") == $this->sum) {
+                    $result[] = $str;
+                }
+            }
+            return $result;
+        }
+    }
 
-
+    //输入:[1 2 3 4 5 6 7 8 9]
+    $rank = new Rank([1, 2, 3, 4, 5, 6, 7, 8, 9], 110);
+    array_walk($rank->run(), function($value) {
+        echo $value;
+        echo "<br/>";
+    });
 
 
 
