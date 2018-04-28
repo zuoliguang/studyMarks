@@ -242,7 +242,7 @@
         $oa = array_pop($ol);
         $iszf = true;
         foreach ($ol as $oli) {
-            // 垂直 or 平行
+            // 垂直 or 平行 (使用高精度计算函数)
             if ( (bcmul($oa[0], $oli[0])+bcmul($oa[1], $oli[1])==0) || (bcmul($oa[0], $oli[1])==bcmul($oa[1], $oli[0])) || (bcmul($oa[0], $oli[0])==bcmul($oa[1], $oli[1])) ) {
                 continue;
             }
