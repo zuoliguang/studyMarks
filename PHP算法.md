@@ -221,6 +221,7 @@
 #### 10、通过平面内的四个坐标点判断是否是正方形
 ```php
     function iszf($p) {
+        $iszf = true;
         // 求出4点的中心点
         $oxs = 0;
         $oys = 0;
@@ -229,6 +230,17 @@
             $oys = bcadd($oys, $t[1]);
         }
         $o = [bcdiv($oxs, 4), bcdiv($oys, 4)];
+
+        // 除去棱形情况,保证中心点到4角距离相等
+        $rondet = $p[0];
+        $olen = bcsqrt( abs(bcsub($o[0], $rondet[0]))*abs(bcsub($o[0], $rondet[0])) + abs(bcsub($o[1], $rondet[1]))*abs(bcsub($o[1], $rondet[1])) );
+        foreach ($p as $tl) {
+            $templen = bcsqrt( abs(bcsub($o[0], $tl[0]))*abs(bcsub($o[0], $tl[0])) + abs(bcsub($o[1], $tl[1]))*abs(bcsub($o[1], $tl[1])) );
+            if ($olen==$templen) {
+                continue;
+            }
+            return false;
+        }
 
         // 求出4个向量 (由中心向4个点)
         $ol = [];
@@ -240,22 +252,20 @@
         // 平行 a1b2=a2b1 or a1b1=a2b2
         // 垂直 a1b1+a2b2=0
         $oa = array_pop($ol);
-        $iszf = true;
         foreach ($ol as $oli) {
-            // 垂直 or 平行 (使用高精度计算函数)
+            // 垂直 or 平行
             if ( (bcmul($oa[0], $oli[0])+bcmul($oa[1], $oli[1])==0) || (bcmul($oa[0], $oli[1])==bcmul($oa[1], $oli[0])) || (bcmul($oa[0], $oli[0])==bcmul($oa[1], $oli[1])) ) {
                 continue;
             }
-            $iszf = false;
+            return false;
         }
+
         return $iszf;
     }
-
-    $p[] = [0,5];
-    $p[] = [0,-5];
+    $p[] = [0,3];
+    $p[] = [0,-3];
     $p[] = [-5,0];
     $p[] = [5,0];
-
     var_dump(iszf($p));
 ```
 
