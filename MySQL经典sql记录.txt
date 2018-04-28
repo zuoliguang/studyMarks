@@ -40,10 +40,11 @@
     END AS `online_state` 
     FROM `pro_product`;
 
-随时更新 待续。。。。
+4、SQL 抽取随机10条数据
+	* order by rand()
+	select * from log order by rand() LIMIT 0,10
 
-
-
+5、
 
 
 
