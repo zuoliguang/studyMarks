@@ -44,7 +44,7 @@
 	* order by rand()
 	select * from log order by rand() LIMIT 0,10
 
-5、
+
 
 
 
