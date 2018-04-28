@@ -1,6 +1,7 @@
 
-1、冒泡排序
+#### 1、冒泡排序
     遍历依次对比一次一次将小的值移动到前边.
+```php
     function bubble_sort($arr)  
     {  
         $count = count($arr);  
@@ -18,10 +19,12 @@
         }  
         return $arr;  
     }
+```
 
-2、快速排序
+#### 2、快速排序
     递归；以数组第一个值为依据，每次都将小的值分到左边，大的分到右边，分子化操作完，大小就已经分完排好了；
     最后 = left + array[0] + right 就是排好的结果了。
+```php
     function quick_sort(array $list) {
         $len = count($list);
         if ($len <= 1) {
@@ -41,9 +44,11 @@
         $right = quick_sort($right);
         return array_merge($left, array($pivotValue), $right);
     }
+```
 
-3、二分查找（折半查找）
+#### 3、二分查找（折半查找）
     适用于有序数组，值可对比操作的数组
+```php
     function binSearch($arr, $target){  
         $height = count($arr)-1;  
         $low = 0;  
@@ -65,8 +70,10 @@
         }  
         return "查找失败";  
     }
+```
 
-4、递归实现二分查找
+#### 4、递归实现二分查找
+```php
     function binaryRecursive($arr,$low,$top,$target){
         if($low<=$top){
             $mid = floor(($low+$top)/2);
@@ -81,8 +88,10 @@
             return -1;
         }
     }
+```
 
-5、遍历一个文件下的所有文件和子文件夹
+#### 5、遍历一个文件下的所有文件和子文件夹
+```php
     function my_scandir($dir){
         $files = array();
         if($handle = opendir($dir)) {
@@ -100,9 +109,11 @@
             return $files;
         }
     }
+```
 
-6、二维数组的排序
+#### 6、二维数组的排序
     PHP内置的自定义排序工具
+```php
     $arr = [
         ['id'=>3, 'name'=>'name3'],
         ['id'=>5, 'name'=>'name5'],
@@ -115,8 +126,10 @@
     });
     echo '<pre>';
     var_dump($arr);
+```
 
-7、给定一个所有元素为非负的数组，将数组中的所有数字连接起来，求最大的那个数
+#### 7、给定一个所有元素为非负的数组，将数组中的所有数字连接起来，求最大的那个数
+```php
     $arr1 = [4, 94, 9, 14, 1];
     function get_max($arr) {
         usort($arr, function($a, $b){
@@ -128,8 +141,10 @@
         return implode('', $arr);
     }
     echo get_max($arr1);
+```
 
-8、有面额（1000 元、500 元、100 元、50 元、20 元、10 元、5 元、1 元）的卡，输入金额，返回组成金额的最少卡数
+#### 8、有面额（1000 元、500 元、100 元、50 元、20 元、10 元、5 元、1 元）的卡，输入金额，返回组成金额的最少卡数
+```php
     $fee = 54;
     function getCards($fee) {
         $feeArr = [1000, 500, 100, 50, 20, 10, 5, 1]; // 排好顺序 大->小
@@ -141,12 +156,14 @@
         return $cards;
     }
     echo getCards($fee);
+```
 
-9、**********************************************************************************
+#### 9、**********************************************************************************
     ‘1 2 3 4 5 6 7 8 9 = 110’
     为了使等式成立，需要在数字间填入加号或者减号（可以不填，但不能填入其它符号）。
     之间没有填入符号的数字组合成一个数，例如：12 + 34 + 56 + 7 - 8 + 9 就是一种合格的填法。
 
+```php
     class Rank
     {
         public $data = array();
@@ -199,8 +216,48 @@
         echo $value;
         echo "<br/>";
     });
+```
 
+#### 10、通过平面内的四个坐标点判断是否是正方形
+```php
+    function iszf($p) {
+        // 求出4点的中心点
+        $oxs = 0;
+        $oys = 0;
+        foreach ($p as $t) {
+            $oxs = bcadd($oxs, $t[0]);
+            $oys = bcadd($oys, $t[1]);
+        }
+        $o = [bcdiv($oxs, 4), bcdiv($oys, 4)];
 
+        // 求出4个向量 (由中心向4个点)
+        $ol = [];
+        foreach ($p as $t) {
+            $ol[] = [bcsub($o[0], $t[0]), bcsub($o[1], $t[1])];
+        }
+
+        // 用其中一个向量与其余向量证明平行和垂直 a,b是两个向量 a=（a1,a2） b=（b1,b2） 
+        // 平行 a1b2=a2b1 or a1b1=a2b2
+        // 垂直 a1b1+a2b2=0
+        $oa = array_pop($ol);
+        $iszf = true;
+        foreach ($ol as $oli) {
+            // 垂直 or 平行
+            if ( (bcmul($oa[0], $oli[0])+bcmul($oa[1], $oli[1])==0) || (bcmul($oa[0], $oli[1])==bcmul($oa[1], $oli[0])) || (bcmul($oa[0], $oli[0])==bcmul($oa[1], $oli[1])) ) {
+                continue;
+            }
+            $iszf = false;
+        }
+        return $iszf;
+    }
+
+    $p[] = [0,5];
+    $p[] = [0,-5];
+    $p[] = [-5,0];
+    $p[] = [5,0];
+
+    var_dump(iszf($p));
+```
 
 
 
