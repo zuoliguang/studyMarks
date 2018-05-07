@@ -4,6 +4,9 @@
 
 **注意** :该笔记写完后，即可以将以此在正式环境中使用,包括框架的一些拓展操作.
 
+参考框架结构图
+
 ![laravel5.6-logo](https://github.com/zuoliguang/studyMarks/blob/master/images/laravel5.6.jpg?raw=true)
 
 ## 1、入门
+
