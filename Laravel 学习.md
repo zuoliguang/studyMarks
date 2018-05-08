@@ -44,7 +44,6 @@
 
 ## 2、HelloWorld 测试学习
 ### 2.1 路由
-#### 2.1.1 直接在路由中返回结果
   直接将结果写在 `Project/app/Http/routes.php` 中
   ```php
   Route::get('/study/route', function () {
@@ -57,9 +56,17 @@
       return view('welcome', ['title'=>'zuoliguang']);
   });
   ```
-  或者指定到固定的控制器来处理,将 `http:://ip/study` 指向 `Project/app/Http/Controllers/Study/IndexController.ph`p 下的 `index` 方法
+  或者指定到固定的控制器来处理,将 `http:://ip/study` 指向 `Project/app/Http/Controllers/Study/IndexController.php` 下的 `index` 方法
   ```php
   Route::get('/study', 'Study\IndexController@index');
+  ```
+  控制器路由命名及使用, `Project/app/Http/routes.php`中
+  ```php
+  Route::get('/study', 'Study\IndexController@index')->name('index');
+  ```
+  `Project/app/Http/Controllers/Study/IndexController.php` 中调用方式（跳转使用）
+  ```php
+  return redirect()->route('index');
   ```
 ### 2.2 middleware 中间件
 ### 2.3 CSRF 保护、表单验证
