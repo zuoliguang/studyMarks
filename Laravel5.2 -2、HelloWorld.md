@@ -150,8 +150,45 @@ Route::get('/', function () {
 ```
 你还可以从路由或控制器中直接返回 Eloquent ORM 集合, 它们会自动转为 JSON 响应.
 
+**自定义 响应对象**
+
+控制器中可以使用 `Illuminate\Http\Response` 来创建响应信息.
+
+路由中也可以直接将结果返回
+```php
+Route::get('home', function () {
+    return response('Hello World', 200)->header('Content-Type', 'text/plain');
+});
+```
+该响应类 Response 实例继承自 Symfony\Component\HttpFoundation\Response 类
+
+**为响应增加头信息**
+```php
+return response($content)
+	->header('Content-Type', $type)
+	->header('X-Header-One', 'Header Value')
+	->header('X-Header-Two', 'Header Value');
+```
+或者
+```php
+return response($content)
+	->withHeaders([
+		'Content-Type' => $type,
+		'X-Header-One' => 'Header Value',
+		'X-Header-Two' => 'Header Value',
+	]);
+```
+**为响应增加 Cookie**
+
+```php
+return response($content)
+	->header('Content-Type', $type)
+	->cookie('name', 'value', $minutes);
+```
+
 ### 2.6 文件上传
-### 2.7 URL 处理
+
+### 2.7 URL 处理、重定向
 ### 2.8 错误处理
 ### 2.9 模板（数据模型）
 ### 2.10 视图 及 前端资源
