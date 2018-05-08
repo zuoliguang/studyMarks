@@ -464,20 +464,221 @@ class Member extends Model
 	{
 		return $this->hasMany('App\Say', 'm_id', 'id');
 	}
-
 }
 ```
+
 > * 主键 
 
 Eloquent 也会假定每个数据表都有一个名为 id 的主键字段。你可以定义一个访问权限为protected的 $primaryKey 属性来覆盖这个约定。
+
 > * 时间戳
 
 默认情况下，Eloquent 会默认数据表中存在 created_at 和 updated_at 这两个字段。
 如果你不需要这两个字段，则需要在模型内将 $timestamps 属性设置为 false。
 如果你需要自定义时间戳格式，可在模型内设置 $dateFormat 属性。
+
 > * 数据库连接
 
 默认情况下，所有的模型使用应用配置中的默认数据库连接。如果你想要为模型指定不同的连接，可以通过 $connection 属性来设置。
+配置文件 `Project/config/database.php` 下 `connections` 对应的值下面的数据库。
+
+***获取模型，控制器种使用方式***
+
+```php
+use App\Member;
+
+// 1、获取全部数据
+$members = Member::all(); 
+
+// 2、获取条件搜索数据
+$members = Member::where('id', '<', 10)->orderBy('id', 'desc')->get(); 
+
+// 3、分块结果
+Member::chunk(2, function($members){
+	foreach ($members as $member) {
+		echo $member->name;
+		echo '<br/>';
+	}
+	echo '------------------<br/>';
+});
+
+// 4、取回单个信息
+$member = Member::find(1);
+$member = Member::where('id', '>', 10)->first();
+var_dump($member);
+
+// 5、取回指定数据集
+$members = Member::find([12, 13, 14]);
+foreach ($members as $member) {
+	echo $member->name;
+	echo "<br/>";
+}
+
+// 6、添加
+$member = new Member;
+$member->name 		= 'model';
+$member->age 		= 40;
+$member->tel 		= '88888888';
+$member->address 	= 'peking zhanghao dizhi hahah';
+$member->score 		= 99;
+$member->class 		= '2-9';
+$member->ext_info 	= 'this is a model test model info';
+$member->save();
+
+// 7、更新
+$member = Member::find(14);
+$member->name = 'test_mode';
+$member->save();
+
+// 8、批量更新
+Member::where('id', 8)->update(['name'=>'test_update']);
+Member::where('id', '>', 8)->where('id', '<=', 13)->update(['name'=>'test_update_agin']);
+
+// 9、删除
+$member = Member::find(7);
+$member->delete();
+
+// 10、批量删除
+Member::destroy(1);
+Member::destroy([1, 2, 3]);
+
+// 11、获取关联信息
+$member = Member::find(2);
+
+// 12、获取一对一的数据
+$pwd = $member->pwd; // 一对一
+var_dump($pwd->pwd);
+
+// 获取一对多的数据
+$says = $member->say; // 一对多
+foreach ($says as $say) {
+	var_dump($say->say);
+	echo '<br/>';
+}
+```
+
+***集合***
+
+使用 Eloquent 中的 all 和 get 方法可以检索多个结果，并会返回一个 Illuminate\Database\Eloquent\Collection 实例。
+Collection 类提供了 很多辅助函数 来处理 Eloquent 结果。
+
+```php
+
+// 取出对象的name信息
+$members = $members->reject(function ($member) {
+    return $member->name;
+});
+
+//分块结果 ,数据分2个一组，然后按组来循环处理数据
+Member::chunk(2, function($members){
+	foreach ($members as $member) {
+		echo $member->name;
+		echo '<br/>';
+	}
+	echo '------------------<br/>';
+});
+
+// 使用游标,该游标只执行一个查询。处理大量数据时，使用 cursor 方法可以大幅度减少内存的使用量
+foreach (Member::where('name', 'zlgcg')->cursor() as $member) {
+    //处理数据
+}
+
+// 找不到数据信息时抛出异常
+// 如果你希望在找不到模型时抛出异常，可以使用 findOrFail 以及 firstOrFail 方法。
+// 这些方法会检索查询的第一个结果，如果没有找到相应的结果，就会抛出一个 Illuminate\Database\Eloquent\ModelNotFoundException 错误。
+$model = App\Flight::findOrFail(1);
+$model = App\Flight::where('legs', '>', 100)->firstOrFail();
+
+// 如果没有对异常进行捕获，则会自动返回 404 响应给用户。也就是说，在使用这些方法时，不需要另外写个检查来返回 404 响应
+Route::get('/api/flights/{id}', function ($id) {
+    return App\Flight::findOrFail($id);
+});
+
+// 检索集合
+// 还可以使用 查询构造器 提供的 count 、 sum 、 max 以及其它 聚合函数 。这些方法只会返回适当的标量值而不是整个模型实例
+$count = App\Flight::where('active', 1)->count();
+$max = App\Flight::where('active', 1)->max('price');
+
+```
+
+**注：增删改查的操作可参考上面 Member 类的操作。**
+
+这里补充一个批量新增的操作:
+
+***批量新增***
+
+该操作需要在模型中设置可以被批量赋值的属性
+
+```php
+/**
+ * 可以被批量赋值的属性。
+ *
+ * @var array
+ */
+protected $fillable = ['name','age'];
+
+/**
+ * 不可被批量赋值的属性。(该设置可用来保护属性)
+ *
+ * @var array
+ */
+protected $guarded = ['price'];
+```
+控制器里操作, 当我们设置好批量赋值的属性，就可以通过 create 方法插入新数据。
+```php
+$flight = App\Flight::create(['name' => 'Flight 10']);
+```
+
+***其它创建方法***
+
+```php
+
+// 通过 name 查找航班，不存在则创建...
+$flight = App\Flight::firstOrCreate(['name' => 'Flight 10']);
+
+// 通过 name 查找航班，不存在则使用 name 和 delayed 属性创建...
+$flight = App\Flight::firstOrCreate(
+    ['name' => 'Flight 10'], ['delayed' => 1]
+);
+
+// 通过 name 查找航班，不存在则创建一个实例...
+$flight = App\Flight::firstOrNew(['name' => 'Flight 10']);
+
+// 通过 name 查找航班，不存在则使用 name 和 delayed 属性创建一个实例...
+$flight = App\Flight::firstOrNew(
+    ['name' => 'Flight 10'], ['delayed' => 1]
+);
+
+// 如果有从奥克兰到圣地亚哥的航班，则价格定为99美元。
+// 如果没匹配到存在的模型，则创建一个。
+$flight = App\Flight::updateOrCreate(
+    ['departure' => 'Oakland', 'destination' => 'San Diego'],
+    ['price' => 99]
+);
+
+```
+
+> * 软删除
+> * 查询软删除模型
+> * 检索软删除模型
+> * 恢复软删除模型
+> * 永久删除
+> * 查询作用域
+[Eloquent ORM 其他可查看文档地址](https://laravel-china.org/docs/laravel/5.6/eloquent)
+
+***事件***
+
+Eloquent 模型会触发许多事件，让你在模型的生命周期的多个时间点进行监控： retrieved, creating, created, updating, updated, saving, saved, deleting, deleted, restoring, restored。 事件让你在每当有特定模型类进行数据库保存或更新时，执行代码。
+
+当从数据库检索现有模型时，会触发retrieved 事件。
+
+当模型第一次被保存时， creating 和 created 事件会被触发。
+
+若数据库中已存在此模型，并调用 save 方法，updating / updated 事件会被触发。 这两种情况下，saving / saved 事件都会被触发。
+
+当删除数据是触发 deleting, deleted 事件。
+
+当恢复软删除时操作 restoring, restored 事件。
 
 ### 2.10 视图 及 前端资源
 
