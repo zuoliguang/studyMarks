@@ -6,7 +6,9 @@
 
 参考框架结构图
 
-![laravel5.6-logo](https://github.com/zuoliguang/studyMarks/blob/master/images/laravel5.6.jpg?raw=true)
+![laravel5.6](https://github.com/zuoliguang/studyMarks/blob/master/images/laravel5.6.jpg?raw=true)
+
+在该图中摘出了自己的即将学习的任务列表，展开对Laravel框架的系统学习。
 
 ## 1、入门
 ### 了解框架的文件目录结构
