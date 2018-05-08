@@ -32,7 +32,7 @@ Route::resource('study/index', 'Study\IndexController');
 ```php
 Route::get('/study/username/{id}/{name?}', 'Study\IndexController@username')->where(['id' => '[0-9]+','name' => '[A-Za-z]+']);
 ```
-  控制器中接收方式
+  控制器中接收参数的方式
 ```php
 public function username($id, $name='zlgcg'){
 		var_dump($id);
@@ -68,7 +68,7 @@ class CheckTest
     }
 }
 ```
-注册该自定义中间件使其生效，给该自定义插件赋值 `checkId` 修改代码 `Project/app/Http/Kernel.php` 中 `$routeMiddleware` 添加
+注册该自定义中间件使其生效，给该自定义插件赋值 `checkId` 修改代码 `Project/app/Http/Kernel.php` 中 `$routeMiddleware` 变量添加
 ```php
 protected $routeMiddleware = [
 	'checkId' => \App\Http\Middleware\CheckTest::class, // 该位置注册自定义的中间件 CheckTest
@@ -76,16 +76,28 @@ protected $routeMiddleware = [
 ```
 
 ### 2.3 CSRF 保护、表单验证
-### 2.4 控制器
-### 2.5 Request 请求
-### 2.6 Responses 响应
-### 2.7 文件上传
-### 2.8 URL 处理
-### 2.9 错误处理
-### 2.10 模板（数据模型）
-### 2.11 视图 及 前端资源
-### 2.12 日志
-### 2.13 拓展插件使用
+在对应的`form`表单中添加 `{{ csrf_field() }}` 代码会自动在表单中添加隐含字段
+```html
+<input type="hidden" name="_token" value="Q55j85A8UPfYJ4xKkInEx6tVapk2r4zRacxhv0n0">
+```
+可在提交的控制器中验证 `_token` 值 和 `csrf_token()` 的值
+```php
+$_token = $request->_token;
+if($_token==csrf_token()){
+	// 处理数据
+} else {
+	// 否则不处理、报错
+}
+```
+### 2.4 Request 请求
+### 2.5 Responses 响应
+### 2.6 文件上传
+### 2.7 URL 处理
+### 2.8 错误处理
+### 2.9 模板（数据模型）
+### 2.10 视图 及 前端资源
+### 2.11 日志
+### 2.12 拓展插件使用
 #### *Artisan 脚手架 命令行*
 #### *广播系统*
 #### *缓存系统*
