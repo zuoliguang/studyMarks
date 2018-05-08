@@ -114,7 +114,6 @@ public function postdata(Request $request) {
 	var_dump($test);echo "<pre>";
 	var_dump($all);echo "<pre>";
 	var_dump($isHas);echo "<pre>";
-
 }
 ```
 或者直接打印 `$request` 查看内容
