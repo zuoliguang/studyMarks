@@ -3,13 +3,13 @@
   直接将结果写在 `Project/app/Http/routes.php` 中
 ```php
 Route::get('/study/route', function () {
-  return 'Hello World, zuoliguang!';
+	return 'Hello World, zuoliguang!';
 });
 ```
   或者返回到对应的模板中展示
 ```php
 Route::get('/', function () {
-  return view('welcome', ['title'=>'zuoliguang']);
+	return view('welcome', ['title'=>'zuoliguang']);
 });
 ```
   或者指定到固定的控制器来处理,将 `http:://ip/study` 指向 `Project/app/Http/Controllers/Study/IndexController.php` 下的 `index` 方法
@@ -27,6 +27,7 @@ return redirect()->route('index');
   资源路由器（将剩余未定义的方法按照方法名定义）
 ```php
 Route::resource('study/index', 'Study\IndexController');
+// 或者
 Route::resources([
 	'photos' => 'PhotoController',
 	'posts' => 'PostController'
@@ -54,22 +55,22 @@ namespace App\Http\Middleware;
 use Closure;
 class CheckTest
 {
-    /**
-     * 自定义测试中间件
-     * 检查该条件参数id
-     * id 小于等于100 正常；否则，跳转到 there 路由去；
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if ($request->id > 100) {
-            return redirect()->route('there');
-        }
-        return $next($request);
-    }
+	/**
+	* 自定义测试中间件
+	* 检查该条件参数id
+	* id 小于等于100 正常；否则，跳转到 there 路由去；
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @param  \Closure  $next
+	* @return mixed
+	*/
+	public function handle($request, Closure $next)
+	{
+		if ($request->id > 100) {
+			return redirect()->route('there');
+		}
+		return $next($request);
+	}
 }
 ```
 注册该自定义中间件使其生效，给该自定义插件赋值 `checkId` 修改代码 `Project/app/Http/Kernel.php` 中 `$routeMiddleware` 变量添加
@@ -105,7 +106,7 @@ public function postdata(Request $request) {
 	$test = $request->test;
 	$all = $request->all(); // 获取传入的所有参数
 	$isHas = $request->has(['name', 'email']); // 是否有 name、email 字段信息
-	
+
 	echo "<pre>";
 	var_dump($uri);
 	var_dump($url);
