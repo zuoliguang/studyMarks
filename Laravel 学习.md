@@ -6,13 +6,12 @@
 
 参考框架结构图
 
-![laravel5.6](https://github.com/zuoliguang/studyMarks/blob/master/images/laravel5.6.jpg?raw=true)
+<!-- ![laravel5.6](https://github.com/zuoliguang/studyMarks/blob/master/images/laravel5.6.jpg?raw=true) -->
 
 在该图中摘出了自己的即将学习的任务列表，展开对Laravel框架的系统学习。
 
 ## 1、入门
 ### 安装
-
 通过使用 Composer 安装 Laravel 安装器：
 
 ```composer global require "laravel/installer"```
@@ -38,7 +37,6 @@
 > *  tests      包含自动化测试文件；
 > *  vendor     包含你的 Composer 依赖包；
 
-### 入口文件
 ### 生产环境
 
 ## 2、HelloWorld
