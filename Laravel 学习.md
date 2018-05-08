@@ -1,5 +1,7 @@
 最近发现好多企业级开发网站均开始使用 Laravel 框架，业余时间来研究一下并学习下该框架的使用
 
+该文档使用的是Laravel5.2的版本来演示代码内容，最新版本功能可参考对应的 [框架文档](https://laravel-china.org/docs/laravel/5.6/installation)
+
 ------
 
 **注意** :该笔记写完后，即可以将以此在正式环境中使用,包括框架的一些拓展操作.
@@ -40,8 +42,28 @@
 ### 1.3 生产环境
 控制项目的配置文件 `.env` 中 `APP_DEBUG=true` 来切换项目状态;
 
-## 2、HelloWorld
+## 2、HelloWorld 测试学习
 ### 2.1 路由
+#### 2.1.1 直接在路由中返回结果
+  直接将结果写在 `Project/app/Http/routes.php` 中
+  ```php
+  Route::get('/study/route', function () {
+    return 'Hello World, zuoliguang!';
+  });
+  ```
+  或者返回到对应的模板中展示
+  ```php
+  Route::get('/', function () {
+      return view('welcome', ['title'=>'zuoliguang']);
+  });
+  ```
+  或者指定到固定的控制器来处理
+  ```php
+  // 将 http:://localhost:8000/study 指向 Project/app/Http/Controllers/Study/IndexController.php 下的 index 方法
+  Route::get('/study', 'Study\IndexController@index');
+  ```
+
+
 ### 2.2 middleware 中间件
 ### 2.3 CSRF 保护、表单验证
 ### 2.4 控制器
