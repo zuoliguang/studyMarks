@@ -105,15 +105,16 @@ public function postdata(Request $request) {
 	$test = $request->test;
 	$all = $request->all(); // 获取传入的所有参数
 	$isHas = $request->has(['name', 'email']); // 是否有 name、email 字段信息
-
-	var_dump($uri);echo "<pre>";
-	var_dump($url);echo "<pre>";
-	var_dump($fullUrl);echo "<pre>";
-	var_dump($is_post);echo "<pre>";
-	var_dump($is_get);echo "<pre>";
-	var_dump($test);echo "<pre>";
-	var_dump($all);echo "<pre>";
-	var_dump($isHas);echo "<pre>";
+	
+	echo "<pre>";
+	var_dump($uri);
+	var_dump($url);
+	var_dump($fullUrl);
+	var_dump($is_post);
+	var_dump($is_get);
+	var_dump($test);
+	var_dump($all);
+	var_dump($isHas);
 }
 ```
 或者直接打印 `$request` 查看内容
