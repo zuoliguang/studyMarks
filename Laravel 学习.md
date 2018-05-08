@@ -58,8 +58,9 @@
   });
   ```
   或者指定到固定的控制器来处理
+  
+  将 http:://localhost:8000/study 指向 Project/app/Http/Controllers/Study/IndexController.php 下的 index 方法
   ```php
-  // 将 http:://localhost:8000/study 指向 Project/app/Http/Controllers/Study/IndexController.php 下的 index 方法
   Route::get('/study', 'Study\IndexController@index');
   ```
 
