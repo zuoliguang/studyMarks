@@ -27,17 +27,16 @@
 
 本地开发环境时，可直接执行 **php artisan serve** 该命令会在 http://localhost:8000 上启动开发服务器
 
-
 ### 了解框架的文件目录结构
-- [x] app 
-- [x] bootstrap
-- [x] config
-- [x] database
-- [x] public
-- [x] resources
-- [x] storage
-- [x] tests
-- [x] vendor
+> *  app        包含应用程序的核心代码，应用中几乎所有的类都应该放在这里；
+> *  bootstrap  包含引导框架并配置自动加载的文件，该目录还包含了一个 cache 目录，存放着框架生成的用来提升性能的文件，比如路由和服务缓存文件；
+> *  config     包含应用程序所有的配置文件；
+> *  database   包含数据填充和迁移文件，还可以把它作为 SQLite 数据库存放目录；
+> *  public     包含了入口文件 index.php，还包含了一些资源文件（如图片、JavaScript 和 CSS）；
+> *  resources  包含了视图和未编译的资源文件（如 LESS、SASS 或 JavaScript），还包含你所有的语言文件；
+> *  storage    包含编译的 Blade 模板、基于文件的会话和文件缓存、以及框架生成的其他文件；
+> *  tests      包含自动化测试文件；
+> *  vendor     包含你的 Composer 依赖包；
 
 ### 入口文件
 ### 生产环境
