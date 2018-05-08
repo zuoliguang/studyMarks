@@ -37,10 +37,44 @@ Route::get('/study/username/{id}/{name?}', 'Study\IndexController@username')->wh
 public function username($id, $name='zlgcg'){
 		var_dump($id);
 		var_dump($name);
-	}
+}
 ```
-  
 ### 2.2 middleware 中间件
+middleware 中间件可在路由中接收是对参数进行约束校验，我们可以使用框架工具直接生成一个 CheckTest 中间件，并使用其对id的限制
+
+执行 `php artisan make:middleware CheckTest`
+
+会生成 `Project/app/Http/Middleware/CheckTest.php` 修改代码
+```php
+namespace App\Http\Middleware;
+use Closure;
+class CheckTest
+{
+    /**
+     * 自定义测试中间件
+     * 检查该条件参数id
+     * id 小于等于100 正常；否则，跳转到 there 路由去；
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if ($request->id > 100) {
+            return redirect()->route('there');
+        }
+        return $next($request);
+    }
+}
+```
+注册该自定义中间件使其生效，给该自定义插件赋值 `checkId` 修改代码 `Project/app/Http/Kernel.php` 中 `$routeMiddleware` 添加
+```php
+protected $routeMiddleware = [
+	'checkId' => \App\Http\Middleware\CheckTest::class, // 该位置注册自定义的中间件 CheckTest
+];
+```
+
 ### 2.3 CSRF 保护、表单验证
 ### 2.4 控制器
 ### 2.5 Request 请求
