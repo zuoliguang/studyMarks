@@ -137,7 +137,7 @@ $route = Route::current();
 $name = Route::currentRouteName();
 $action = Route::currentRouteAction();
 ```
-### 2.5 Responses 响应
+### 2.5 Responses 响应、重定向
 路由控制器中可直接采用return响应
 ```php
 Route::get('/', function () {
@@ -185,15 +185,79 @@ return response($content)
 	->header('Content-Type', $type)
 	->cookie('name', 'value', $minutes);
 ```
+***城定向***
+重定向至命名路由, 当你不带参数调用辅助函数 redirect 时，会返回 Illuminate\Routing\Redirector 实例。这个实例允许你调用 Redirector 上的任何方法。
+```php
+return redirect()->route('index');
+```
+带参数时
+```php
+// 对于具有以下 URI 的路由: profile/{id}
+return redirect()->route('profile', ['id' => 1]);
+```
+重定向至控制器行为
+```php
+return redirect()->action('HomeController@index');
+// 带参数
+return redirect()->action(
+    'UserController@profile', ['id' => 1]
+);
+```
+重定向到外部域
+```php
+return redirect()->away('https://www.google.com');
+```
+**其他响应类型**
+
+***视图响应***
+```php
+return response()
+	->view('hello', $data, 200)
+	->header('Content-Type', $type);
+```
+
+***JSON 响应***
+```php
+return response()->json([
+	'name' => 'Abigail',
+	'state' => 'CA'
+]);
+```
+JSONP 响应，你可以使用 json 方法并与 withCallback 方法配合使用
+```php
+return response()
+	->json(['name' => 'Abigail', 'state' => 'CA'])
+	->withCallback($request->input('callback'));
+```
+
+***文件下载***
+注:管理文件下载的扩展包 Symfony HttpFoundation，要求下载文件名必须是 ASCII 编码的
+```php
+return response()->download($pathToFile); // 下载指定的文件名称
+return response()->download($pathToFile, $name, $headers); // 以指定的名称显示到用户眼前
+```
+
+***文件响应***
+file 方法可以直接在用户浏览器中显示文件（不是发起下载），例如图像或者 PDF。
+```php
+return response()->file($pathToFile);
+return response()->file($pathToFile, $headers);
+```
 
 ### 2.6 文件上传
 
-### 2.7 URL 处理、重定向
+### 2.7 URL 处理
+
 ### 2.8 错误处理
+
 ### 2.9 模板（数据模型）
+
 ### 2.10 视图 及 前端资源
+
 ### 2.11 日志
+
 ### 2.12 拓展插件使用
+
 #### *Artisan 脚手架 命令行*
 #### *广播系统*
 #### *缓存系统*
