@@ -1,30 +1,42 @@
 ## 2、HelloWorld 测试学习
 ### 2.1 路由
-  直接将结果写在 `Project/app/Http/routes.php` 中
+直接将结果写在 `Project/app/Http/routes.php` 中
 ```php
 Route::get('/study/route', function () {
 	return 'Hello World, zuoliguang!';
 });
 ```
-  或者返回到对应的模板中展示
+或者返回到对应的模板中展示
 ```php
 Route::get('/', function () {
 	return view('welcome', ['title'=>'zuoliguang']);
 });
 ```
-  或者指定到固定的控制器来处理,将 `http:://ip/study` 指向 `Project/app/Http/Controllers/Study/IndexController.php` 下的 `index` 方法
+或者指定到固定的控制器来处理,将 `http:://ip/study` 指向 `Project/app/Http/Controllers/Study/IndexController.php` 下的 `index` 方法
 ```php
 Route::get('/study', 'Study\IndexController@index');
 ```
-  控制器路由命名及使用, `Project/app/Http/routes.php`中代码
+控制器路由命名及使用, `Project/app/Http/routes.php`中代码
 ```php
 Route::get('/study', 'Study\IndexController@index')->name('index');
 ```
-  在 `Project/app/Http/Controllers/Study/IndexController.php` 中调用方式（跳转使用）
+在 `Project/app/Http/Controllers/Study/IndexController.php` 中调用方式（跳转使用）
 ```php
 return redirect()->route('index');
 ```
-  资源路由器（将剩余未定义的方法按照方法名定义）
+参数的传递方式及参数约束 在路由中可写  其中 `name` 可为空
+```php
+Route::get('/study/username/{id}/{name?}', 'Study\IndexController@username')->where(['id' => '[0-9]+','name' => '[A-Za-z]+']);
+```
+控制器中接收参数的方式
+```php
+public function username($id, $name='zlgcg'){
+	var_dump($id);
+	var_dump($name);
+}
+```
+
+资源路由器（将剩余未定义的方法按照方法名定义）
 ```php
 Route::resource('study/index', 'Study\IndexController');
 // 或者
@@ -33,16 +45,15 @@ Route::resources([
 	'posts' => 'PostController'
 ]);
 ```
-  参数的传递方式及参数约束 在路由中可写  其中 `name` 可为空
+声明资源路由时，你可以指定控制器应该处理的部分行为，而不是所有默认的行为
 ```php
-Route::get('/study/username/{id}/{name?}', 'Study\IndexController@username')->where(['id' => '[0-9]+','name' => '[A-Za-z]+']);
-```
-  控制器中接收参数的方式
-```php
-public function username($id, $name='zlgcg'){
-	var_dump($id);
-	var_dump($name);
-}
+Route::resource('photos', 'PhotoController', ['only' => [
+    'index', 'show'
+]]);
+
+Route::resource('photos', 'PhotoController', ['except' => [
+    'create', 'store', 'update', 'destroy'
+]]);
 ```
 ### 2.2 middleware 中间件
 middleware 中间件可在路由中接收是对参数进行约束校验，我们可以使用框架工具直接生成一个 CheckTest 中间件，并使用其对id的限制
@@ -127,6 +138,18 @@ $name = Route::currentRouteName();
 $action = Route::currentRouteAction();
 ```
 ### 2.5 Responses 响应
+路由控制器中可直接采用return响应
+```php
+Route::get('/', function () {
+    return 'Hello World';
+});
+// 除了从路由和控制器返回字符串之外，还可以返回数组。框架会自动将数组转为 JSON 响应。
+Route::get('/', function () {
+    return [1, 2, 3];
+});
+```
+你还可以从路由或控制器中直接返回 Eloquent ORM 集合, 它们会自动转为 JSON 响应.
+
 ### 2.6 文件上传
 ### 2.7 URL 处理
 ### 2.8 错误处理
