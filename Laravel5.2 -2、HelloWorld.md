@@ -205,6 +205,7 @@ return redirect()->action('HomeController@index');
 return redirect()->action(
     'UserController@profile', ['id' => 1]
 );
+return redirect()->action('Study\IndexController@username', ['name'=>'testName']);
 ```
 重定向到外部域
 ```php
@@ -252,7 +253,9 @@ return response()->file($pathToFile, $headers);
 ```
 
 ### 2.6 文件上传
+
 文件上传操作类 `use Illuminate\Support\Facades\Storage` 和 `use Illuminate\Http\Request` 
+
 ***上传地址配置***
 
 配置文件地址 `Project/config/filesystems.php` 
@@ -301,9 +304,180 @@ public function doupload(Request $request)
 
 ### 2.7 URL 处理
 
+***生成基础 URL***
+```php
+$post = App\Post::find(1);
+echo url("/posts/{$post->id}");
+// http://example.com/posts/1
+```
+
+***访问当前 URL***
+
+如果没有给辅助函数 url 提供路径，则会返回一个 Illuminate\Routing\UrlGenerator 实例，来允许你访问有关当前 URL 的信息
+```php
+// 获取没有查询字符串的当前的 URL ...
+echo url()->current();
+
+// 获取包含查询字符串的当前的 URL ...
+echo url()->full();
+
+// 获取上一个请求的完整的 URL...
+echo url()->previous();
+```
+
+上面的这些方法都可以通过 URL facade 访问
+```php
+use Illuminate\Support\Facades\URL;
+echo URL::current();
+```
+
+[More关于URL](https://laravel-china.org/docs/laravel/5.6/urls)
+
 ### 2.8 错误处理
+config/app.php 配置文件中的 debug 选项决定了对于一个错误实际上将显示多少信息给用户。
+
+本地开发时，`APP_DEBUG=true`;
+
+生产环境时，`APP_DEBUG=false`;
+
+所有异常都是由 `App\Exceptions\Handler` 类处理的。这个类包含两个方法：`report` 和 `render`。
+
+***异常处理器 Report 方法***
+
+```php
+namespace App\Exceptions;
+public function isValid($value)
+{
+    try {
+        // Validate the value...
+    } catch (Exception $e) {
+        report($e);
+        return false;
+    }
+}
+```
+
+***HTTP 异常***
+
+一些异常用于描述产生自服务器的 HTTP 错误代码。
+
+使用 `abort` 辅助函数可以从应用程序的任何地方生成这样的响应。
+
+```php
+abort(404);
+```
+
+***自定义 HTTP 错误页面***
+
+`Laravel` 可以轻松显示各种 HTTP 状态代码的自定义错误页面。
+
+如果你希望自定义 404 HTTP 状态码的错误页面，可以创建一个 `Project/resources/views/errors/404.blade.php` 视图文件。
+
+该文件将被用于你的应用程序产生的所有 404 错误。
+
+此目录中的视图文件的命名应匹配它们对应的 HTTP 状态码。由 abort 函数引发的 HttpException 实例将作为 $exception 变量传递给视图.
+
+```php
+<h2>{{ $exception->getMessage() }}</h2>
+```
 
 ### 2.9 模板（数据模型）
+Laravel 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和数据库交互。
+每个数据库表都有一个对应的「模型」用来与该表交互。你可以通过模型查询数据表中的数据，并将新记录添加到数据表中。
+
+***定义模型***
+
+创建模型实例的最简单方法是使用 Artisan 命令 make:model： 
+`php artisan make:model User`
+
+如果要在生成模型时生成 数据库迁移 ，可以使用 --migration 或 -m 选项：
+`php artisan make:model User --migration` 
+or 
+`php artisan make:model User -m`
+
+***Eloquent 模型约定***
+
+```php
+namespace App;
+use App\Pwd;
+use App\Say;
+use Illuminate\Database\Eloquent\Model;
+
+class Member extends Model
+{
+    /**
+     * 与模型关联的数据表
+     * @var string
+     */
+    protected $table = 'member';
+
+    /**
+     * 模型的主键
+     * @var string
+     */
+    public $primaryKey = 'id';
+
+    /**
+     * 该模型是否被自动维护时间戳
+     * @var bool
+     */
+    public $timestamps = false;
+
+	/**
+     * 模型的日期字段的存储格式
+     *
+     * @var string
+     */
+    // protected $dateFormat = 'U';
+
+	/**
+     * 数据模型专属的数据库连接
+     *
+     * @var string
+     */
+    // protected $connection = 'connection-name';
+
+    /**
+     * 添加可以批量赋值的字段
+     * @var array
+     */
+    protected $fillable = ['name', 'age', 'tel', 'address', 'score', 'class', 'ext_info'];
+
+    /**
+	 * 不可被批量赋值的属性
+	 * @var array
+	 */
+	protected $guarded = [];
+
+	/**
+	 * 关联 pwd 表 一对一
+	 */
+	public function pwd()
+	{
+		return $this->hasOne('App\Pwd', 'm_id', 'id'); // 关联的模型，关联模型对应的字段，当前模型的字段
+	}
+	
+	/**
+	 * 关联 say 表 一对多
+	 */
+	public function say()
+	{
+		return $this->hasMany('App\Say', 'm_id', 'id');
+	}
+
+}
+```
+> * 主键 
+
+Eloquent 也会假定每个数据表都有一个名为 id 的主键字段。你可以定义一个访问权限为protected的 $primaryKey 属性来覆盖这个约定。
+> * 时间戳
+
+默认情况下，Eloquent 会默认数据表中存在 created_at 和 updated_at 这两个字段。
+如果你不需要这两个字段，则需要在模型内将 $timestamps 属性设置为 false。
+如果你需要自定义时间戳格式，可在模型内设置 $dateFormat 属性。
+> * 数据库连接
+
+默认情况下，所有的模型使用应用配置中的默认数据库连接。如果你想要为模型指定不同的连接，可以通过 $connection 属性来设置。
 
 ### 2.10 视图 及 前端资源
 
