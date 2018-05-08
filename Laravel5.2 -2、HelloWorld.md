@@ -664,25 +664,54 @@ $flight = App\Flight::updateOrCreate(
 > * 恢复软删除模型
 > * 永久删除
 > * 查询作用域
-[Eloquent ORM 其他可查看文档地址](https://laravel-china.org/docs/laravel/5.6/eloquent)
+
+[Eloquent ORM 其他可查看文档地址](https://laravel-china.org/docs/laravel/5.6/eloquent#ad4448)
 
 ***事件***
 
-Eloquent 模型会触发许多事件，让你在模型的生命周期的多个时间点进行监控： retrieved, creating, created, updating, updated, saving, saved, deleting, deleted, restoring, restored。 事件让你在每当有特定模型类进行数据库保存或更新时，执行代码。
+> Eloquent 模型会触发许多事件，让你在模型的生命周期的多个时间点进行监控： retrieved, creating, created, updating, updated, saving, saved, deleting, deleted, restoring, restored。 事件让你在每当有特定模型类进行数据库保存或更新时，执行代码。
 
-当从数据库检索现有模型时，会触发retrieved 事件。
+> 当从数据库检索现有模型时，会触发retrieved 事件。
 
-当模型第一次被保存时， creating 和 created 事件会被触发。
+> 当模型第一次被保存时， creating 和 created 事件会被触发。
 
-若数据库中已存在此模型，并调用 save 方法，updating / updated 事件会被触发。 这两种情况下，saving / saved 事件都会被触发。
+> 若数据库中已存在此模型，并调用 save 方法，updating / updated 事件会被触发。 这两种情况下，saving / saved 事件都会被触发。
 
-当删除数据是触发 deleting, deleted 事件。
+> 当删除数据是触发 deleting, deleted 事件。
 
-当恢复软删除时操作 restoring, restored 事件。
+> 当恢复软删除时操作 restoring, restored 事件。
+
+###### 已上操作均可使用 [观察者](https://laravel-china.org/docs/laravel/5.6/eloquent#cab083) 类来监听操作
+
+
 
 ### 2.10 视图 及 前端资源
 
+***[创建视图](https://laravel-china.org/docs/laravel/5.6/views#e5a2b2)***
+
+```php
+<!-- 此视图文件位置：resources/views/greeting.blade.php -->
+<html>
+    <body>
+        <h1>Hello, {{ $name }}</h1>
+    </body>
+</html>
+```
+
+***[传递数据](https://laravel-china.org/docs/laravel/5.6/views#9f239f)***
+
+```php
+return view('greeting', ['name' => 'James']);
+```
+
+***外部视图引入***
+
+具体可以查看[Blade模板文档](https://github.com/zuoliguang/studyMarks/blob/master/Blade%E6%A8%A1%E6%9D%BF.md)
+或者查看官方[模板文档](https://laravel-china.org/docs/laravel/5.6/blade)
+
 ### 2.11 日志
+
+[官方日志](https://laravel-china.org/docs/laravel/5.6/logging)
 
 ### 2.12 拓展插件使用
 
