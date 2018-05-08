@@ -28,8 +28,8 @@ return redirect()->route('index');
 ```php
 Route::resource('study/index', 'Study\IndexController');
 Route::resources([
-    'photos' => 'PhotoController',
-    'posts' => 'PostController'
+	'photos' => 'PhotoController',
+	'posts' => 'PostController'
 ]);
 ```
   参数的传递方式及参数约束 在路由中可写  其中 `name` 可为空
@@ -39,8 +39,8 @@ Route::get('/study/username/{id}/{name?}', 'Study\IndexController@username')->wh
   控制器中接收参数的方式
 ```php
 public function username($id, $name='zlgcg'){
-		var_dump($id);
-		var_dump($name);
+	var_dump($id);
+	var_dump($name);
 }
 ```
 ### 2.2 middleware 中间件
