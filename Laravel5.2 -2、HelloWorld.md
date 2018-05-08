@@ -124,7 +124,6 @@ $route = Route::current();
 $name = Route::currentRouteName();
 $action = Route::currentRouteAction();
 ```
-
 ### 2.5 Responses 响应
 ### 2.6 文件上传
 ### 2.7 URL 处理
