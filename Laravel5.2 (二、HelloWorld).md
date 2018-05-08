@@ -16,14 +16,18 @@
   ```php
   Route::get('/study', 'Study\IndexController@index');
   ```
-  控制器路由命名及使用, `Project/app/Http/routes.php`中
+  控制器路由命名及使用, `Project/app/Http/routes.php`中代码
+  
   ```php
   Route::get('/study', 'Study\IndexController@index')->name('index');
   ```
+  
   在 `Project/app/Http/Controllers/Study/IndexController.php` 中调用方式（跳转使用）
+  
   ```php
   return redirect()->route('index');
   ```
+  
   资源路由器（将剩余未定义的方法按照方法名定义）
   ```php
   Route::resource('study/index', 'Study\IndexController');
