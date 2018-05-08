@@ -1,21 +1,21 @@
 ## 2、HelloWorld 测试学习
 ### 2.1 路由
   直接将结果写在 `Project/app/Http/routes.php` 中
-  ```php
-  Route::get('/study/route', function () {
-    return 'Hello World, zuoliguang!';
-  });
-  ```
+```php
+Route::get('/study/route', function () {
+  return 'Hello World, zuoliguang!';
+});
+```
   或者返回到对应的模板中展示
-  ```php
-  Route::get('/', function () {
-    return view('welcome', ['title'=>'zuoliguang']);
-  });
-  ```
+```php
+Route::get('/', function () {
+  return view('welcome', ['title'=>'zuoliguang']);
+});
+```
   或者指定到固定的控制器来处理,将 `http:://ip/study` 指向 `Project/app/Http/Controllers/Study/IndexController.php` 下的 `index` 方法
-  ```php
-  Route::get('/study', 'Study\IndexController@index');
-  ```
+```php
+Route::get('/study', 'Study\IndexController@index');
+```
   控制器路由命名及使用, `Project/app/Http/routes.php`中代码
 ```php
 Route::get('/study', 'Study\IndexController@index')->name('index');
@@ -28,7 +28,18 @@ return redirect()->route('index');
 ```php
 Route::resource('study/index', 'Study\IndexController');
 ```
-  
+  参数的传递方式及参数约束 在路由中可写  其中 `name` 可为空
+```php
+Route::get('/study/username/{id}/{name?}', 'Study\IndexController@username')->where(['id' => '[0-9]+','name' => '[A-Za-z]+']);
+```
+  控制器中接收方式
+```php
+public function username($id, $name='zlgcg'){
+		var_dump($id);
+		var_dump($name);
+	}
+```
+  
 ### 2.2 middleware 中间件
 ### 2.3 CSRF 保护、表单验证
 ### 2.4 控制器
