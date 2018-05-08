@@ -90,6 +90,38 @@ if($_token==csrf_token()){
 }
 ```
 ### 2.4 Request 请求
+在上传信息的接口位置可以使用 `use Illuminate\Http\Request` 创建接受类，控制器中代码
+```php
+public function postdata(Request $request) {
+	$uri = $request->path(); // 获取实际路径
+	$url = $request->url(); // 获取地址
+	$fullUrl = $request->fullUrl(); // 获取地址
+	$is_post = $request->isMethod('post'); // 是否是post
+	$is_get = $request->isMethod('get'); // 是否是get
+	$test = $request->test;
+	$all = $request->all(); // 获取传入的所有参数
+	$isHas = $request->has(['name', 'email']); // 是否有 name、email 字段信息
+
+	var_dump($uri);echo "<pre>";
+	var_dump($url);echo "<pre>";
+	var_dump($fullUrl);echo "<pre>";
+	var_dump($is_post);echo "<pre>";
+	var_dump($is_get);echo "<pre>";
+	var_dump($test);echo "<pre>";
+	var_dump($all);echo "<pre>";
+	var_dump($isHas);echo "<pre>";
+
+}
+```
+或者直接打印 `$request` 查看内容
+
+**使用Route** 如果要获取的是路径信息 可以使用 `use Illuminate\Support\Facades\Route` 来直接获得
+```php
+$route = Route::current();
+$name = Route::currentRouteName();
+$action = Route::currentRouteAction();
+```
+
 ### 2.5 Responses 响应
 ### 2.6 文件上传
 ### 2.7 URL 处理
