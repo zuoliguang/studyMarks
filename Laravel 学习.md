@@ -61,13 +61,21 @@
   Route::get('/study', 'Study\IndexController@index');
   ```
   控制器路由命名及使用, `Project/app/Http/routes.php`中
+  
   ```php
   Route::get('/study', 'Study\IndexController@index')->name('index');
   ```
+  
   `Project/app/Http/Controllers/Study/IndexController.php` 中调用方式（跳转使用）
+  
   ```php
   return redirect()->route('index');
   ```
+  资源路由器（将剩余未定义的方法按照方法名定义）
+  ```php
+  Route::resource('study/index', 'Study\IndexController');
+  ```
+  
 ### 2.2 middleware 中间件
 ### 2.3 CSRF 保护、表单验证
 ### 2.4 控制器
