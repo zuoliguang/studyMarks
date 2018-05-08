@@ -27,6 +27,10 @@ return redirect()->route('index');
   资源路由器（将剩余未定义的方法按照方法名定义）
 ```php
 Route::resource('study/index', 'Study\IndexController');
+Route::resources([
+    'photos' => 'PhotoController',
+    'posts' => 'PostController'
+]);
 ```
   参数的传递方式及参数约束 在路由中可写  其中 `name` 可为空
 ```php
