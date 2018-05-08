@@ -150,7 +150,8 @@ Route::get('/', function () {
 ```
 你还可以从路由或控制器中直接返回 Eloquent ORM 集合, 它们会自动转为 JSON 响应.
 
-**自定义 响应对象**
+***自定义 响应对象***
+
 
 控制器中可以使用 `Illuminate\Http\Response` 来创建响应信息.
 
@@ -162,7 +163,8 @@ Route::get('home', function () {
 ```
 该响应类 Response 实例继承自 Symfony\Component\HttpFoundation\Response 类
 
-**为响应增加头信息**
+***为响应增加头信息***
+
 ```php
 return response($content)
 	->header('Content-Type', $type)
@@ -178,7 +180,7 @@ return response($content)
 		'X-Header-Two' => 'Header Value',
 	]);
 ```
-**为响应增加 Cookie**
+***为响应增加 Cookie***
 
 ```php
 return response($content)
@@ -186,6 +188,7 @@ return response($content)
 	->cookie('name', 'value', $minutes);
 ```
 ***城定向***
+
 重定向至命名路由, 当你不带参数调用辅助函数 redirect 时，会返回 Illuminate\Routing\Redirector 实例。这个实例允许你调用 Redirector 上的任何方法。
 ```php
 return redirect()->route('index');
@@ -210,6 +213,7 @@ return redirect()->away('https://www.google.com');
 **其他响应类型**
 
 ***视图响应***
+
 ```php
 return response()
 	->view('hello', $data, 200)
@@ -217,6 +221,7 @@ return response()
 ```
 
 ***JSON 响应***
+
 ```php
 return response()->json([
 	'name' => 'Abigail',
@@ -231,6 +236,7 @@ return response()
 ```
 
 ***文件下载***
+
 注:管理文件下载的扩展包 Symfony HttpFoundation，要求下载文件名必须是 ASCII 编码的
 ```php
 return response()->download($pathToFile); // 下载指定的文件名称
@@ -238,6 +244,7 @@ return response()->download($pathToFile, $name, $headers); // 以指定的名称
 ```
 
 ***文件响应***
+
 file 方法可以直接在用户浏览器中显示文件（不是发起下载），例如图像或者 PDF。
 ```php
 return response()->file($pathToFile);
@@ -245,6 +252,52 @@ return response()->file($pathToFile, $headers);
 ```
 
 ### 2.6 文件上传
+文件上传操作类 `use Illuminate\Support\Facades\Storage` 和 `use Illuminate\Http\Request` 
+***上传地址配置***
+
+配置文件地址 `Project/config/filesystems.php` 
+```php
+'disks' => [
+        'local' => [
+            'driver' => 'local',
+            'root' => storage_path('upload'), // 该位置设置文件保存地址
+        ]
+    ]
+```
+上传页面
+```php
+<form method="POST" action="/study/doupload" enctype="multipart/form-data">
+	{{ csrf_field() }}
+	<input type="file" name="file">
+	<button type="submit">submit</button>
+</form>
+```
+后台文件接收
+```php
+// 文件上传, 将获得的有效文件使用插件保存到指定地址即可 
+public function doupload(Request $request)
+{
+	$file = $request->file('file');
+	$file_path = ''; // 上传后的文件地址 
+	// 验证文件是否有效
+	if ($file->isValid()) {
+		$path = $file->path(); // 临时文件的存放地址
+		$name = $file->getClientOriginalName(); // 图片名称
+		$ext = $file->getClientOriginalExtension(); // 图片格式
+		$size = $file->getClientSize(); // 图片大小
+		$file_content = file_get_contents($path);
+		$file_name = date('Y-m-d-H-i-s-').$name;
+		Storage::disk('local')->put($file_name, $file_content);
+		$file_path = config()->get('filesystems.disks.local.root')."/".$file_name;
+	}
+	
+	if (!empty($file_path)) {
+		echo '文件上传成功，地址：'.$file_path;
+	} else {
+		echo '文件上传失败';
+	}
+}
+```
 
 ### 2.7 URL 处理
 
