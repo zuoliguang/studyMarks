@@ -1,4 +1,7 @@
 ## 2、HelloWorld 测试学习
+
+[TOC]
+
 ### 2.1 路由
 直接将结果写在 `Project/app/Http/routes.php` 中
 ```php
@@ -729,7 +732,7 @@ Log::debug($message.'-debug ');
 ```
 > 日志文件默认记录的地址 `APP_PATH/storage/logs/laravel.log`, 日志的信息格式可以自己定义, 实际开发中会将该文件保存到根路径下或者项目之外或者使用数据库存储，实际情况则要要看具体业务实现方案。
 
-[官方日志](https://laravel-china.org/docs/laravel/5.6/logging)
+也可以查看 [官方日志文档](https://laravel-china.org/docs/laravel/5.6/logging)。
 
 如果选择在线数据库的方式可以看下用 `Python` 实现的一款开源插件[Loglog](https://www.oschina.net/p/loglog), 初版有些简陋，有待改进的方案，但是由于时间有限，各位可以在原有的思路上自行优化使用。
 
@@ -742,17 +745,50 @@ Log::debug($message.'-debug ');
 这里我只介绍几个实际开发中会经常使用到的几个功能方便手动的开发。
 
 > 1.创建模型: `php artisan make:model User`; 如果要在生成模型时生成 数据库迁移 ，可以使用 `--migration` 或 `-m` 选项: `php artisan make:model User -m`；
+
 > 2.创建控制器: `php artisan make:controller PhotoController --resource`；
+
 > 3.创建Middleware中间件: `php artisan make:middleware CheckAge`；
+
 > 注:其他的会在后期慢慢学习追加
 
 #### *广播系统*
+
+
+
 #### *缓存系统*
+
+
+
 #### *集合 Collection （处理数组的高级封装）*
+
+
+
 #### *事件系统*
+
+
+
 #### *文件存储*
+
+
+
 #### *辅助函数、框架全局Helper函数*
+
+
+
 #### *消息辅助（邮件、短信、数据库）*
+
+
+
 #### *消息队列*
+
+
+
 #### *调度任务 Cron*
+
+
+
 #### *Laravel 拓展包开发*
+
+
+
