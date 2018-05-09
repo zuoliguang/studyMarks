@@ -692,38 +692,60 @@ $flight = App\Flight::updateOrCreate(
 ###### 已上操作均可使用 [观察者](https://laravel-china.org/docs/laravel/5.6/eloquent#cab083) 类来监听操作
 
 
-
 ### 2.10 视图 及 前端资源
-
-***[创建视图](https://laravel-china.org/docs/laravel/5.6/views#e5a2b2)***
-
-```php
-<!-- 此视图文件位置：resources/views/greeting.blade.php -->
-<html>
-    <body>
-        <h1>Hello, {{ $name }}</h1>
-    </body>
-</html>
-```
-
-***[传递数据](https://laravel-china.org/docs/laravel/5.6/views#9f239f)***
-
-```php
-return view('greeting', ['name' => 'James']);
-```
-
-***外部视图引入***
 
 具体可以查看[Blade模板文档](https://github.com/zuoliguang/studyMarks/blob/master/Blade%E6%A8%A1%E6%9D%BF.md)
 或者查看官方[模板文档](https://laravel-china.org/docs/laravel/5.6/blade)
 
+***前端资源引入***
+
+这里我们把前端资源的文件都放在了 `Project/public` 下, 和入口文件一样的位置，所以可以直接在模板文件里写
+```php
+<link href="/css/test.css" rel="stylesheet" type="text/css">
+```
+本地化的javascript 及 图片资源均可以同样方式使用。
+
+> 注：客户上传图片及文件最好使用第三方的服务平台进行存储，以免造成服务器宕机。
+
 ### 2.11 日志
 
+Laravel 的日志系统是基于 `Monolog` 库，`Monolog` 提供了多种强力的日志处理程序。
+
+#### 配置
+
+Laravel 5.2 框架里直接饮用的 `use Illuminate\Support\Facades\Log` ;
+
+在代码中使用的方式是
+```php
+$message = 'this is an log infomation for laravel study!!!!!!';
+Log::emergency($message.'-emergency ');
+Log::alert($message.'-alert ');
+Log::critical($message.'-critical ');
+Log::error($message.'-error ');
+Log::warning($message.'-warning ');
+Log::notice($message.'-notice ');
+Log::info($message.'-info ');
+Log::debug($message.'-debug ');
+```
+> 日志文件默认记录的地址 `APP_PATH/storage/logs/laravel.log`, 日志的信息格式可以自己定义, 实际开发中会将该文件保存到根路径下或者项目之外或者使用数据库存储，实际情况则要要看具体业务实现方案。
+
 [官方日志](https://laravel-china.org/docs/laravel/5.6/logging)
+
+如果选择在线数据库的方式可以看下用 `Python` 实现的一款开源插件[Loglog](https://www.oschina.net/p/loglog), 初版有些简陋，有待改进的方案，但是由于时间有限，各位可以在原有的思路上自行优化使用。
 
 ### 2.12 拓展插件使用
 
 #### *Artisan 脚手架 命令行*
+
+详细的介绍还是要看 [官方的文档](https://laravel-china.org/docs/laravel/5.6/artisan).
+
+这里我只介绍几个实际开发中会经常使用到的几个功能方便手动的开发。
+
+> 1.创建模型: `php artisan make:model User`; 如果要在生成模型时生成 数据库迁移 ，可以使用 `--migration` 或 `-m` 选项: `php artisan make:model User -m`；
+> 2.创建控制器: `php artisan make:controller PhotoController --resource`；
+> 3.创建Middleware中间件: `php artisan make:middleware CheckAge`；
+> 注:其他的会在后期慢慢学习追加
+
 #### *广播系统*
 #### *缓存系统*
 #### *集合 Collection （处理数组的高级封装）*
