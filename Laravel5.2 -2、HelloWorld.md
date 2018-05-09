@@ -754,15 +754,136 @@ Log::debug($message.'-debug ');
 
 #### *广播系统*
 
+`Laravel` 通过 `WebSocket` 连接来使「广播」事件, 广播事件允许你在服务端代码和客户端 JavaScript 应用之间共享相同的事件名。
 
+***配置***
+
+所有关于事件广播的配置都被保存在 `config/broadcasting.php` 文件中。 `Laravel` 自带了几个广播驱动器：`Pusher`、 `Redis`，和一个用于本地开发与调试的 `log` 驱动器。另外，还有一个 null 驱动器可以让你完全关闭广播功能。每一个驱动的示例配置都可以在 config/broadcasting.php 文件中被找到。
+
+广播服务提供者
+在对事件进行广播之前，你必须先注册 App\Providers\BroadcastServiceProvider。对于一个全新安装的 Laravel 应用程序，你只需在 config/app.php 配置文件的 providers 数组中取消对该提供者的注释即可。该提供者将允许你注册广播授权路由和回调。
+
+由于本地使用的是 Laravel5.2 没有提供 广播系统 功能这里直接导向[Laravel5.6的官方文档](https://laravel-china.org/docs/laravel/5.6/broadcasting)。
 
 #### *缓存系统*
 
+`Laravel` 为各种后端缓存提供丰富而统一的 API，而其配置信息位于 `config/cache.php` 文件中，你可以指定默认的缓存驱动程序。`Laravel` 支持当前流行的后端缓存，例如 `Memcached` 和 `Redis`。
 
+[官方的文档可以参考这里](https://laravel-china.org/docs/laravel/5.6/cache)。这里我们只简单的使用Redis来实现一下功能；
+
+由于没有安装Laravel对应的支持插件这里我们用composer来安装一下：`composer require "predis/predis:~1.0"`，安装完成即可开始使用。
+
+***配置***
+
+在配置文件 `.env` 和 对应的redis配置文件添加完信息
+
+使用 `use Illuminate\Support\Facades\Cache` 来获取缓存实例
+```php
+use Illuminate\Support\Facades\Cache;
+$value = Cache::get('key');
+```
+当然，也可一次访问多个缓存实例
+```php
+use Illuminate\Support\Facades\Cache;
+// 文件缓存
+$val = Cache::store('file')->get('foo');
+
+// redis缓存
+Cache::store('redis')->put('bar', 'baz', 10);
+
+// ------不指定时走默认的-----
+// 获取数据
+$value = Cache::get('key');
+$value = Cache::get('key', 'default'); // 当获取不到时采用默认值
+
+// 确认是否存在
+if (Cache::has('key')) {
+    //
+}
+
+// 递增与递减值
+Cache::increment('key');
+Cache::increment('key', $amount);
+Cache::decrement('key');
+Cache::decrement('key', $amount);
+
+// 获取和存储 缓存时间$minutes
+// 解析：操作先去缓存中获取信息，当缓存中没有要获取的信息时，就会去数据库去取，并返回数据同时在缓存中缓存一份数据。
+$value = Cache::remember('users', $minutes, function () {
+    return DB::table('users')->get();
+});
+// 或者永久缓存
+$value = Cache::rememberForever('users', function() {
+    return DB::table('users')->get();
+});
+
+// 获取之后删除数据
+$value = Cache::pull('key');
+
+// 在缓存中存储数据
+Cache::put('key', 'value', $minutes);
+
+// 过期时间设置
+$expiresAt = now()->addMinutes(10);
+Cache::put('key', 'value', $expiresAt);
+
+// add 方法将不存在于缓存中的数据放入缓存中，如果存放成功返回 true ，否则返回 false
+Cache::add('key', 'value', $minutes);
+
+// 数据永久存储
+// forever 方法可以用来将数据永久存入缓存中。
+Cache::forever('key', 'value');
+
+// 删除缓存中的数据
+Cache::forget('key');
+// flush 方法清空所有缓存
+Cache::flush();
+
+// Cache 辅助函数 控制器存在一个全局的辅助函数 
+$value = cache('key');
+cache(['key' => 'value'], $minutes);
+cache(['key' => 'value'], now()->addSeconds(10));
+
+```
+具体的使用方法看上面代码的使用。
 
 #### *集合 Collection （处理数组的高级封装）*
 
+`Illuminate\Support\Collection` 类提供了一个更具可读性的、更便于处理数组数据的封装。
 
+例子：
+```php
+// 创建集合
+$collection = collect(['taylor', 'abigail', null])
+// 将每个元素大写
+->map(function ($name) {
+    return strtoupper($name);
+})
+// 将空元素去掉
+->reject(function ($name) {
+    return empty($name);
+});
+```
+
+***集合拓展***
+
+```php
+use Illuminate\Support\Str;// 加载str类
+
+Collection::macro('toUpper', function () {
+    return $this->map(function ($value) {
+        return Str::upper($value); // 将每个元素大写操作
+    });
+});
+
+$collection = collect(['first', 'second']);
+$upper = $collection->toUpper();
+// 结果 ['FIRST', 'SECOND']
+```
+
+> Collection 类每个可用的方法。记住，所有方法都可以以链式访问的形式优雅地操纵数组。而且，几乎所有的方法都会返回新的 Collection 实例，允许你在必要时保存集合的原始副本。
+
+[Collection可用的方法](https://laravel-china.org/docs/laravel/5.6/collections#26e4a9), 具体方法可查看链接详情。
 
 #### *事件系统*
 
