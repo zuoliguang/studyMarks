@@ -265,7 +265,7 @@ return response()->file($pathToFile);
 return response()->file($pathToFile, $headers);
 ```
 
-### 2.6 文件上传
+### 2.6 <a name="uploadFile">文件上传</a>
 
 文件上传操作类 `use Illuminate\Support\Facades\Storage` 和 `use Illuminate\Http\Request` 
 
@@ -992,7 +992,7 @@ Event::fire(new TestEvent('zuoliguang'));
 
 #### *文件存储*
 
-该部分内容可以查看 文件上传 部分内容
+该部分内容可以查看 <a href="#uploadFile">文件上传<a> 部分内容
 
 #### *辅助函数、框架全局Helper函数*
 
