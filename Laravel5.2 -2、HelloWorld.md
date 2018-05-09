@@ -1,5 +1,7 @@
 ## 2、HelloWorld 测试学习
 
+[TOCM]
+
 [TOC]
 
 ### 2.1 路由
@@ -887,11 +889,110 @@ $upper = $collection->toUpper();
 
 #### *事件系统*
 
+Laravel 的事件提供了一个简单的观察者实现，能够订阅和监听应用中发生的各种事件。事件类保存在 `app/Events` 目录中，而这些事件的的监听器则被保存在 `app/Listeners` 目录下。
+
+我们先来实现一个简单的时间监听装置。
+
+`Project/app/Events/Event.php` 中添加监听映射
+```php
+/**
+ * 应用程序的事件侦听器映射。
+ *
+ * @var array
+ */
+protected $listen = [
+	'App\Events\TestEvent' => [
+		'App\Listeners\TestListener',
+	],
+];
+```
+
+`app/Events` 目录下添加 `TestEvent`
+
+```php
+namespace App\Events;
+
+use App\Events\Event;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+
+class TestEvent extends Event
+{
+    use SerializesModels;
+
+    public $testInfo = 'This Is Test Info!';
+
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct($str='')
+    {
+        $this->testInfo .= $str;
+        Log::notice($this->testInfo.'-Event ');
+    }
+}
+```
+
+`app/Listeners` 目录下添加 `TestListener`
+
+```php
+namespace App\Listeners;
+
+use App\Events\TestEvent;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class TestListener
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  TestEvent  $event
+     * @return void
+     */
+    public function handle(TestEvent $event)
+    {
+        $message = $event->testInfo;
+        Log::warning($message.'-Listener ');
+    }
+}
+```
+
+这里将执行的结果直接写入Log文件中查看
+
+控制器中调用的方式, 使用全局 `event` 辅助函数来触发事件
+
+```php
+use App\Events\TestEvent;
+
+event(new TestEvent('zuoliguang'));
+```
+或者
+```php
+use Event;
+use App\Events\TestEvent;
+
+Event::fire(new TestEvent('zuoliguang'));
+```
 
 
 #### *文件存储*
 
-
+该部分内容可以查看 文件上传 部分内容
 
 #### *辅助函数、框架全局Helper函数*
 
