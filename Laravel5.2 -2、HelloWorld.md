@@ -90,6 +90,11 @@ protected $routeMiddleware = [
 	'checkId' => \App\Http\Middleware\CheckTest::class, // 该位置注册自定义的中间件 CheckTest
 ];
 ```
+使用时 在路由文件中对参数约束方式
+```php
+// 这里的 checkId 对应的是 Kernel.php 文件里变量 $routeMiddleware 下的 key 值
+Route::get('/study/user/{id}', 'Study\IndexController@user')->where(['id' => '[0-9]+'])->middleware('checkId');
+```
 
 ### 2.3 CSRF 保护、表单验证
 在对应的`form`表单中添加 `{{ csrf_field() }}` 代码会自动在表单中添加隐含字段
@@ -129,15 +134,18 @@ public function postdata(Request $request) {
 	var_dump($isHas);
 }
 ```
-或者直接打印 `$request` 查看内容
+或者直接打印查看 `$request` 内容
 
-**使用Route** 如果要获取的是路径信息 可以使用 `use Illuminate\Support\Facades\Route` 来直接获得
+**使用Route** 
+
+如果要获取的是路径信息 可以使用 `use Illuminate\Support\Facades\Route` 来直接获得
 ```php
 $route = Route::current();
 $name = Route::currentRouteName();
 $action = Route::currentRouteAction();
 ```
 ### 2.5 Responses 响应、重定向
+
 路由控制器中可直接采用return响应
 ```php
 Route::get('/', function () {
@@ -607,7 +615,7 @@ $max = App\Flight::where('active', 1)->max('price');
 
 ***批量新增***
 
-该操作需要在模型中设置可以被批量赋值的属性
+该操作需要在模型中设置可以被批量赋值的属性，还可以是指不可被赋值的属性。
 
 ```php
 /**
@@ -624,7 +632,7 @@ protected $fillable = ['name','age'];
  */
 protected $guarded = ['price'];
 ```
-控制器里操作, 当我们设置好批量赋值的属性，就可以通过 create 方法插入新数据。
+控制器里操作, 当我们设置好批量赋值的属性，就可以通过 create 方法插入新数据。返回值为被创建的实例对象。
 ```php
 $flight = App\Flight::create(['name' => 'Flight 10']);
 ```
@@ -665,7 +673,7 @@ $flight = App\Flight::updateOrCreate(
 > * 永久删除
 > * 查询作用域
 
-[Eloquent ORM 其他可查看文档地址](https://laravel-china.org/docs/laravel/5.6/eloquent#ad4448)
+已上从操作可查看[Eloquent ORM 其他可查看文档地址](https://laravel-china.org/docs/laravel/5.6/eloquent#ad4448)
 
 ***事件***
 
