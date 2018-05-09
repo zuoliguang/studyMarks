@@ -990,11 +990,11 @@ Event::fire(new TestEvent('zuoliguang'));
 
 该部分内容可以查看 <a href="#uploadFile">文件上传<a> 部分内容
 
-或者查看[官方文档](https://laravel-china.org/docs/laravel/5.6/filesystem), 文档中也可以尝试其他的方式来保存。
+或者查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/filesystem), 文档中也可以尝试其他的方式来保存。
 
 #### *辅助函数、框架全局Helper函数*
 
-可查看 [辅助函数官方文档](https://laravel-china.org/docs/laravel/5.6/helpers)
+具体可查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/helpers)
 
 #### *消息队列*
 
@@ -1002,13 +1002,13 @@ Laravel 队列为不同的队列后台服务提供了统一的 API，比如 Bean
 
 队列配置文件存储在 `config/queue.php`。在这个文件中，你可以找到框架包含的所有队列驱动的连接配置： `database`, `Beanstalkd`, `Amazon SQS`, `Redis`，和一个直接执行任务的同步驱动（本地使用）。 还包括了一个 null 队列驱动用于直接丢弃队列任务。
 
-具体可查看 [辅助函数官方文档](https://laravel-china.org/docs/laravel/5.6/queues)
+具体可查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/queues)
 
 #### *消息辅助（邮件、短信、数据库）*
 
-具体可查看 [辅助函数官方文档](https://laravel-china.org/docs/laravel/5.6/notifications)
+具体可查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/notifications)
 
 #### *Laravel 拓展包开发*
 
-可查看 [辅助函数官方文档](https://laravel-china.org/docs/laravel/5.6/packages)
+具体可查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/packages)
 
