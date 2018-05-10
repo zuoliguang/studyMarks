@@ -1,8 +1,8 @@
 ## 4、数据库
 
-Laravel提供的DB类 `use Illuminate\Support\Facades\DB` ;
-
 ### 4.1 原生数据库操作
+
+Laravel提供的DB类 `use Illuminate\Support\Facades\DB` ;
 
 代码实例
 
