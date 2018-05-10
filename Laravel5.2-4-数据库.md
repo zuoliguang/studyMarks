@@ -274,17 +274,17 @@ return App\User::paginate();
 
 每个分页器实例可以通过以下方法获取额外的分页信息
 
-> * $results->count()
-> * $results->currentPage()
-> * $results->firstItem()
-> * $results->hasMorePages()
-> * $results->lastItem()
-> * $results->lastPage() （使用 simplePaginate 时不可用）
-> * $results->nextPageUrl()
-> * $results->perPage()
-> * $results->previousPageUrl()
-> * $results->total() （使用 simplePaginate 时不可用）
-> * $results->url($page)
+* $results->count()
+* $results->currentPage()
+* $results->firstItem()
+* $results->hasMorePages()
+* $results->lastItem()
+* $results->lastPage() （使用 simplePaginate 时不可用）
+* $results->nextPageUrl()
+* $results->perPage()
+* $results->previousPageUrl()
+* $results->total() （使用 simplePaginate 时不可用）
+* $results->url($page)
 
 ### 4.4 初始化测试数据
 
