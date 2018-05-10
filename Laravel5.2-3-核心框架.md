@@ -132,6 +132,5 @@ Facade 类参考
 
 ### 3.3 容器
 
-### 3.4 静态代理
+点击这里可以查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/container)
 
-### 3.5 Facades 代理类
