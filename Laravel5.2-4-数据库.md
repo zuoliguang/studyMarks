@@ -55,8 +55,9 @@ public function db_update_user()
     //业务代码TODO
     if (false) {
         DB::rollBack(); // 回滚事务
+    } else {
+        DB::commit(); // 提交事务
     }
-    DB::commit(); // 提交事务
 }
 ```
 
