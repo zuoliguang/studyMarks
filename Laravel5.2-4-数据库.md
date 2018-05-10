@@ -225,6 +225,67 @@ public function model()
 
 ### 4.3 分页
 
+Laravel 的分页器与查询构造器、Eloquent ORM 集成在一起，并提供方便易用的数据结果集分页。
+
+***查询构造器分页***
+
+```php
+// 每页显示 15 项
+$users = DB::table('users')->paginate(15);
+```
+
+***简单分页***
+
+分页视图中显示简单的「下一页」和「上一页」的链接，即不需要显示每个页码的链接
+
+```php
+$users = DB::table('users')->simplePaginate(15);
+```
+
+***Eloquent 模型分页***
+
+```php
+$users = App\User::paginate(15);
+$users = User::where('votes', '>', 100)->paginate(15);
+$users = User::where('votes', '>', 100)->simplePaginate(15);
+```
+
+***Blade 模板显示结果集并渲染页面链接***
+
+```php
+<div class="container">
+    @foreach ($users as $user)
+        {{ $user->name }}
+    @endforeach
+</div>
+
+{{ $users->links() }}
+```
+
+> 注：links 方法将会链接渲染到结果集中其余的页面。每个链接都包含了正确的 page 查询字符串变量。记住，links 方法生成的 HTML 与 Bootstrap CSS 框架 兼容。
+
+***将结果转换为 JSON***
+
+```php
+return App\User::paginate();
+```
+
+***分页器实例方法***
+
+每个分页器实例可以通过以下方法获取额外的分页信息
+
+> * $results->count()
+> * $results->currentPage()
+> * $results->firstItem()
+> * $results->hasMorePages()
+> * $results->lastItem()
+> * $results->lastPage() （使用 simplePaginate 时不可用）
+> * $results->nextPageUrl()
+> * $results->perPage()
+> * $results->previousPageUrl()
+> * $results->total() （使用 simplePaginate 时不可用）
+> * $results->url($page)
+
 ### 4.4 初始化测试数据
 
 ### 4.5 迁移数据
