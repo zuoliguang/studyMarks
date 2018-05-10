@@ -269,7 +269,30 @@
     var_dump(iszf($p));
 ```
 
+#### 11、array_walk 使用方法
 
+批量生成数据
+
+```php
+$id = 1;
+$data = [];
+$values = [
+	'k1' => 'v1',
+	'k2' => 'v2',
+	'k3' => 'v3',
+	'k4' => 'v4',
+	'k5' => 'v5',
+	'k6' => 'v6',
+	'k7' => 'v7',
+	'k8' => 'v8'
+];
+// 处理$values数据，使用到的变量 $data（引用），$id
+array_walk($values, function($value, $key) use (&$data, $id) {
+	$data[]=['prop_id'=>$id,'name'=>$key,'value'=>$value];
+});
+
+var_dump($data);
+```
 
 
 
