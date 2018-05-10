@@ -286,6 +286,11 @@ return App\User::paginate();
 * $results->total() （使用 simplePaginate 时不可用）
 * $results->url($page)
 
-### 4.4 初始化测试数据
+### 4.4 迁移数据
 
-### 4.5 迁移数据
+迁移就像是数据库的版本控制, 允许团队简单轻松的编辑并共享应用的数据库表结构, Laravel 的 Schema 门面 对所有 Laravel 支持的数据库系统提供了创建和操作数据表的相应支持。
+
+***生成迁移***
+
+对于数据库迁移的内容查看 [官方文档](https://laravel-china.org/docs/laravel/5.6/migrations)
+
