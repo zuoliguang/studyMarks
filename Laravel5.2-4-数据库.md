@@ -6,8 +6,8 @@ Laravel提供的DB类 `use Illuminate\Support\Facades\DB` ;
 
 代码实例
 
+***新增***
 ```php
-// 新增
 public function db_add_user()
 {
     // 1、单处理
@@ -27,8 +27,10 @@ public function db_add_user()
     // 3、sql操作 
     DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
 }
+```
 
-// 更新
+***更新***
+```php
 public function db_update_user()
 {
     // 1、依据id更新
@@ -56,8 +58,10 @@ public function db_update_user()
     }
     DB::commit(); // 提交事务
 }
+```
 
-// 查询
+***查询***
+```php
 public function db_get_user()
 {
     // 1、条件查询
@@ -126,14 +130,15 @@ public function db_get_user()
         // 即找到 m_pwd 中有对应的 member 数据
     var_dump($data);
 }
+```
 
-// 删除 
+***删除***
+```php
 public function db_del_user()
 {
     DB::table('member')->where('id', 4)->delete();
     $deleted_rows = DB::delete('delete from users'); // sql 操作
 }
-
 ```
 
 ### 4.2 Eloquent ORM 模型
