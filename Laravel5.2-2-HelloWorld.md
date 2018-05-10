@@ -465,7 +465,7 @@ class Member extends Model
 	{
 		return $this->hasOne('App\Pwd', 'm_id', 'id'); // 关联的模型，关联模型对应的字段，当前模型的字段
 	}
-	
+
 	/**
 	 * 关联 say 表 一对多
 	 */
@@ -844,6 +844,50 @@ cache(['key' => 'value'], now()->addSeconds(10));
 
 ```
 具体的使用方法看上面代码的使用。
+
+***sesseion***
+
+代码实例
+
+```php
+public function session(Request $request)
+{
+	// --------------------------全局函数 sesseion();
+	// --------------------------HTTP 请求实例 $request->session()
+	// 1、session 
+	// 存储
+	session(['kkk' => 'zuoliguanghhhh']);
+	// 获取
+	$v = session('kkk');
+	// 指定默认值
+	$v = session('qqq', 'default');
+
+	// var_dump($v);
+
+	// 2、$request->session() 存储
+	// 存储
+	$request->session()->put('aaa', 'zuoliguangaaaa');
+	$request->session()->put('bbb', 'zuoliguangbbbb');
+	// 添加新值
+	$request->session()->push('user.teams', 'developers');
+
+	// 删除
+	$v = $request->session()->pull('bbb', 'default_bbb');
+
+	// var_dump($v);
+
+	// 获取
+	$v = $request->session()->get('aaa'); // 获取指定信息
+	$vs = $request->session()->all(); // 获取所有信息
+	
+    // 删除
+    $request->session()->forget('key');
+    // 全部删除
+    $request->session()->flush();
+    
+	var_dump($vs);
+}
+```
 
 #### *集合 Collection （处理数组的高级封装）*
 
