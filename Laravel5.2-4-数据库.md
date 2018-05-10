@@ -144,10 +144,87 @@ public function db_del_user()
 
 ### 4.2 Eloquent ORM 模型
 
-### 4.3 查询构造器
+自行创建的模型 `use App\Member`
 
-### 4.4 分页
+***使用模型数据库操作***
+```php
+public function model()
+{
+    header("Content-type: text/html; charset=utf-8");
 
-### 4.5 初始化测试数据
+    // 1、获取全部数据
+    $members = Member::all(); 
 
-### 4.6 迁移数据
+    // 2、获取条件搜索数据
+    $members = Member::where('id', '<', 10)->get(); 
+
+    // 3、分块结果
+    Member::chunk(2, function($members){
+        foreach ($members as $member) {
+            echo $member->name;
+            echo '<br/>';
+        }
+        echo '------------------<br/>';
+    });
+
+    // 4、取回单个信息
+    $member = Member::find(1);
+    $member = Member::where('id', '>', 10)->first();
+    var_dump($member);
+
+    // 5、取回指定数据集
+    $members = Member::find([12, 13, 14]);
+    foreach ($members as $member) {
+        echo $member->name;
+        echo "<br/>";
+    }
+
+    // 6、添加
+    $member = new Member;
+    $member->name 		= 'model';
+    $member->age 		= 40;
+    $member->tel 		= '88888888';
+    $member->address 	= 'peking zhanghao dizhi hahah';
+    $member->score 		= 99;
+    $member->class 		= '2-9';
+    $member->ext_info 	= 'this is a model test model info';
+    $member->save();
+
+    // 7、更新
+    $member = Member::find(14);
+    $member->name = 'test_mode';
+    $member->save();
+
+    // 8、批量更新
+    Member::where('id', 8)->update(['name'=>'test_update']);
+    Member::where('id', '>', 8)->where('id', '<=', 13)->update(['name'=>'test_update_agin']);
+
+    // 9、删除
+    $member = Member::find(7);
+    $member->delete();
+
+    // 10、批量删除
+    Member::destroy(1);
+    Member::destroy([1, 2, 3]);
+
+    // 11、获取关联信息
+    $member = Member::find(2);
+
+    // 12、获取一对一的数据
+    $pwd = $member->pwd; // 一对一
+    var_dump($pwd->pwd);
+
+    // 获取一对多的数据
+    $says = $member->say; // 一对多
+    foreach ($says as $say) {
+        var_dump($say->say);
+        echo '<br/>';
+    }
+}
+```
+
+### 4.3 分页
+
+### 4.4 初始化测试数据
+
+### 4.5 迁移数据
