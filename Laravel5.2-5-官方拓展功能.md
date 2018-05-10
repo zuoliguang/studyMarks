@@ -1,8 +1,8 @@
 ## 5、官方拓展功能
 
-### 5.1 全文搜索
+### 5.1 全文搜索 - Scout
 
-该部分使用的Laravel Scout，具体可查看 [详细文档](https://laravel-china.org/docs/laravel/5.6/scout)。
+[官方文档](https://laravel-china.org/docs/laravel/5.6/scout)
 
 ### 5.2 队列监控面板 - Horizon
 
