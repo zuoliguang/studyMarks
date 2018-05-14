@@ -1,4 +1,3 @@
-在使用以下代码测试之前，还有可参考的官方参考 [代码实例](https://github.com/pinguo/php-msf-demo)
 
 ### HTTP Server
 
@@ -119,3 +118,7 @@ $server->start();
 ```
 
 [点击这里](https://pinguo.gitbooks.io/php-msf-docs/content/chapter-2/2.2-swoole.html) 可查看更多 `Swoole` 实例，虽然有些也想不到实际应用的场景，多看评论并结合自己的经验或许会有答案。
+
+测试之前，还有可参考的官方参考代码以及详细的讲解 
+* [代码实例](https://github.com/pinguo/php-msf-demo)
+* [详细讲解](https://pinguo.gitbooks.io/php-msf-docs/chapter-4/4.1-%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0.html)
