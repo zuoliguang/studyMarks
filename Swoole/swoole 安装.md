@@ -1,6 +1,7 @@
 ## Swoole学习 
 
 > 该学习笔记参照 [PHP-MSF开发手册](https://legacy.gitbook.com/book/pinguo/php-msf-docs/details) 学习，并依据提供的解决方案解决该过程遇到的问题.
+> 或者参照 [Swoole文档中心](https://wiki.swoole.com/wiki/page/1.html) 安装
 > 安装的环境 CentOS6.5、PHP7.7.4（ 使用[lnmp1.4](https://lnmp.org/),安装集合环境 ）.
 
 这里讲解的主要是如何在 PHP 中添加 Swoole 拓展。
