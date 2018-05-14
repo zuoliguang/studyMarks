@@ -1,5 +1,7 @@
 ## Swoole学习 
 
+简介 ：面向生产环境的 PHP 异步网络通信引擎，使用 PHP + Swoole 作为网络通信框架，可以使企业 IT 研发团队的效率大大提升，更加专注于开发创新产品。
+
 > 该学习笔记参照 [PHP-MSF开发手册](https://legacy.gitbook.com/book/pinguo/php-msf-docs/details) 学习，并依据提供的解决方案解决该过程遇到的问题.
 
 > 或者参照 [Swoole文档中心](https://wiki.swoole.com/wiki/page/1.html) 安装.
@@ -43,6 +45,8 @@
 `make`
 
 `make install`
+
+> ***当然 PHP 的工具也提供了类似一键安装的工具命令 `pecl install swoole`***
 
 #### 2. PHP加载
 
@@ -97,8 +101,5 @@ $client->close();
 操作完已上操作，我们访问客户端地址就会看到链接的返回信息 `hello world`.
 
 那已上操作说明我们通过 `Swoole` 创建了 TCP 端口并通过该端口进行了简单的通信.
-
-
-
 
 
