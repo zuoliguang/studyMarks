@@ -115,3 +115,5 @@ $server->on('finish', function ($server, $task_id, $data) {
 });
 $server->start();
 ```
+
+[点击这里](https://pinguo.gitbooks.io/php-msf-docs/content/chapter-2/2.2-swoole.html) 可查看更多 `Swoole` 实例，虽然有些也想不到实际应用的场景，多看评论并结合自己的经验或许会有答案。
