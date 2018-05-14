@@ -1,3 +1,5 @@
+在使用以下代码测试之前，还有可参考的官方参考 [代码实例](https://github.com/pinguo/php-msf-demo)
+
 ### HTTP Server
 
 ```php
