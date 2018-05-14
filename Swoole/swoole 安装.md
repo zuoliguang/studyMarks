@@ -1,11 +1,11 @@
-##Swoole学习 
+## Swoole学习 
 
 > 该学习笔记参照 [PHP-MSF开发手册](https://legacy.gitbook.com/book/pinguo/php-msf-docs/details) 学习，并依据提供的解决方案解决该过程遇到的问题.
 > 安装的环境 CentOS6.5、PHP7.7.4（ 使用[lnmp1.4](https://lnmp.org/),安装集合环境 ）.
 
 这里讲解的主要是如何在 PHP 中添加 Swoole 拓展。
 
-####1. 下载并安装软件
+#### 1. 下载并安装软件
 
 因为环境的要求
 
@@ -41,7 +41,7 @@
 
 `make install`
 
-####2. PHP加载
+#### 2. PHP加载
 
 修改PHP拓展部分 `vim /usr/local/php/etc/php.ini`
 
@@ -51,7 +51,7 @@
 
 查看 `php -m` 或者 `phpinfo()` 即可看到 Swoole 拓展.
 
-####3. 测试代码
+#### 3. 测试代码
 
 
 
