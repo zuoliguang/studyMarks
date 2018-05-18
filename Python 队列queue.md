@@ -106,6 +106,36 @@ import Queue
 
 > Queue.join() 实际上意味着等到队列为空，再执行别的操作
 
+### 四、队列数据进出规则实例 ：
+
+也是一个最简单的生产者消费者例子。
+
+```python
+# -*- coding: UTF-8 -*- 
+import Queue, time, threading, random
+
+l = []
+q = Queue.LifoQueue() 
+
+def productor(name, s):
+    time.sleep(s)
+    print('服务员{}有时间了'.format(name))
+    q.put(name)
+
+def customer():
+    s = q.get()
+    print('服务员{}被叫走了'.format(s))
+
+for i in range(5):
+    n = random.randint(1, 7)
+    t = threading.Thread(target=productor, args=(i, n))
+    l.append(t)
+    t.start()
+
+for i in l:
+    i.join()
+    customer()
+```
 
 
 
