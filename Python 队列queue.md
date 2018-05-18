@@ -12,15 +12,19 @@
 
 ### 二、队列数据存取规则：
 
-|   数据使用方式  |          类名          |                              作用                              |            示例            |
+|   数据使用方式  |   类名                 |           作用                                                 |     示例                   |
 | :------------- |:----------------------:|:-------------------------------------------------------------:| --------------------------:|
-| FIFO先进先出    | Queue(maxsize)         | 先进入队列的数据，先取出，maxsize:>=0，设置队列长度，0为无限长    | q = queue.Queue()         |
-| FILO先进后出    | LifoQueue(maxsize)     | 先进入队列的数据，最后取出,maxsize:>=0,设置队列长度，0为无限长    | q = queue.LifoQueue()     |
+| FIFO先进先出    | Queue(maxsize)         | 先进入队列的数据，先取出，maxsize:>=0，设置队列长度，0为无限长    | q = queue.Queue()          |
+| FILO先进后出    | LifoQueue(maxsize)     | 先进入队列的数据，最后取出,maxsize:>=0,设置队列长度，0为无限长    | q = queue.LifoQueue()      |
 | Priority优先级  | PriorityQueue(maxsize) | 设置优先标志，优先取出高标志位,maxsize:>=0,设置队列长度，0为无限长 | q = queue.PriorityQueue() |
 
 代码：
 
 ```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import Queue
+
 ### 一、先进先出 ###
      str = ''
      q = Queue.Queue()
