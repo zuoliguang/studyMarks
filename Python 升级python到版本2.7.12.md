@@ -54,3 +54,36 @@ make distclean
 改成
 #!/usr/bin/python2.6.6
 ```
+
+***9、pip最新安装***
+
+pip是python的安装工具，很多python的常用工具，都可以通过pip进行安装。
+
+要安装pip，首先要安装setuptools。下面的链接可以得到相关信息，最新版本是21.0.0:
+
+`https://pypi.python.org/pypi/setuptools`
+
+下载并进行安装：
+
+```
+tar vxf setuptools-21.0.0.tar.gz 
+cd setuptools-21.0.0
+python setup.py  install
+```
+
+安装完成后，下载pip。其信息在如下网站：
+
+`https://pypi.python.org/pypi/pip`
+
+下载并进行安装：
+
+```
+tar vxf pip-8.1.1.tar.gz 
+cd pip-8.1.1
+python setup.py install
+```
+
+安装完成后，运行pip
+
+
+
