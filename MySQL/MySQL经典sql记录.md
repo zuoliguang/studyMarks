@@ -69,6 +69,6 @@ select * from log order by rand() LIMIT 0,10
 > 将 tab2 表的 name 更新到 tab1 表的 nick_name ，条件 tab2.out_id = tab1.id；
 
 ```
-UPDATE tab1 LEFT JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name WHERE tab2.out_id = tab1.id
+UPDATE tab1 (LEFT) JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name WHERE tab2.out_id = tab1.id
 ```
 
