@@ -47,11 +47,11 @@ $sql = "UPDATE `table_name` SET
 ```
 SELECT `spu_code`, 
 CASE 
-	WHEN `online_state` = 0 THEN '待入库' 
-	WHEN `online_state` = 1 THEN '已入库' 
-	WHEN `online_state` = 2 THEN '待上架' 
-	WHEN `online_state` = 3 THEN '已上架' 
-	WHEN `online_state` = 4 THEN '已下架' 
+WHEN `online_state` = 0 THEN '待入库' 
+WHEN `online_state` = 1 THEN '已入库' 
+WHEN `online_state` = 2 THEN '待上架' 
+WHEN `online_state` = 3 THEN '已上架' 
+WHEN `online_state` = 4 THEN '已下架' 
 END AS `online_state` 
 FROM `pro_product`;
 ```
