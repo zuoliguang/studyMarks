@@ -7,14 +7,14 @@
 
 ###### 上架
 ```
-	$sql = "UPDATE `ec_product` p SET `status`=1 WHERE EXISTS 
-		(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)>0) AND `status`=2";
+$sql = "UPDATE `ec_product` p SET `status`=1 WHERE EXISTS 
+	(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)>0) AND `status`=2";
 ```
 
 ###### 下架
 ```
-	$sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS 
-		(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)=0) AND `status`=1";
+$sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS 
+	(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)=0) AND `status`=1";
 ```
 
 ***2、批量修改字段 SQL***
@@ -23,7 +23,7 @@
 * 当 title = title2 时, name => name2, date => date2;
 
 ```
-	$sql = "UPDATE `table_name` SET 
+$sql = "UPDATE `table_name` SET 
 	# 批量更新 name 字段
 	`name` = CASE
 	WHEN `title` = 'title1' THEN 'name1'
@@ -45,15 +45,15 @@
 > online_state 字段不同代表不同的含义，下面以此方式直接输出
 
 ```
-    SELECT `spu_code`, 
-    CASE 
-        WHEN `online_state` = 0 THEN '待入库' 
-        WHEN `online_state` = 1 THEN '已入库' 
-        WHEN `online_state` = 2 THEN '待上架' 
-        WHEN `online_state` = 3 THEN '已上架' 
-        WHEN `online_state` = 4 THEN '已下架' 
-    END AS `online_state` 
-    FROM `pro_product`;
+SELECT `spu_code`, 
+CASE 
+	WHEN `online_state` = 0 THEN '待入库' 
+	WHEN `online_state` = 1 THEN '已入库' 
+	WHEN `online_state` = 2 THEN '待上架' 
+	WHEN `online_state` = 3 THEN '已上架' 
+	WHEN `online_state` = 4 THEN '已下架' 
+END AS `online_state` 
+FROM `pro_product`;
 ```
 
 ***4、SQL 抽取随机10条数据***
@@ -61,7 +61,7 @@
 > order by rand()
 
 ```
-	select * from log order by rand() LIMIT 0,10
+select * from log order by rand() LIMIT 0,10
 ```
 
 
