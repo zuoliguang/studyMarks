@@ -1,4 +1,4 @@
-注意：需要root权限
+注意：环境说明：CentOS6.5、root权限、原python版本 2.6.6
 
 #### 查看python版本：
 ```
