@@ -1,20 +1,14 @@
-> 本文参考了https://www.cnblogs.com/syqlp/p/5462459.html，诚挚感谢
+#### 用python27实现文字识别OCR功能
 
-试验目标：用python27实现文字识别OCR功能
-
-环境：win10(64位)
-
-     Python2.7.9
+环境：
+* win10(64位)
+* Python2.7.14
 
 实现流程：
 
 1． 安装pyocr
 
-到https://pypi.python.org/pypi/pyocr/0.4.1下载pyocr-0.4.1.tar.gz
-
-解压后，进入pyocr-0.4.1.tar.gz目录里执行下面的命令进行安装：
-
-Python setup.py install
+到 https://pypi.org/project/pyocr/ 查看 使用 `pip install pyocr`
 
 2． 安装PIL
 
