@@ -38,12 +38,9 @@ import os
 os.environ['NLS_LANG'] = 'SIMPLIFIED CHINESE_CHINA.UTF8'
 
 try:
-
    from pyocr import pyocr
    from PIL import Image
-
 except ImportError:
-
    print '模块导入错误,请使用pip安装,pytesseract依赖以下库：'
    print 'http://www.lfd.uci.edu/~gohlke/pythonlibs/#pil'
    print 'http://code.google.com/p/tesseract-ocr/'
@@ -54,15 +51,18 @@ if len(tools) == 0:
    print("No OCR tool found")
    sys.exit(1)
 
-print("Using '%s'" %(tools[0].get_name()))
-print tools[0].image_to_string(Image.open('D:\\123.png'),lang='eng')
-print tools[0].image_to_string(Image.open('D:\\3434.png'),lang='chi_sim')
-#printtools[0].image_to_string(Image.open('D:\\3535.png'),lang='chi_sim')
+print("Using '%s'" %( tools[0].get_name() ))
+file = 'D:\\test.png' # 文件路径
+image = Image.open(file)
+print tools[0].image_to_string(Image.open(image),lang='eng') # 英文
+print tools[0].image_to_string(Image.open(image),lang='chi_sim') # 中文
 
 ```
 可查看运行结果，英文好使，中文还需添加支持插件。
 
-网上找到的解决方法如下：
+> ***个人点评 : 插件的识别度很低，对于小字体或者密集部分字符串识别不出具体内容，生产环境需要对底层算法做优化
+
+网上找到的解决中文解读方法如下：
 
 1.下载`tesseract-ocr`的中文库，地址：`https://codeload.github.com/tesseract-ocr/tessdata/zip/master`，
 
