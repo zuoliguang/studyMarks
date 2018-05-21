@@ -8,23 +8,17 @@
 
 1． 安装pyocr
 
-到 https://pypi.org/project/pyocr/ 查看 使用 `pip install pyocr`
+到 `https://pypi.org/project/pyocr` 查看 本地安装  `pip install pyocr`
 
 2． 安装PIL
 
-针对win64位的PIL，到下面的网址下载 Pillow-2.1.0.win-amd64-py2.7.exe (md5) ：   https://pypi.python.org/packages/2.7/P/Pillow/Pillow-2.1.0.win-amd64-py2.7.exe#md5=3abe747fbbcdba151e48255b96639b69
+pip install PIL
 
- 下载后选默认直接安装即可。
-
-如果是32位系统，到http://www.pythonware.com/products/pil/index.htm下载安装
+或者 `https://pypi.org/project/image` 安装 pip install image
 
 3． 安装tesseract-ocr
 
-到下面网址下载：
-
-http://jaist.dl.sourceforge.net/project/tesseract-ocr-alt/tesseract-ocr-setup-3.02.02.exe
-
-下载后选默认直接安装。
+查看 `https://pypi.org/project/tesseract-ocr` 安装 `pip install tesseract-ocr`
 
 4． 测试
 
