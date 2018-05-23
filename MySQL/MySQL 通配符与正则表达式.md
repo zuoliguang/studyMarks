@@ -11,10 +11,7 @@
 % 表示任何字符出现任意次数。
 
 ```mysql
-MariaDB [test]> select id,age,province
--> from user
--> where province like '天%'
--> ;
+MariaDB [test]> SELECT id, age, province FROM user WHERE province LIKE '天%' ;
 +----+------+----------+
 | id | age | province |
 +----+------+----------+
@@ -28,9 +25,128 @@ MariaDB [test]> select id,age,province
 下划线_，只匹配单个字符而不是多个字符。
 
 使用通配符的技巧：
-1.不要过度使用通配符
-2.在确实需要使用通配符时，不要用在搜索模式的开始处。影响效率
-3.仔细注意通配符的位置
+> 1.不要过度使用通配符
+> 2.在确实需要使用通配符时，不要用在搜索模式的开始处。影响效率
+> 3.仔细注意通配符的位置
 
+***4、使用mysql 正则表达式***
 
+*匹配 age 带 2 的记录*
+
+```mysql
+MariaDB [test]> SELECT id, age, province FROM user WHERE age REGEXP '2' ;
++----+------+----------+
+| id | age | province |
++----+------+----------+
+| 1 | 22 | 北京 |
+| 2 | 25 | 广东 |
+| 10 | 27 | 湖南 |
+| 11 | 29 | 北京 |
+| 13 | 24 | 北京 |
++----+------+----------+
+5 rows in set (0.00 sec)
+```
+
+***5、进行OR匹配***
+
+*获取 age 等于 22 或者 27 的记录*
+
+```mysql
+MariaDB [test]> SELECT id, age, province FROM user WHERE age REGEXP '22|27' ;
++----+------+----------+
+| id | age | province |
++----+------+----------+
+| 1 | 22 | 北京 |
+| 10 | 27 | 湖南 |
++----+------+----------+
+2 rows in set (0.03 sec)
+```
+
+***6、匹配几个字符之一***
+
+*匹配 age 等于 17、27、37 的记录*
+
+```mysql
+MariaDB [test]> SELECT id, age, province FROM user WHERE age REGEXP '[123]7';
++----+------+----------+
+| id | age | province |
++----+------+----------+
+| 8 | 17 | 河北 |
+| 10 | 27 | 湖南 |
++----+------+----------+
+2 rows in set (0.00 sec)
+```
+
+***7、匹配范围***
+
+*匹配 age 等于 17、27、37、47、57、67、77、87、97 的记录*
+
+```mysql
+MariaDB [test]> SELECT id, age, province FROM user WHERE age REGEXP '[1-9]7';
++----+------+----------+
+| id | age | province |
++----+------+----------+
+| 8 | 17 | 河北 |
+| 10 | 27 | 湖南 |
++----+------+----------+
+2 rows in set (0.00 sec)
+```
+
+***8、匹配个数（多个实例）***
+
+? 0个或一个匹配
+
+{n} 指定数目的匹配
+
+{n,} 不少于指定数目的匹配
+
+{n,m} 范围匹配
+
+***9、定位符***
+
+^ 文本开始
+
+$ 文本末尾
+
+***10.匹配字符类***
+
+[:alnum:] 任意字母和数字
+
+[:alpha:] 任意字符
+
+[:blank:] 空格和制表
+
+[:cntrl:] ASCII 控制字符
+
+[:digit:] 任意数字
+
+[:graph:] 与[:print:]相同，但不包括空格
+
+[:lower:] 任意小写字母
+
+[:print:] 任意可打印字符
+
+[:punct:] 既不在[:alnum:] 又不在 [:cntrl:] 中的任意字符
+
+[:space:] 包括空格在内的任意空白字符
+
+[:upper:] 任意大写字母
+
+[:xdigit:] 任意十六进制数字
+
+***11.匹配特殊字符***
+
+注意：特殊字符处理时需进行转义 escaping
+
+\f 换页
+
+\n 换行
+
+\r 回车
+
+\t 制表
+
+\v 纵向制表
+
+匹配（\）为了匹配反斜杠字符本身，需要使用\
 
