@@ -6,13 +6,13 @@
 ##### 商品的后台管理 自动检测商品库存并更新主商品在架的状态
 
 ###### 上架
-```mysql
+```php
 $sql = "UPDATE `ec_product` p SET `status`=1 WHERE EXISTS 
 	(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)>0) AND `status`=2";
 ```
 
 ###### 下架
-```mysql
+```php
 $sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS 
 	(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)=0) AND `status`=1";
 ```
@@ -22,7 +22,7 @@ $sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS
 * 当 title = title1 时，name => name1, date => date1;
 * 当 title = title2 时, name => name2, date => date2;
 
-```mysql
+```php
 $sql = "UPDATE `table_name` SET 
 	# 批量更新 name 字段
 	`name` = CASE
