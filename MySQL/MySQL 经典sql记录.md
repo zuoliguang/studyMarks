@@ -19,8 +19,8 @@ $sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS
 
 ***2、批量修改字段 SQL***
 
-* 当 title = title1 时，name => name1, date => date1;
-* 当 title = title2 时, name => name2, date => date2;
+> 当 title = title1 时，name => name1, date => date1;
+> 当 title = title2 时, name => name2, date => date2;
 
 ```php
 $sql = "UPDATE `table_name` SET 
@@ -74,7 +74,7 @@ UPDATE tab1 (LEFT) JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name
 
 ***6、去除联合字段重复数据，并添加联合唯一索引***
 
-* xy_sku_image 表 处理 sku_code，tm_url 字段
+> xy_sku_image 表 处理 sku_code，tm_url 字段
 ```mysql
 # 查出联合字段重复的数据
 SELECT * FROM (SELECT *, CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image) t WHERE t.sku_tm_url IN 
