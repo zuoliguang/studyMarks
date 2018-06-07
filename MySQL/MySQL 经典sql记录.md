@@ -6,13 +6,13 @@
 ##### 商品的后台管理 自动检测商品库存并更新主商品在架的状态
 
 ###### 上架
-```
+```mysql
 $sql = "UPDATE `ec_product` p SET `status`=1 WHERE EXISTS 
 	(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)>0) AND `status`=2";
 ```
 
 ###### 下架
-```
+```mysql
 $sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS 
 	(SELECT 1 FROM `ec_product_item` WHERE p.id = `product_id` GROUP BY `product_id` HAVING SUM(stock)=0) AND `status`=1";
 ```
@@ -22,7 +22,7 @@ $sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS
 * 当 title = title1 时，name => name1, date => date1;
 * 当 title = title2 时, name => name2, date => date2;
 
-```
+```mysql
 $sql = "UPDATE `table_name` SET 
 	# 批量更新 name 字段
 	`name` = CASE
@@ -44,7 +44,7 @@ $sql = "UPDATE `table_name` SET
 
 > online_state 字段不同代表不同的含义，下面以此方式直接输出
 
-```
+```mysql
 SELECT `spu_code`, 
 CASE 
 WHEN `online_state` = 0 THEN '待入库' 
@@ -60,7 +60,7 @@ FROM `pro_product`;
 
 > order by rand()
 
-```
+```mysql
 select * from log order by rand() LIMIT 0,10
 ```
 
@@ -68,7 +68,35 @@ select * from log order by rand() LIMIT 0,10
 
 > 将 tab2 表的 name 更新到 tab1 表的 nick_name ，条件 tab2.out_id = tab1.id；
 
-```
+```mysql
 UPDATE tab1 (LEFT) JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name WHERE tab2.out_id = tab1.id
 ```
+
+***6、去除联合字段重复数据，并添加联合唯一索引***
+
+> xy_sku_image 表 处理 sku_code，tm_url 字段
+```mysql
+# 查出联合字段重复的数据
+SELECT * FROM (SELECT *, CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image) t WHERE t.sku_tm_url IN 
+(
+SELECT sku_tm_url FROM (SELECT CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image) tt GROUP BY sku_tm_url HAVING COUNT(sku_tm_url) > 1
+);
+
+# 保留id最大的数据
+DELETE FROM xy_sku_image WHERE id NOT IN (
+SELECT maxid FROM ( SELECT MAX(id) AS maxid,CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image GROUP BY sku_tm_url ) t
+)
+
+# 添加唯一索引的方法
+ALTER TABLE `xy_sku_image` ADD UNIQUE INDEX sku_img_index(tm_url,sku_code); 
+```
+
+
+
+
+
+
+
+
+
 
