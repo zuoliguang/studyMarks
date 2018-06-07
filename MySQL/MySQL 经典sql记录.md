@@ -20,6 +20,7 @@ $sql = "UPDATE `ec_product` p SET `status`=2 WHERE EXISTS
 ***2、批量修改字段 SQL***
 
 > 当 title = title1 时，name => name1, date => date1;
+
 > 当 title = title2 时, name => name2, date => date2;
 
 ```php
