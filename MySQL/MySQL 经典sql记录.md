@@ -78,19 +78,21 @@ UPDATE tab1 (LEFT) JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name
 > xy_sku_image 表 处理 sku_code，tm_url 字段
 ```mysql
 # 查出联合字段重复的数据
-SELECT * FROM (SELECT *, CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image) t WHERE t.sku_tm_url IN 
-(
-SELECT sku_tm_url FROM (SELECT CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image) tt GROUP BY sku_tm_url HAVING COUNT(sku_tm_url) > 1
+SELECT * FROM (SELECT *, CONCAT(clum01, clum02) AS uniq_index FROM `table_name`) t WHERE t.uniq_index IN (
+SELECT uniq_index FROM (SELECT CONCAT(clum01, clum02) AS uniq_index FROM `table_name`) tt GROUP BY uniq_index HAVING COUNT(uniq_index) > 1
 );
 
 # 保留id最大的数据
-DELETE FROM xy_sku_image WHERE id NOT IN (
-SELECT maxid FROM ( SELECT MAX(id) AS maxid,CONCAT(sku_code,tm_url) AS sku_tm_url FROM xy_sku_image GROUP BY sku_tm_url ) t
+DELETE FROM `table_name` WHERE id NOT IN (
+SELECT maxid FROM ( SELECT MAX(id) AS maxid,CONCAT(clum01, clum02) AS uniq_index FROM `table_name` GROUP BY uniq_index ) t
 )
 
 # 添加唯一索引的方法
-ALTER TABLE `xy_sku_image` ADD UNIQUE INDEX sku_img_index(tm_url,sku_code); 
+ALTER TABLE `table_name` ADD UNIQUE INDEX uniq_index(clum01, clum02); 
 ```
+
+* 注意：当clum01, clum02 字段为 NULL 时，会发现搜出的数据有问题
+* 解决方案：将有问题的字段用 `IFNULL(clum01,'default')` 判断，给出默认值即可。
 
 
 
