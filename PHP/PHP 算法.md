@@ -74,7 +74,8 @@
 
 #### 4、递归实现二分查找
 ```php
-    function binaryRecursive($arr,$low,$top,$target){
+    // $low,$top 分别为下角标的起始
+    function binaryRecursive($arr,$low,$top,$target){
         if($low<=$top){
             $mid = floor(($low+$top)/2);
             if($arr[$mid]==$target){
