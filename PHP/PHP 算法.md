@@ -82,7 +82,7 @@
             }elseif($arr[$mid]<$target){
                 return binaryRecursive($arr,$mid+1,$top,$target);
             }else{
-                return binaryRecursive($arr,$low,$top-1,$target);
+                return binaryRecursive($arr,$low,$mid-1,$target);
             }
         }else{
             return -1;
