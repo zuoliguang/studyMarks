@@ -101,7 +101,8 @@ ALTER TABLE `table_name` ADD UNIQUE INDEX uniq_index(clum01, clum02);
 
 > 数据库外部SQL文件
 
-```shell
+```
+//mysql -u账号 -p密码 -D数据库名 < sql文件绝对路径
 mysql -uroot -p123456 -Dppgo_job</home/wwwroot/ppgo_job/ppgo_job.sql
 ```
 
