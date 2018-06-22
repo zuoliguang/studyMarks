@@ -97,8 +97,13 @@ ALTER TABLE `table_name` ADD UNIQUE INDEX uniq_index(clum01, clum02);
 * 注意：当clum01, clum02 字段为 NULL 时，会发现搜出的数据有问题
 * 解决方案：将有可能为 `NULL` 的字段用 `IFNULL(clum01,'default')` 判断，给出默认值即可。
 
+***7、数据库引入外部源SQL文件***
 
+> 数据库外部SQL文件
 
+```shell
+mysql -uroot -p123456 -Dppgo_job</home/wwwroot/ppgo_job/ppgo_job.sql
+```
 
 
 
