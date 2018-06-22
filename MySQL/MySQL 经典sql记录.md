@@ -70,7 +70,10 @@ select * from log order by rand() LIMIT 0,10
 > 将 tab2 表的 name 更新到 tab1 表的 nick_name ，条件 tab2.out_id = tab1.id；
 
 ```mysql
-UPDATE tab1 (LEFT) JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name WHERE tab2.out_id = tab1.id
+-- SQL（1）
+UPDATE tab1 (LEFT) JOIN tab2 ON tab1.id = tab2.id SET tab1.nick_name = tab2.name WHERE tab2.out_id = tab1.id;
+-- SQL（2）
+UPDATE tab1, tab2 SET tab1.nick_name = tab2.name WHERE tab1.id = tab2.id AND tab2.out_id = tab1.id;
 ```
 
 ***6、去除联合字段重复数据，并添加联合唯一索引***
