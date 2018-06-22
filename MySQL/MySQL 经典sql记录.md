@@ -99,7 +99,7 @@ ALTER TABLE `table_name` ADD UNIQUE INDEX uniq_index(clum01, clum02);
 
 ***7、数据库引入外部源SQL文件***
 
-> 数据库外部SQL文件
+> 数据库加载外部SQL文件
 
 ```
 //mysql -u账号 -p密码 -D数据库名 < sql文件绝对路径
