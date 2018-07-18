@@ -105,10 +105,24 @@ ALTER TABLE `table_name` ADD UNIQUE INDEX uniq_index(clum01, clum02);
 //mysql -u账号 -p密码 -D数据库名 < sql文件绝对路径
 mysql -uroot -p123456 -Dppgo_job</home/wwwroot/ppgo_job/ppgo_job.sql
 ```
+***8、mysql 条件 if 、case
 
+> 数据库的表达式用法
 
+if 表达式 `IF(expr1,expr2,expr3)` 
 
+> 如果 expr1 是TRUE，则 IF()的返回值为expr2; 否则返回值则为 expr3。
 
+```mysql
+select id, name, if(sex=1,"男","女") as sex from user;
+```
+case 查看 [`3`] 标题内容
 
+ifnull 表达式 `IFNULL(expr1,expr2)`
 
+> 假如expr1 不为 NULL，则 IFNULL() 的返回值为 expr1; 否则其返回值为 expr2。
+
+```mysql
+SELECT id, IFNULL(img_sku_code, sku_code) AS sku_code FROM `image_sku`;
+```
 
