@@ -106,7 +106,7 @@ ALTER TABLE `table_name` ADD UNIQUE INDEX uniq_index(clum01, clum02);
 
 mysql -uroot -p123456 -Dppgo_job</home/wwwroot/ppgo_job/ppgo_job.sql
 ```
-***8、mysql 条件 if 、case
+***8、mysql 条件 if 、case***
 
 > 数据库的表达式用法
 
