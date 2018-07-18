@@ -41,7 +41,7 @@ $sql = "UPDATE `table_name` SET
 
     该方式的操作可以用来自己构造批量修改的SQL语句，比遍历逐句修改节省且更有效。
 
-***3、判断获取的结果，直接输出想要的状态信息，避免二次处理***
+***<a name="#tag3">3、判断获取的结果，直接输出想要的状态信息，避免二次处理</a>***
 
 > online_state 字段不同代表不同的含义，下面以此方式直接输出
 
@@ -124,7 +124,7 @@ if 还可以结合聚合函数使用
 select sum(if(id<500, 1, 0)) as A, sum(if(id>=500 && id<1000, 1, 0)) as B from customer;
 ```
 
-case 查看 [`3`] 标题内容
+case 查看 <a href="#tag3">[`3`]</a> 标题内容
 
 ifnull 表达式 `IFNULL(expr1, expr2)`
 
