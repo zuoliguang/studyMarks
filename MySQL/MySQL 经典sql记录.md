@@ -116,6 +116,14 @@ if 表达式 `IF(expr1, expr2, expr3)`
 ```mysql
 select id, name, if(sex=1, "男", "女") as sex from user;
 ```
+if 还可以结合聚合函数使用
+> 分别统计不同范围的数据
+> 1： id 小于500；
+> 2：id 大于 500 且 小于 1000
+```mysql
+select sum(if(id<500, 1, 0)) as A, sum(if(id>=500 && id<1000, 1, 0)) as B from customer;
+```
+
 case 查看 [`3`] 标题内容
 
 ifnull 表达式 `IFNULL(expr1, expr2)`
