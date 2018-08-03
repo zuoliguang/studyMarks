@@ -11,3 +11,11 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # 添加完成重新加载环境即可
 source /etc/profile
 ```
+***2、下载添加 beego框架***
+
+```
+go get github.com/beego/bee
+```
+
+***3、启动框架，创建项目***
+
