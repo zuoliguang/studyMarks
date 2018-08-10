@@ -42,8 +42,4 @@
 
 ***2、下载添加 beego框架***
 
-```
-go get github.com/astaxie/beego
-```
-
-***3、启动框架，创建项目***
+使用 beego 框架可参考地址 https://beego.me/quickstart
