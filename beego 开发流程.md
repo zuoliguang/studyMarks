@@ -2,7 +2,7 @@
 
 ***0、go 安装***
 
-1、可以到 (Golang中国)[http://golangtc.com/download] 下载go的安装包
+1、可以到 [Golang中国](http://golangtc.com/download) 下载go的安装包
 
 2、解压安装包tar -C /usr/local -xzf <安装包>
 
