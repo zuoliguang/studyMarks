@@ -10,3 +10,58 @@
 　　-a 标记，强制重新编译。
  
  2、go install 
+ 
+  用于编译安装，可以作用于 main 包和非 main 包，然后将编译后的生成的执行文件存放到工程的 bin 目录下，将生成的归档文件（即静态链接库）存放到工程的 pkg 目录下。
+  
+3、go run 
+
+  编译并执行，只能作用于命令源码文件，一般用于开发中快速测试。
+
+4、go clean
+
+  该命令可以删除执行其它命令时产生的文件和目录，但我没有找到删除 pkg 目录下的归档文件的选项。
+
+5、go test
+
+  进行单元测试的工具，单元测试代码建议与被测试代码放在同一个代码包中，并以 `_test.go` 为后期，测试函数建议以 "Test" 为名称前缀。该命令可以对代码包进行测试，也可以指定某个测试代码文件运行（要一并带上被测试代码文件）
+  
+6、go get
+
+  下载第三方代码包并编译安装 ，需要注意的是，它会下载安装到 GOPATH 环境变量配置的第一个工作区中。
+
+7、go doc
+
+  文档注释相关，可以搭建本地GO文档服务器，包含自己的项目注释，更多细节请参考：https://github.com/hyper-carrot/go_command_tutorial/blob/master/0.5.md
+
+8、go list
+
+  不加任何标记直接使用，是显示指定包的导入路径，如 go list net/http 就显示 net/http
+
+9、go fmt
+
+  作用于代码包，用于格式化代码包中的代码格式，注意不包含代码包中的子代码包。是 gofmt 的简单封装，相当于 gofmt -l -w ，更多信息，请通过 gofmt -h 查看。　
+  
+10、go fix
+
+  当GO语言版本升级之后，把代码包中旧的语法更新成新版本语法的自动化工具。它是 go tool fix 的简单封装，它作用于代码包。当需要升级自己的项目或者升级下载的第三方代码包，可以使用此方法。
+  
+11、go vet
+
+  静态检查工具，这是个好东西，一般项目快完成时进行进行优化时需要，到时候再详细研究。
+  
+12、go tool pprof
+
+  性能检查工具，等需要时再详细研究。详见：https://github.com/hyper-carrot/go_command_tutorial/blob/master/0.12.md
+  
+13、go tool cgo
+
+  从 cgo的名字可以猜出，这是一个跟C语言和GO语言有关的命令，需要时再进行研究。
+  
+14、go env
+
+  用于打印GO语言的环境信息，如 GOPATH 是工作区目录，GOROOT 是GO语言安装目录，GOBIN 是通过 go install 命令生成可执行文件的存放目录（默认是当前工作区的 bin 目录下），GOEXE 为生成可执行文件的后缀
+  
+15、转成汇编代码
+  
+  go tool objdump -s "operate\.Login" server
+  
