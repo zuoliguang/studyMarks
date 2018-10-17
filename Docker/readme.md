@@ -1,4 +1,4 @@
-docker 入门安装可参考书签学习内容列表中
+docker 入门安装可参考书签学习内容列表
 
 1、Docker 镜像库 (https://hub.docker.com/ )
 
